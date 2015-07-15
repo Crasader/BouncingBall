@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Layer
+class GameScene : public cocos2d::Layer
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -16,10 +16,14 @@ public:
     void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
 
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(GameScene);
+    void update() override;
 private:
-    bool onContactBegin(cocos2d::PhysicsContact &contact);
     cocos2d::Sprite* _ball;
+    bool onContactBegin(cocos2d::PhysicsContact &contact);
+    void setupTouchHandling();
+    void setupContactHandling();
+    int totalScore;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -3,13 +3,22 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Project Name="MainScene.csd" Type="Scene" />
-        <Image Name="background.png" />
+        <Project Name="Stage1MainScene.csd" Type="Scene" />
         <Image Name="donut1.png" />
         <Image Name="donut2.png" />
         <Image Name="donut3.png" />
-        <Project Name="SandSurface.csd" Type="Node" />
-        <Project Name="WaterSurface.csd" Type="Node" />
+        <Image Name="background.png" />
+        <Project Name="State1Point.csd" Type="Node" />
+        <Project Name="State1Surface.csd" Type="Node" />
+        <Folder Name="Points">
+          <Image Name="point_minus_1.png" />
+          <Image Name="point_minus_2.png" />
+          <Image Name="point_minus_5.png" />
+          <Image Name="point_plus_1.png" />
+          <Image Name="point_plus_10.png" />
+          <Image Name="point_plus_2.png" />
+          <Image Name="point_plus_5.png" />
+        </Folder>
       </RootFolder>
     </Group>
   </SolutionFolder>

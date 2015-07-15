@@ -58,7 +58,6 @@ void Surface::setSurfaceType(SurfaceType type)
         surfaceBody->setContactTestBitmask(0x03);
         surfaceBody->setCategoryBitmask(0x02);
         surfaceBody->setCollisionBitmask(0x02);
- //       surfaceBody->setCollisionBitmask(0x03);
         surfacePiece->setPhysicsBody(surfaceBody);
     }
 }

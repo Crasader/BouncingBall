@@ -1,10 +1,9 @@
 //
-//  Ball.cpp
+//  Lobby.cpp
 //  BouncingBall
 //
 //  Created by Liang Fan on 7/15/15.
 //
 //
 
-#include "Ball.h"
-
+#include "Lobby.h"
