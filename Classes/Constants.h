@@ -9,11 +9,21 @@
 #ifndef BouncingBall_Constants_h
 #define BouncingBall_Constants_h
 
+#include "cocos2d.h"
+
+//TODO: change this to % of the screen
 
 enum class SurfaceType
 {
     sand,
     water
+};
+enum class GameState
+{
+    moveBallToShootingArea,
+    prepareShooting,
+    placeItem,
+    shooting
 };
 
 //TODO: bitmask defination
@@ -39,5 +49,6 @@ enum Category
     minimized  = 0x04, // 00000100
     maximized  = 0x08  // 00001000
 };
+
 
 #endif

@@ -15,9 +15,12 @@
 class Ball : public cocos2d::Sprite
 {
 public:
-    
+    bool init() override;
+    CREATE_FUNC(Ball);
+    void setVelocity(cocos2d::Vec2 velocity);
 private:
-    SurfaceType currentSurface;
+
+
 };
 
 #endif /* defined(__BouncingBall__Ball__) */
