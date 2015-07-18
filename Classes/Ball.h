@@ -17,7 +17,8 @@ class Ball : public cocos2d::Sprite
 public:
     bool init() override;
     CREATE_FUNC(Ball);
-    void setVelocity(cocos2d::Vec2 velocity);
+    void shoot(float speed, float angle);
+    bool isStoped();
 private:
 
 

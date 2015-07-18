@@ -9,6 +9,26 @@
 #ifndef __BouncingBall__SceneManager__
 #define __BouncingBall__SceneManager__
 
-#include <stdio.h>
-
+class GameScene;
+//class SceneManager : NetworkingDelegate
+class SceneManager
+{
+public:
+    static SceneManager* getInstance();
+    void enterGameScene(bool networked);
+    void backToLobby();
+    
+    void showPeerList();
+    void receiveMultiplayerInvitations();
+    void sendData(const void* data, unsigned long length);
+private:
+//    std::unique_ptr<NetworkingWrapper> networkingWrapper;
+    GameScene* gameScene;
+    
+    SceneManager();
+    ~SceneManager();
+    
+ //   void receivedData(const void* state, unsigned long length);
+ //   void stateChanged(ConnectionState state);
+};
 #endif /* defined(__BouncingBall__SceneManager__) */

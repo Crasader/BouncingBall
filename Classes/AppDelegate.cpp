@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "GameScene.h"
+#include "Lobby.h"
 
 USING_NS_CC;
 
@@ -31,7 +31,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_WIDTH);
+    glview->setDesignResolutionSize(640, 960, ResolutionPolicy::FIXED_WIDTH);
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -39,10 +39,30 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
+    cocos2d::Size targetSize = glview->getFrameSize();
     FileUtils::getInstance()->addSearchPath("res");
+    
+    //TODO: make the game asset for 4 solution
+    
+    std::vector<std::string> searchResolutionOrder(1);
+    
+    if (targetSize.height < 481.0f) {
+        searchResolutionOrder[0] = "resources-2x";
+    } else if (targetSize.height < 1335.0f) {
+        searchResolutionOrder[0] = "resources-2x";
+    } else if (targetSize.height < 1921.0f) {
+        searchResolutionOrder[0] = "resources-2x";
+    } else {
+        searchResolutionOrder[0] = "resources-2x";
+    }
+    
+    FileUtils::getInstance()->setSearchResolutionsOrder(searchResolutionOrder);
+    
 
     // create a scene. it's an autorelease object
-    auto scene = GameScene::createScene();
+    auto scene = Scene::create();
+    Lobby* lobby = Lobby::create();
+    scene->addChild(lobby);
 
     // run
     director->runWithScene(scene);

@@ -3,9 +3,15 @@
 #include "ui/CocosGUI.h"
 #include "Surface.h"
 #include "SurfaceReader.h"
+
+
+#include "ball.h"
+#include "SceneManager.h"
+
+#include "Cannon.h"
+#include "CannonReader.h"
 #include "RewardPoint.h"
 #include "RewardPointReader.h"
-
 
 
 USING_NS_CC;
@@ -19,7 +25,8 @@ Scene* GameScene::createScene()
     auto layer = GameScene::create();
     layer->setPhyWorld(scene->getPhysicsWorld());
     scene->addChild(layer);
-    return scene;}
+    return scene;
+}
 
 // on "init" you need to initialize your instance
 bool GameScene::init()
@@ -39,6 +46,16 @@ bool GameScene::init()
 void GameScene::onEnter()
 {
     Layer::onEnter();
+    
+    //setup menu
+    cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    ui::Button* backButton = ui::Button::create();
+    backButton->setAnchorPoint(Vec2(0.0f,1.0f));
+    backButton->setPosition(Vec2(0.0f,visibleSize.height));
+    backButton->loadTextures("backButton.png", "backButtonPressed.png");
+    backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
+    this->addChild(backButton);
 
     setupMap();
     
@@ -51,6 +68,7 @@ void GameScene::onEnter()
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
     setupTouchHandling();
+    this->scheduleUpdate();
 }
 
 bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
@@ -73,9 +91,12 @@ void GameScene::setupMap()
     auto origin = Director::getInstance()->getVisibleOrigin();
     
     CSLoader* instance = CSLoader::getInstance();
-    instance->registReaderObject("RewardPointReader" , (ObjectFactory::Instance) RewardPointReader::getInstance);
+//   instance->registReaderObject("RewardPointReader" , (ObjectFactory::Instance) RewardPointReader::getInstance);
+    instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
     
-    auto rootNode = CSLoader::createNode("Stage1MainScene.csb");
+    auto rootNode = CSLoader::createNode("MainScene.csb");
+     _cannon = rootNode->getChildByName<Cannon*>("Cannon");
+
 
     //TODO: make a enum to replace the magic number
     
@@ -93,9 +114,14 @@ void GameScene::setupMap()
 }
 void GameScene::setupBall()
 {
-    _ball = Ball::create();
-    
-    this->addChild(_ball);
+    Ball* ball = Ball::create();
+    _ballWaitShooting = ball;
+    Vec2 ballPos = _cannon->getPosition();
+    _ballWaitShooting->setPosition(ballPos);
+    _balls.pushBack(_ballWaitShooting);
+    this->addChild(_ballWaitShooting);
+    _gameState = GameState::prepareShooting;
+
 }
 
  //TODO:check if the ball is speed 0,may be using the physcis update
@@ -104,89 +130,80 @@ void GameScene::setupTouchHandling()
 {
     auto touchListener = EventListenerTouchOneByOne::create();
     static Vec2 lastTouchPos;
+    static Vec2 firstTouchPos;
     static Vec2 initPos;
+    static bool allowToShoot;
     touchListener->onTouchBegan = [&](Touch* touch, Event* event)
     {
-        //TODO: finish the check that whether user touch the place that can put a ball
-        lastTouchPos = this->convertTouchToNodeSpace(touch);
-        
-        if (_ball->getBoundingBox().containsPoint(lastTouchPos)) {
-            _selectedSprite = _ball;
-            initPos = _ball->getPosition();
-    
-            if ( ballIsInShootingArea()) {
-                _gameState = GameState::prepareShooting;
-            } else {
-                _gameState = GameState::moveBallToShootingArea;
+        switch (_gameState) {
+            case GameState::prepareShooting:
+            {
+                Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+                lastTouchPos = touchPos;
+                firstTouchPos = touchPos;
+                allowToShoot = true;
+                return true;
             }
-            return true;
-        } else {
-            return false;
+                break;
+            case GameState::shooting:
+            {
+                return false;
+            }
         }
-        //if item is selected than selectedSprite = items
-    //    return true;
+
     };
     
     touchListener->onTouchMoved = [&](Touch* touch, Event* event)
     {
         Vec2 touchPos = this->convertTouchToNodeSpace(touch);
-        switch (_gameState) {
-            case GameState::moveBallToShootingArea:
-            {
-                _ball->setPosition(touchPos);
-            }
-                break;
-            case GameState::prepareShooting:
-                break;
-            default:
-                break;
-        }
-        
-        
+        //TODO: change the magic number
+        float angle = (touchPos.x - lastTouchPos.x)/this->getContentSize().width * 180;
+        _cannon->setAngle(angle);
+        lastTouchPos = touchPos;
+        allowToShoot = false;
     };
     
     touchListener->onTouchEnded = [&](Touch* touch, Event* event)
     {
-        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
-        switch (_gameState) {
-            case GameState::moveBallToShootingArea:
-            {
-                if (! ballIsInShootingArea()) {
-                    _ball->setPosition(initPos);
-                } else {
-                    _gameState = GameState::prepareShooting;
-                }
-            }
-                break;
-            case GameState::prepareShooting:
-            {
-                Vec2 velocity = _ball->getPosition() - touchPos;
-                _ball->setVelocity(velocity);
-                _gameState = GameState::moveBallToShootingArea;
-                
-            }
+        if (allowToShoot) {
+            _cannon->runShootingAnimation();
+            _ballWaitShooting->shoot(500.0f,_cannon->getAngle());
+            _gameState = GameState::shooting;
         }
-
+       
     };
     
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
-bool GameScene::ballIsInShootingArea()
+void GameScene::update(float dt)
 {
-    return isInShootingArea(_ball->getPosition());
-}
-
-bool GameScene::isInShootingArea(Vec2 pos)
-{
-    //TODO: make the shooting aear
-    if (pos.x < 300 && pos.x > 200) {
-        return true;
-    } else {
-        return false;
+    if (_gameState == GameState::shooting && this->allBallIsStoped()) {
+        _ballWaitShooting = nullptr;
+        setupBall();
     }
 }
 
+
+#pragma mark -
+#pragma mark UI Method
+void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
+{
+    if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        SceneManager::getInstance()->backToLobby();
+    }
+    
+}
+
+bool GameScene::allBallIsStoped()
+{
+    for (auto ball : _balls) {
+        if (! ball->isStoped()) {
+            return false;
+        }
+    }
+    return true;
+}
 
 
 

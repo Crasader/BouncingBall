@@ -2,8 +2,11 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-#include "ball.h"
+#include "CocosGUI.h"
 #include "Constants.h"
+#include "Ball.h"
+class Cannon;
+
 class GameScene : public cocos2d::Layer
 {
 public:
@@ -18,20 +21,26 @@ public:
 
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
-private:
-    Ball* _ball;
+protected:
+    cocos2d::Vector<Ball*> _balls;
+    Ball* _ballWaitShooting;
+    Cannon* _cannon;
+    
+    void update(float dt) override;
+    bool allBallIsStoped();
+    
+    
     bool onContactBegin(cocos2d::PhysicsContact &contact);
     void setupTouchHandling();
     void setupContactHandling();
     void setupBall();
     void setupMap();
-    bool ballIsInShootingArea();
-    bool isInShootingArea(cocos2d::Vec2 touchPos);
     
     int _totalScore;
     
-    cocos2d::Sprite* _selectedSprite;
     GameState _gameState;
+    
+    void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
 };
 
 

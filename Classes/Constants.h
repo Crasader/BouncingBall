@@ -13,6 +13,8 @@
 
 //TODO: change this to % of the screen
 
+const static float MIN_SPEED = 2.2f;
+
 enum class SurfaceType
 {
     sand,
@@ -20,9 +22,7 @@ enum class SurfaceType
 };
 enum class GameState
 {
-    moveBallToShootingArea,
     prepareShooting,
-    placeItem,
     shooting
 };
 
