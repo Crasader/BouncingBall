@@ -1,18 +1,12 @@
 #include "GameScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
-#include "Surface.h"
-#include "SurfaceReader.h"
-
 
 #include "ball.h"
 #include "SceneManager.h"
 
 #include "Cannon.h"
 #include "CannonReader.h"
-#include "RewardPoint.h"
-#include "RewardPointReader.h"
-
 
 USING_NS_CC;
 
@@ -47,18 +41,8 @@ void GameScene::onEnter()
 {
     Layer::onEnter();
     
-    //setup menu
-    cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
-    
-    ui::Button* backButton = ui::Button::create();
-    backButton->setAnchorPoint(Vec2(0.0f,1.0f));
-    backButton->setPosition(Vec2(0.0f,visibleSize.height));
-    backButton->loadTextures("backButton.png", "backButtonPressed.png");
-    backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
-    this->addChild(backButton);
-
     setupMap();
-    
+   
     setupBall();
 
     //TODO: use level loadler to load the all node of game scene
@@ -84,24 +68,30 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     if (b->getCategoryBitmask() == 0x02 ) {
         _totalScore += b->getTag();
     }
+    return true;
 }
 void GameScene::setupMap()
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
-    
+
     CSLoader* instance = CSLoader::getInstance();
-//   instance->registReaderObject("RewardPointReader" , (ObjectFactory::Instance) RewardPointReader::getInstance);
     instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
      _cannon = rootNode->getChildByName<Cannon*>("Cannon");
 
+    ui::Button* backButton = ui::Button::create();
+    backButton->setAnchorPoint(Vec2(0.0f,1.0f));
+    backButton->setPosition(Vec2(0.0f,visibleSize.height));
+    backButton->loadTextures("backButton.png", "backButtonPressed.png");
+    backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
+    this->addChild(backButton);
 
-    //TODO: make a enum to replace the magic number
     
     //TODO: for high speed
     auto edgeSp = Sprite::create();
+    //TODO: make a enum to replace the magic number
     auto boundBody = PhysicsBody::createEdgeBox(visibleSize, PhysicsMaterial(0.0f,1.0f,0.0f), 3);
     edgeSp->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
     edgeSp->setPhysicsBody(boundBody);
@@ -110,29 +100,30 @@ void GameScene::setupMap()
     
     this->addChild(rootNode);
     
-    
 }
 void GameScene::setupBall()
 {
     Ball* ball = Ball::create();
     _ballWaitShooting = ball;
+    
     Vec2 ballPos = _cannon->getPosition();
     _ballWaitShooting->setPosition(ballPos);
+    
     _balls.pushBack(_ballWaitShooting);
     this->addChild(_ballWaitShooting);
     _gameState = GameState::prepareShooting;
 
 }
 
- //TODO:check if the ball is speed 0,may be using the physcis update
-
 void GameScene::setupTouchHandling()
 {
     auto touchListener = EventListenerTouchOneByOne::create();
+    
     static Vec2 lastTouchPos;
     static Vec2 firstTouchPos;
     static Vec2 initPos;
     static bool allowToShoot;
+    
     touchListener->onTouchBegan = [&](Touch* touch, Event* event)
     {
         switch (_gameState) {
@@ -156,7 +147,7 @@ void GameScene::setupTouchHandling()
     touchListener->onTouchMoved = [&](Touch* touch, Event* event)
     {
         Vec2 touchPos = this->convertTouchToNodeSpace(touch);
-        //TODO: change the magic number
+        //change 180 degree when move from left of screen to right
         float angle = (touchPos.x - lastTouchPos.x)/this->getContentSize().width * 180;
         _cannon->setAngle(angle);
         lastTouchPos = touchPos;
@@ -178,6 +169,7 @@ void GameScene::setupTouchHandling()
 
 void GameScene::update(float dt)
 {
+    Node::update(dt);
     if (_gameState == GameState::shooting && this->allBallIsStoped()) {
         _ballWaitShooting = nullptr;
         setupBall();

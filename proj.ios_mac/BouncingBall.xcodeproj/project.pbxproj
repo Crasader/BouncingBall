@@ -56,10 +56,6 @@
 		9E0CBC521B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC4F1B5571D70000EA9C /* PhysicsBodyFactory.cpp */; };
 		9E0CBC561B55B77D0000EA9C /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC541B55B77D0000EA9C /* Lobby.cpp */; };
 		9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC541B55B77D0000EA9C /* Lobby.cpp */; };
-		9E0CBC5C1B55B82C0000EA9C /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC5A1B55B82C0000EA9C /* Block.cpp */; };
-		9E0CBC5D1B55B82C0000EA9C /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC5A1B55B82C0000EA9C /* Block.cpp */; };
-		9E0CBC601B55B8BB0000EA9C /* BlockReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC5E1B55B8BB0000EA9C /* BlockReader.cpp */; };
-		9E0CBC611B55B8BB0000EA9C /* BlockReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC5E1B55B8BB0000EA9C /* BlockReader.cpp */; };
 		9E0CBC7B1B55BF860000EA9C /* ItemBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC791B55BF860000EA9C /* ItemBox.cpp */; };
 		9E0CBC7C1B55BF860000EA9C /* ItemBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC791B55BF860000EA9C /* ItemBox.cpp */; };
 		9E0CBC7F1B55BFBE0000EA9C /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC7D1B55BFBE0000EA9C /* Item.cpp */; };
@@ -68,10 +64,6 @@
 		9E0CBC841B56C7660000EA9C /* ContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC811B56C7660000EA9C /* ContactManager.cpp */; };
 		9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */; };
 		9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */; };
-		9E0CBC8B1B56DD980000EA9C /* RewardPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC891B56DD980000EA9C /* RewardPoint.cpp */; };
-		9E0CBC8C1B56DD980000EA9C /* RewardPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC891B56DD980000EA9C /* RewardPoint.cpp */; };
-		9E0CBC8F1B56DDA80000EA9C /* RewardPointReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC8D1B56DDA80000EA9C /* RewardPointReader.cpp */; };
-		9E0CBC901B56DDA80000EA9C /* RewardPointReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC8D1B56DDA80000EA9C /* RewardPointReader.cpp */; };
 		9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */; };
 		9E0CBC941B56F9360000EA9C /* JSONPacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */; };
 		9E0CBC971B56FA160000EA9C /* SceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC951B56FA160000EA9C /* SceneManager.cpp */; };
@@ -82,9 +74,6 @@
 		9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */; };
 		9E0CBCA41B5997560000EA9C /* BallBag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBCA21B5997560000EA9C /* BallBag.cpp */; };
 		9E0CBCA51B5997560000EA9C /* BallBag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBCA21B5997560000EA9C /* BallBag.cpp */; };
-		9E21B9EF1B54525700CAA983 /* SurfaceReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E21B9ED1B54525700CAA983 /* SurfaceReader.cpp */; };
-		9E21B9F21B5454F700CAA983 /* Surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E21B9F01B5454F700CAA983 /* Surface.cpp */; };
-		9E21B9F31B5454F700CAA983 /* Surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E21B9F01B5454F700CAA983 /* Surface.cpp */; };
 		9E21BA0A1B54A13400CAA983 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA091B54A0EF00CAA983 /* libcocos2d iOS.a */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -164,10 +153,6 @@
 		9E0CBC501B5571D70000EA9C /* PhysicsBodyFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsBodyFactory.h; sourceTree = "<group>"; };
 		9E0CBC541B55B77D0000EA9C /* Lobby.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lobby.cpp; sourceTree = "<group>"; };
 		9E0CBC551B55B77D0000EA9C /* Lobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lobby.h; sourceTree = "<group>"; };
-		9E0CBC5A1B55B82C0000EA9C /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Block.cpp; sourceTree = "<group>"; };
-		9E0CBC5B1B55B82C0000EA9C /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
-		9E0CBC5E1B55B8BB0000EA9C /* BlockReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlockReader.cpp; sourceTree = "<group>"; };
-		9E0CBC5F1B55B8BB0000EA9C /* BlockReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockReader.h; sourceTree = "<group>"; };
 		9E0CBC721B55BAF10000EA9C /* UIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIConstants.h; sourceTree = "<group>"; };
 		9E0CBC791B55BF860000EA9C /* ItemBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ItemBox.cpp; sourceTree = "<group>"; };
 		9E0CBC7A1B55BF860000EA9C /* ItemBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemBox.h; sourceTree = "<group>"; };
@@ -177,10 +162,6 @@
 		9E0CBC821B56C7660000EA9C /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
 		9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelLoader.cpp; sourceTree = "<group>"; };
 		9E0CBC861B56CBC90000EA9C /* LevelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelLoader.h; sourceTree = "<group>"; };
-		9E0CBC891B56DD980000EA9C /* RewardPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RewardPoint.cpp; sourceTree = "<group>"; };
-		9E0CBC8A1B56DD980000EA9C /* RewardPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardPoint.h; sourceTree = "<group>"; };
-		9E0CBC8D1B56DDA80000EA9C /* RewardPointReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RewardPointReader.cpp; sourceTree = "<group>"; };
-		9E0CBC8E1B56DDA80000EA9C /* RewardPointReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardPointReader.h; sourceTree = "<group>"; };
 		9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONPacker.cpp; sourceTree = "<group>"; };
 		9E0CBC921B56F9360000EA9C /* JSONPacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONPacker.h; sourceTree = "<group>"; };
 		9E0CBC951B56FA160000EA9C /* SceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneManager.cpp; sourceTree = "<group>"; };
@@ -191,10 +172,6 @@
 		9E0CBC9E1B58583A0000EA9C /* CannonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CannonReader.h; sourceTree = "<group>"; };
 		9E0CBCA21B5997560000EA9C /* BallBag.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BallBag.cpp; sourceTree = "<group>"; };
 		9E0CBCA31B5997560000EA9C /* BallBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallBag.h; sourceTree = "<group>"; };
-		9E21B9ED1B54525700CAA983 /* SurfaceReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SurfaceReader.cpp; sourceTree = "<group>"; };
-		9E21B9EE1B54525700CAA983 /* SurfaceReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurfaceReader.h; sourceTree = "<group>"; };
-		9E21B9F01B5454F700CAA983 /* Surface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Surface.cpp; sourceTree = "<group>"; };
-		9E21B9F11B5454F700CAA983 /* Surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surface.h; sourceTree = "<group>"; };
 		9E21B9F41B545BD000CAA983 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E21BA011B54A0EF00CAA983 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -398,22 +375,10 @@
 		9E0CBC591B55B7C20000EA9C /* GameObject */ = {
 			isa = PBXGroup;
 			children = (
-				9E21B9ED1B54525700CAA983 /* SurfaceReader.cpp */,
-				9E21B9EE1B54525700CAA983 /* SurfaceReader.h */,
-				9E21B9F01B5454F700CAA983 /* Surface.cpp */,
-				9E21B9F11B5454F700CAA983 /* Surface.h */,
 				9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */,
 				9E0CBC9E1B58583A0000EA9C /* CannonReader.h */,
 				9E0CBC991B58582B0000EA9C /* Cannon.cpp */,
 				9E0CBC9A1B58582B0000EA9C /* Cannon.h */,
-				9E0CBC5E1B55B8BB0000EA9C /* BlockReader.cpp */,
-				9E0CBC5F1B55B8BB0000EA9C /* BlockReader.h */,
-				9E0CBC5A1B55B82C0000EA9C /* Block.cpp */,
-				9E0CBC5B1B55B82C0000EA9C /* Block.h */,
-				9E0CBC8D1B56DDA80000EA9C /* RewardPointReader.cpp */,
-				9E0CBC8E1B56DDA80000EA9C /* RewardPointReader.h */,
-				9E0CBC891B56DD980000EA9C /* RewardPoint.cpp */,
-				9E0CBC8A1B56DD980000EA9C /* RewardPoint.h */,
 				9E0CBC4C1B556DC60000EA9C /* Ball.cpp */,
 				9E0CBC4D1B556DC60000EA9C /* Ball.h */,
 				9E0CBC7D1B55BFBE0000EA9C /* Item.cpp */,
@@ -425,9 +390,9 @@
 		9E0CBC731B55BB1D0000EA9C /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */,
 				9E0CBCA21B5997560000EA9C /* BallBag.cpp */,
 				9E0CBCA31B5997560000EA9C /* BallBag.h */,
+				9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */,
 				9E0CBC921B56F9360000EA9C /* JSONPacker.h */,
 				9E0CBC861B56CBC90000EA9C /* LevelLoader.h */,
 				9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */,
@@ -593,12 +558,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E0CBC8F1B56DDA80000EA9C /* RewardPointReader.cpp in Sources */,
 				9E0CBC7F1B55BFBE0000EA9C /* Item.cpp in Sources */,
 				9E0CBC7B1B55BF860000EA9C /* ItemBox.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				9E21B9EF1B54525700CAA983 /* SurfaceReader.cpp in Sources */,
-				9E0CBC601B55B8BB0000EA9C /* BlockReader.cpp in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				9E0CBCA41B5997560000EA9C /* BallBag.cpp in Sources */,
@@ -608,14 +570,11 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				9E0CBC4E1B556DC60000EA9C /* Ball.cpp in Sources */,
 				9E0CBC9F1B58583A0000EA9C /* CannonReader.cpp in Sources */,
-				9E0CBC8B1B56DD980000EA9C /* RewardPoint.cpp in Sources */,
 				9E0CBC971B56FA160000EA9C /* SceneManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				9E0CBC831B56C7660000EA9C /* ContactManager.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				9E0CBC9B1B58582B0000EA9C /* Cannon.cpp in Sources */,
-				9E0CBC5C1B55B82C0000EA9C /* Block.cpp in Sources */,
-				9E21B9F21B5454F700CAA983 /* Surface.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,24 +582,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E21B9F31B5454F700CAA983 /* Surface.cpp in Sources */,
-				9E0CBC5D1B55B82C0000EA9C /* Block.cpp in Sources */,
 				9E0CBC941B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */,
 				9E0CBCA51B5997560000EA9C /* BallBag.cpp in Sources */,
-				9E0CBC901B56DDA80000EA9C /* RewardPointReader.cpp in Sources */,
 				9E0CBC521B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
 				9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E0CBC801B55BFBE0000EA9C /* Item.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				9E0CBC981B56FA160000EA9C /* SceneManager.cpp in Sources */,
-				9E0CBC611B55B8BB0000EA9C /* BlockReader.cpp in Sources */,
 				9E0CBC7C1B55BF860000EA9C /* ItemBox.cpp in Sources */,
 				9E0CBC9C1B58582B0000EA9C /* Cannon.cpp in Sources */,
 				9E0CBC841B56C7660000EA9C /* ContactManager.cpp in Sources */,
-				9E0CBC8C1B56DD980000EA9C /* RewardPoint.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* GameScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,7 +16,7 @@ class Lobby : public cocos2d::Node
 {
 public:
     CREATE_FUNC(Lobby);
-    
+
 private:
     bool init() override;
     void onEnter() override;

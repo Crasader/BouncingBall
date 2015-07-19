@@ -19,7 +19,7 @@ bool Ball::init()
  //   this->setScale(0.2f);
     auto ballBody = PhysicsBody::createCircle(this->getContentSize().width/2 ,PhysicsMaterial(0.0f,1.0f,0.0f));
     ballBody->setGravityEnable(false);
-    ballBody->setLinearDamping(0.2f);
+    ballBody->setLinearDamping(0.4f);
     ballBody->setContactTestBitmask(0x03);
     ballBody->setCategoryBitmask(0x01);
     ballBody->setCollisionBitmask(0x01);
@@ -30,7 +30,7 @@ bool Ball::init()
 bool Ball::isStoped()
 {
     Vec2 velocity = this->getPhysicsBody()->getVelocity();
-    return (velocity.x < MIN_SPEED  && velocity.y < MIN_SPEED);
+    return (abs(velocity.x) < MIN_SPEED && abs(velocity.y) < MIN_SPEED);
 }
 void Ball::shoot(float speed, float angle)
 {

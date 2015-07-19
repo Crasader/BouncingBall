@@ -16,11 +16,7 @@ bool Cannon::init()
         return false;
     }
     
-    // load the character animation timeline
     _timeline = CSLoader::createTimeline("Cannon.csb");
-
-    
-    // retain the character animation timeline so it doesn't get deallocated
     _timeline->retain();
     
     return true;
@@ -29,7 +25,6 @@ bool Cannon::init()
 
 void Cannon::onExit()
 {
-    // release the retain we called in init
     _timeline->release();
     Node::onExit();
 }
@@ -40,6 +35,9 @@ void Cannon::runShootingAnimation()
     _timeline->play("Shoot",false);
     
 }
+
+#pragma mark -
+#pragma mark Getter/Setter
 
 float Cannon::getAngle()
 {
