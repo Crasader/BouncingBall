@@ -1,12 +1,15 @@
 #include "GameScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
+#include "UIConstants.h"
 
 #include "ball.h"
 #include "SceneManager.h"
 
 #include "Cannon.h"
 #include "CannonReader.h"
+
+#include "JSONPacker.h"
 
 USING_NS_CC;
 
@@ -61,13 +64,13 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     PhysicsBody *b = contact.getShapeB()->getBody();
     
     //TODO:make a emun type detection,fix this ugly code
-    if (a->getCategoryBitmask() == 0x02) {
-        _totalScore += a->getTag();
+    if (a->getTag() == b->getTag()) {
+        _totalScore += 2;
+    } else {
+        _totalScore += 1;
     }
+    updateScoreLabel(_totalScore);
 
-    if (b->getCategoryBitmask() == 0x02 ) {
-        _totalScore += b->getTag();
-    }
     return true;
 }
 void GameScene::setupMap()
@@ -81,12 +84,16 @@ void GameScene::setupMap()
     auto rootNode = CSLoader::createNode("MainScene.csb");
      _cannon = rootNode->getChildByName<Cannon*>("Cannon");
 
-    ui::Button* backButton = ui::Button::create();
-    backButton->setAnchorPoint(Vec2(0.0f,1.0f));
-    backButton->setPosition(Vec2(0.0f,visibleSize.height));
-    backButton->loadTextures("backButton.png", "backButtonPressed.png");
-    backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
-    this->addChild(backButton);
+
+
+    std::string jsonStr = FileUtils::getInstance()->getStringFromFile("map1.json");
+    const JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
+    for (auto ballconfig : mapState.ballConfigs)
+    {
+        Ball* ball = Ball::createWithBallConfig(ballconfig);
+        rootNode->addChild(ball);
+        this->_balls.pushBack(ball);
+    }
 
     
     //TODO: for high speed
@@ -99,6 +106,20 @@ void GameScene::setupMap()
     edgeSp->setTag(0);
     
     this->addChild(rootNode);
+    
+    ui::Button* backButton = ui::Button::create();
+    backButton->setAnchorPoint(Vec2(0.0f,1.0f));
+    backButton->setPosition(Vec2(0.0f,visibleSize.height));
+    backButton->loadTextures("backButton.png", "backButtonPressed.png");
+    backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
+    this->addChild(backButton);
+    
+    this->_scoreLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
+    this->_scoreLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
+    this->_scoreLabel->setPosition(Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.98f));
+    this->_scoreLabel->setColor(LABEL_COLOR);
+    this->addChild(_scoreLabel);
+    
     
 }
 void GameScene::setupBall()
@@ -126,19 +147,20 @@ void GameScene::setupTouchHandling()
     
     touchListener->onTouchBegan = [&](Touch* touch, Event* event)
     {
+        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+        lastTouchPos = touchPos;
+        firstTouchPos = touchPos;
         switch (_gameState) {
             case GameState::prepareShooting:
             {
-                Vec2 touchPos = this->convertTouchToNodeSpace(touch);
-                lastTouchPos = touchPos;
-                firstTouchPos = touchPos;
                 allowToShoot = true;
                 return true;
             }
                 break;
             case GameState::shooting:
             {
-                return false;
+                allowToShoot = false;
+                return true;
             }
         }
 
@@ -158,7 +180,7 @@ void GameScene::setupTouchHandling()
     {
         if (allowToShoot) {
             _cannon->runShootingAnimation();
-            _ballWaitShooting->shoot(500.0f,_cannon->getAngle());
+            _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
             _gameState = GameState::shooting;
         }
        
@@ -198,5 +220,11 @@ bool GameScene::allBallIsStoped()
 }
 
 
+#pragma mark -
+#pragma mark Util Methods;
 
-
+void GameScene::updateScoreLabel(int score)
+{
+    std::string scoreString = StringUtils::toString(score);
+    this->_scoreLabel->setString(scoreString);
+}

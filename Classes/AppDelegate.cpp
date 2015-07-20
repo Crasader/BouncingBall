@@ -41,6 +41,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     cocos2d::Size targetSize = glview->getFrameSize();
     FileUtils::getInstance()->addSearchPath("res");
+    FileUtils::getInstance()->addSearchPath("map");
+
     
     //TODO: make the game asset for 4 solution
     

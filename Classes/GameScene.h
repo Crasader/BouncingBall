@@ -29,7 +29,7 @@ protected:
     void update(float dt) override;
     bool allBallIsStoped();
     
-    
+    void updateScoreLabel(int score);
     bool onContactBegin(cocos2d::PhysicsContact &contact);
     void setupTouchHandling();
     void setupContactHandling();
@@ -37,6 +37,7 @@ protected:
     void setupMap();
     
     int _totalScore;
+    cocos2d::ui::Text*  _scoreLabel;
     
     GameState _gameState;
     

@@ -11,37 +11,41 @@
 
 #include "cocos2d.h"
 
-//TODO: change this to % of the screen
-
+#pragma mark Ball Setting
 const static float MIN_SPEED = 2.2f;
+const static float BALL_DEFAULT_LINEAR_DAMPING = 0.5f;
+const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
+const static int BALL_DEFAULT_HP = 3;
+const static float MAX_SHOOTING_SPEED = 1000.0f;
 
-enum class SurfaceType
-{
-    sand,
-    water
-};
+
+
+#pragma Collusion Setting
+//TODO: add other colors, butfirst use three color
+const static int BALL_CATEGORY = 0x01;
+const static int BLOCK_CATEGORY = 0x02;
+
+
+const static int BALL_CULLISION_MASK = BALL_CATEGORY | BLOCK_CATEGORY;
+const static int BALL_CONTACT_MASK = BALL_CATEGORY | BLOCK_CATEGORY;
+//TODO maybe color should be a tag
+
+
 enum class GameState
 {
     prepareShooting,
     shooting
 };
+enum class BallColor
+{
+    red = 0,
+    green = 1,
+    blue = 2,
+    purple = 3,
+    yellow = 4,
+    black =5
+};
 
-//TODO: bitmask defination
-/*
- 4 basic category: surface,points,block,ball
- when ball pass surface is speed changed
- when ball pass the points user get points
- when ball hit the block collusion happend
- 
- ball is dynamic(movable)
- ball can detect collusion of surface,points,block,ball
- ball can collise block,ball
- 
- block is dynamic(movable)
- block can detect block,ball
- block can colliose block,ball
- 
- */
 enum Category
 {
     ball = 0x001, // 00000001

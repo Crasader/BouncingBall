@@ -51,11 +51,11 @@ void SceneManager::enterGameScene(bool networked)
 
 void SceneManager::backToLobby()
 {
-    if (gameScene) {
+  //  if (gameScene) {
         Director::getInstance()->popScene();
-        gameScene = nullptr;
+ //       gameScene = nullptr;
  //       networkingWrapper->disconnect();
-    }
+  //  }
     
 }
 

@@ -11,16 +11,25 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
+#include "JSONPacker.h"
 
 class Ball : public cocos2d::Sprite
 {
 public:
+    static Ball* createWithBallConfig(JSONPacker::BallConfig config);
+    static Ball* createRandomBall();
     bool init() override;
-    CREATE_FUNC(Ball);
     void shoot(float speed, float angle);
     bool isStoped();
-private:
+    CREATE_FUNC(Ball);
 
+private:
+    int _hp;
+    BallColor _color;
+    
+    bool initWithBallConfig(JSONPacker::BallConfig config);
+    BallColor getBallColorFromStr(std::string color);
+    cocos2d::PhysicsBody* createBallPhysicsBody(BallColor color);
 
 };
 

@@ -9,6 +9,35 @@
 #ifndef __BouncingBall__JSONPacker__
 #define __BouncingBall__JSONPacker__
 
-#include <stdio.h>
+#include "cocos2d.h"
+#include "Constants.h"
+
+namespace JSONPacker
+{
+    struct BallConfig
+    {
+        float relativeX;
+        float relativeY;
+        std::string color;
+        int hp;
+    };
+    
+    struct BlockConfig
+    {
+        
+    };
+    
+    struct MapState
+    {
+        std::vector<BallConfig> ballConfigs;
+ //       cocos2d::Vector<Block*> blocks;
+        
+    };
+
+    //TODO: improve this speed
+    const MapState unpackMapStateJSON(std::string json);
+    std::string packMapStateJSON(MapState mapstate);
+}
+
 
 #endif /* defined(__BouncingBall__JSONPacker__) */
