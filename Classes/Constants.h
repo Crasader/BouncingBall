@@ -18,7 +18,9 @@ const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMa
 const static int BALL_DEFAULT_HP = 3;
 const static float MAX_SHOOTING_SPEED = 1000.0f;
 
-
+#pragma mark -
+#pragma mark Edge Setting
+const static cocos2d::PhysicsMaterial EDGE_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
 
 #pragma Collusion Setting
 //TODO: add other colors, butfirst use three color

@@ -19,8 +19,12 @@ public:
     CREATE_FUNC(GameScene);
 protected:
     cocos2d::PhysicsWorld* m_world;
-    cocos2d::Vector<Ball*> _balls;
+    
+    //Ball
+    cocos2d::Vector<Ball*> _ballsOnState;
     Ball* _ballWaitShooting;
+    cocos2d::Vector<Ball*> _ballsInBag;
+    
     Cannon* _cannon;
     cocos2d::Sprite* _edgeSp;
     

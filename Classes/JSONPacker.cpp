@@ -23,7 +23,7 @@ namespace JSONPacker {
         document.Parse<0>(json.c_str());
         
       //  rapidjson::Value& balls = document["ball"];
-        std::vector<BallConfig> ballConfigs;
+        std::vector<BallConfig> ballsOnStage;
         for (int i =0; i < document["ball"].Capacity();++i)
         {
             const rapidjson::Value& ball = document["ball"][i];
@@ -33,9 +33,22 @@ namespace JSONPacker {
             int hp = ball["hp"].GetInt();
 
             BallConfig config = {relativeX, relativeY, color, hp};
-            ballConfigs.push_back(config);
+            ballsOnStage.push_back(config);
         }
-        MapState mapState = { ballConfigs };
+        std::vector<BallConfig> ballsInBag;
+        for (int i =0; i < document["ballBag"].Capacity();++i)
+        {
+            const rapidjson::Value& ball = document["ball"][i];
+            float relativeX = ball["relativeX"].GetDouble();
+            float relativeY = ball["relativeY"].GetDouble();
+            std::string color = ball["color"].GetString();
+            int hp = ball["hp"].GetInt();
+            
+            BallConfig config = {relativeX, relativeY, color, hp};
+            ballsInBag.push_back(config);
+        }
+        
+        MapState mapState = { ballsOnStage, ballsInBag};
         return mapState;
     }
     

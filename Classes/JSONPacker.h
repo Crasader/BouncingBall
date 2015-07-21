@@ -29,7 +29,8 @@ namespace JSONPacker
     
     struct MapState
     {
-        std::vector<BallConfig> ballConfigs;
+        std::vector<BallConfig> ballsOnStage;
+        std::vector<BallConfig> ballsInBag;
  //       cocos2d::Vector<Block*> blocks;
         
     };

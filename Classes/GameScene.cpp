@@ -83,21 +83,30 @@ void GameScene::setupMap()
     std::string jsonStr = FileUtils::getInstance()->getStringFromFile("map1.json");
     const JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
  
-    for (auto ballconfig : mapState.ballConfigs)
+    for (auto ballconfig : mapState.ballsOnStage)
     {
         Ball* ball = Ball::createWithBallConfig(ballconfig);
         rootNode->addChild(ball);
-        this->_balls.pushBack(ball);
+        this->_ballsOnState.pushBack(ball);
     }
     
+    for (auto ballconfig : mapState.ballsInBag) {
+        Ball* ball = Ball::createWithBallConfig(ballconfig);
+        this->_ballsInBag.pushBack(ball);
+    }
     
+    this->addChild(rootNode);
+    
+    //Setup Edge
     float bottomHeight = rootNode->getChildByName<Sprite*>("BottomBound")->getContentSize().height;
     float upperHeight = rootNode->getChildByName<Sprite*>("UpperBound")->getContentSize().height;
-    float height = visibleSize.height - bottomHeight - upperHeight;
+    float edgeHeight = visibleSize.height - bottomHeight - upperHeight;
     
     float sideWidth = rootNode->getChildByName<Sprite*>("SideBarShadowLeft")->getChildByName<Sprite*>("SideBarLeft")->getContentSize().width /2;
-    float width = visibleSize.width - 2 * sideWidth;
-    auto edgeBody = PhysicsBody::createEdgeBox(Size(width, height), PhysicsMaterial(0.0f,1.0f,0.0f), 3);
+    float edgeWidth = visibleSize.width - 2 * sideWidth;
+    
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(edgeWidth, edgeHeight), EDGE_MATERIAL);
+    
     edgeBody->setContactTestBitmask(EDGE_INIT_CONTACT_MASK);
     edgeBody->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
     edgeBody->setCategoryBitmask(EDGE_CATEGORY);
@@ -107,8 +116,8 @@ void GameScene::setupMap()
     _edgeSp->setPhysicsBody(edgeBody);
     this->addChild(_edgeSp);
     
-    this->addChild(rootNode);
     
+    //Setup UI
     ui::Button* backButton = ui::Button::create();
     backButton->setAnchorPoint(Vec2(0.0f,1.0f));
     backButton->setPosition(Vec2(0.0f,visibleSize.height));
@@ -131,13 +140,14 @@ void GameScene::resetEgde()
 }
 void GameScene::setupBall()
 {
-    Ball* ball = Ball::create();
-    _ballWaitShooting = ball;
+    _ballWaitShooting = _ballsInBag.front();
+    _ballWaitShooting->retain();
+    _ballsInBag.erase(_ballsInBag.begin());
     
     Vec2 ballPos = _cannon->getPosition();
     _ballWaitShooting->setPosition(ballPos);
     
-    _balls.pushBack(_ballWaitShooting);
+    _ballsOnState.pushBack(_ballWaitShooting);
     this->addChild(_ballWaitShooting);
     resetEgde();
     _gameState = GameState::prepareShooting;
@@ -204,11 +214,11 @@ void GameScene::update(float dt)
 {
     Node::update(dt);
     if (_gameState == GameState::shooting && this->allBallIsStoped()) {
+        _ballWaitShooting->release();
         _ballWaitShooting = nullptr;
         setupBall();
     }
 }
-
 
 #pragma mark -
 #pragma mark UI Method
@@ -222,7 +232,7 @@ void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEven
 
 bool GameScene::allBallIsStoped()
 {
-    for (auto ball : _balls) {
+    for (auto ball : _ballsOnState) {
         if (! ball->isStoped()) {
             return false;
         }
