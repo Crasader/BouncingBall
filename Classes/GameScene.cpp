@@ -51,7 +51,13 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 {
     PhysicsBody *a = contact.getShapeA()->getBody();
     PhysicsBody *b = contact.getShapeB()->getBody();
-    std::string name = contact.getCurrentTarget()->getName();
+    
+    //Pass the first collusion of edge
+    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
+        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
+        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
+        return false;
+    }
     
     //TODO:make a emun type detection,fix this ugly code
     if (a->getTag() == b->getTag()) {
@@ -59,13 +65,6 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     } else {
         _totalScore += 1;
     }
-    
-    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
-        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
-        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
-        return false;
-    }
-    
     updateScoreLabel(_totalScore);
 
     return true;
