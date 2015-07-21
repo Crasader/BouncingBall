@@ -24,6 +24,7 @@ const static float MAX_SHOOTING_SPEED = 1000.0f;
 //TODO: add other colors, butfirst use three color
 const static int BALL_CATEGORY = 0x01;
 const static int BLOCK_CATEGORY = 0x02;
+const static int EDGE_CATEGORY = 0x08;
 
 
 const static int BALL_CULLISION_MASK = BALL_CATEGORY | BLOCK_CATEGORY;

@@ -26,7 +26,6 @@ public:
 private:
     int _hp;
     BallColor _color;
-    
     bool initWithBallConfig(JSONPacker::BallConfig config);
     BallColor getBallColorFromStr(std::string color);
     cocos2d::PhysicsBody* createBallPhysicsBody(BallColor color);

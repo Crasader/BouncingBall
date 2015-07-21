@@ -5,22 +5,22 @@
       <Animation Duration="5" Speed="0.1667" ActivedAnimationName="Shoot">
         <Timeline ActionTag="-1721826314" Property="FileData">
           <TextureFrame FrameIndex="0" Tween="False">
-            <TextureFile Type="Normal" Path="resources-2x/cannon1.png" Plist="" />
+            <TextureFile Type="Normal" Path="res/cannon1.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="1" Tween="False">
-            <TextureFile Type="Normal" Path="resources-2x/cannon1.png" Plist="" />
+            <TextureFile Type="Normal" Path="res/cannon1.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="2" Tween="False">
-            <TextureFile Type="Normal" Path="resources-2x/cannon2.png" Plist="" />
+            <TextureFile Type="Normal" Path="res/cannon2.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="3" Tween="False">
-            <TextureFile Type="Normal" Path="resources-2x/cannon3.png" Plist="" />
+            <TextureFile Type="Normal" Path="res/cannon3.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="4" Tween="False">
-            <TextureFile Type="Normal" Path="resources-2x/cannon4.png" Plist="" />
+            <TextureFile Type="Normal" Path="res/cannon4.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="5" Tween="False">
-            <TextureFile Type="Normal" Path="resources-2x/cannon1.png" Plist="" />
+            <TextureFile Type="Normal" Path="res/cannon1.png" Plist="" />
           </TextureFrame>
         </Timeline>
       </Animation>
@@ -40,7 +40,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize X="1.3433" Y="3.7736" />
-            <FileData Type="Normal" Path="resources-2x/cannon1.png" Plist="" />
+            <FileData Type="Normal" Path="res/cannon1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>

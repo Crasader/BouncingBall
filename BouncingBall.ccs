@@ -6,119 +6,31 @@
         <Project Name="MainScene.csd" Type="Scene" />
         <Project Name="Point.csd" Type="Node" />
         <Project Name="Surface.csd" Type="Node" />
-        <Folder Name="Points">
-          <Image Name="point_minus_1.png" />
-          <Image Name="point_minus_2.png" />
-          <Image Name="point_minus_5.png" />
-          <Image Name="point_plus_1.png" />
-          <Image Name="point_plus_10.png" />
-          <Image Name="point_plus_2.png" />
-          <Image Name="point_plus_5.png" />
-        </Folder>
-        <Folder Name="assets">
-          <Folder Name="Background">
-            <Folder Name="Ocean">
-              <Image Name="Layer-10.png" />
-              <Image Name="Layer-11.png" />
-              <Image Name="Layer-12.png" />
-              <Image Name="Layer-13.png" />
-              <Image Name="Layer-14.png" />
-              <Image Name="Layer-15.png" />
-              <Image Name="Layer-16.png" />
-              <Image Name="Layer-17.png" />
-              <Image Name="Layer-18.png" />
-              <Image Name="Layer-19.png" />
-              <Image Name="Layer-2.png" />
-              <Image Name="Layer-20.png" />
-              <Image Name="Layer-21.png" />
-              <Image Name="Layer-3.png" />
-              <Image Name="Layer-4.png" />
-              <Image Name="Layer-5.png" />
-              <Image Name="Layer-6.png" />
-              <Image Name="Layer-7.png" />
-              <Image Name="Layer-8.png" />
-              <Image Name="Layer-9.png" />
-              <Image Name="Ocean.png" />
-            </Folder>
-            <Folder Name="Ship_Deck">
-              <Image Name="Layer-2.png" />
-              <Image Name="Layer-3.png" />
-              <Image Name="Layer-4.png" />
-              <Image Name="Layer-5.png" />
-              <Image Name="Layer-6.png" />
-              <Image Name="Layer-7.png" />
-              <Image Name="Layer-8.png" />
-              <Image Name="Layer-9.png" />
-              <Image Name="Ship_Deck.png" />
-            </Folder>
-          </Folder>
-          <Folder Name="Cannon">
-            <Image Name="Aimshot.png" />
-            <Image Name="Cannon.png" />
-            <Image Name="Cannon_Base.png" />
-            <Image Name="Cannon_Shoot.png" />
-          </Folder>
-          <Folder Name="Dogi">
-            <Image Name="Dogi_Pirate_Idle.png" />
-            <Image Name="Dogi_Pirate_Lost.png" />
-            <Image Name="Dogi_Pirate_Shoot.png" />
-            <Image Name="Dogi_Pirate_Win.png" />
-            <Image Name="Dogi_Shadow.png" />
-          </Folder>
-          <Folder Name="Explosion">
-            <Image Name="Black_Ball_Explode.png" />
-            <Image Name="Blue_Ball_Explode.png" />
-            <Image Name="Bomb_Explode.png" />
-            <Image Name="Clock_Explode.png" />
-            <Image Name="Coin_Explode.png" />
-            <Image Name="Green_Ball_Explode.png" />
-            <Image Name="Heart_Explode.png" />
-            <Image Name="Omni_Ball_Explode.png" />
-            <Image Name="Purple_Ball_Explode.png" />
-            <Image Name="Red_Ball_Explode.png" />
-            <Image Name="Target_Explode.png" />
-            <Image Name="Treasure_Chest_Explode.png" />
-            <Image Name="Yellow_Ball_Explode.png" />
-          </Folder>
-          <Folder Name="GUI">
-            <Image Name="GUI_Templates.png" />
-          </Folder>
-          <Folder Name="Items">
-            <Image Name="Anchor.png" />
-            <Image Name="Black_Ball.png" />
-            <Image Name="Blue_Ball.png" />
-            <Image Name="Bomb.png" />
-            <Image Name="Chain.png" />
-            <Image Name="Clock.png" />
-            <Image Name="Coin.png" />
-            <Image Name="Gear.png" />
-            <Image Name="Green_Ball.png" />
-            <Image Name="Heart.png" />
-            <Image Name="Omni_Ball.png" />
-            <Image Name="Purple_Ball.png" />
-            <Image Name="Red_Ball.png" />
-            <Image Name="Rock.png" />
-            <Image Name="Steering.png" />
-            <Image Name="Target.png" />
-            <Image Name="Treasure_Chest.png" />
-            <Image Name="Yellow_Ball.png" />
-          </Folder>
-        </Folder>
         <Project Name="Cannon.csd" Type="Node" />
-        <Folder Name="resources-2x">
-          <Image Name="logo.png" />
-          <Image Name="multiplayerButton.png" />
-          <Image Name="multiplayerButtonPressed.png" />
-          <Image Name="singlePlayerButton.png" />
-          <Image Name="singlePlayerButtonPressed.png" />
+        <Folder Name="res">
+          <Image Name="backButton.png" />
+          <Image Name="backButtonPressed.png" />
+          <Image Name="blue.png" />
+          <Image Name="bottomBound.png" />
           <Image Name="cannon1.png" />
           <Image Name="cannon2.png" />
           <Image Name="cannon3.png" />
           <Image Name="cannon4.png" />
-          <Image Name="Steering.png" />
-          <Image Name="dogi.png" />
-          <Image Name="BackGround.png" />
           <Image Name="Cannon_Base.png" />
+          <Image Name="dogi.png" />
+          <Image Name="green.png" />
+          <Image Name="logo.png" />
+          <Image Name="multiplayerButton.png" />
+          <Image Name="multiplayerButtonPressed.png" />
+          <Image Name="red.png" />
+          <Image Name="sideNet.png" />
+          <Image Name="singlePlayerButton.png" />
+          <Image Name="singlePlayerButtonPressed.png" />
+          <Image Name="Steering.png" />
+          <Image Name="BackGround.png" />
+          <Image Name="sideBar.png" />
+          <Image Name="sideBarShadow.png" />
+          <Image Name="upperBound.png" />
         </Folder>
       </RootFolder>
     </Group>

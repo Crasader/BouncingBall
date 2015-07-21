@@ -13,24 +13,12 @@
 
 USING_NS_CC;
 
-using namespace cocostudio::timeline;
-
-Scene* GameScene::createScene()
-{
-    auto scene = Scene::createWithPhysics();
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    auto layer = GameScene::create();
-    layer->setPhyWorld(scene->getPhysicsWorld());
-    scene->addChild(layer);
-    return scene;
-}
-
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Layer::init() )
+    if ( !Node::init() )
     {
         return false;
     }
@@ -42,7 +30,7 @@ bool GameScene::init()
 
 void GameScene::onEnter()
 {
-    Layer::onEnter();
+    Node::onEnter();
     
     setupMap();
    
@@ -62,6 +50,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 {
     PhysicsBody *a = contact.getShapeA()->getBody();
     PhysicsBody *b = contact.getShapeB()->getBody();
+    std::string name = contact.getCurrentTarget()->getName();
     
     //TODO:make a emun type detection,fix this ugly code
     if (a->getTag() == b->getTag()) {
@@ -69,6 +58,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     } else {
         _totalScore += 1;
     }
+    
     updateScoreLabel(_totalScore);
 
     return true;
@@ -76,7 +66,6 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 void GameScene::setupMap()
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
 
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
@@ -84,26 +73,28 @@ void GameScene::setupMap()
     auto rootNode = CSLoader::createNode("MainScene.csb");
      _cannon = rootNode->getChildByName<Cannon*>("Cannon");
 
-
-
     std::string jsonStr = FileUtils::getInstance()->getStringFromFile("map1.json");
     const JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
+ 
     for (auto ballconfig : mapState.ballConfigs)
     {
         Ball* ball = Ball::createWithBallConfig(ballconfig);
         rootNode->addChild(ball);
         this->_balls.pushBack(ball);
     }
-
-    
-    //TODO: for high speed
+  
     auto edgeSp = Sprite::create();
-    //TODO: make a enum to replace the magic number
-    auto boundBody = PhysicsBody::createEdgeBox(visibleSize, PhysicsMaterial(0.0f,1.0f,0.0f), 3);
-    edgeSp->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+    float bottomHeight = rootNode->getChildByName<Sprite*>("BottomBound")->getContentSize().height;
+    float upperHeight = rootNode->getChildByName<Sprite*>("UpperBound")->getContentSize().height;
+    float height = visibleSize.height - bottomHeight - upperHeight;
+    
+    float sideWidth = rootNode->getChildByName<Sprite*>("SideBarShadowLeft")->getChildByName<Sprite*>("SideBarLeft")->getContentSize().width /2;
+    float width = visibleSize.width - 2 * sideWidth;
+
+    auto boundBody = PhysicsBody::createEdgeBox(Size(width, height), PhysicsMaterial(0.0f,1.0f,0.0f), 3);
+    edgeSp->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2 + (bottomHeight - upperHeight)/2));
     edgeSp->setPhysicsBody(boundBody);
     this->addChild(edgeSp);
-    edgeSp->setTag(0);
     
     this->addChild(rootNode);
     
@@ -170,11 +161,13 @@ void GameScene::setupTouchHandling()
     {
         Vec2 touchPos = this->convertTouchToNodeSpace(touch);
         //change 180 degree when move from left of screen to right
-        float angle = (touchPos.x - lastTouchPos.x)/this->getContentSize().width * 180;
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        float angle = (touchPos.x - lastTouchPos.x)/visibleSize.width * 180;
         _cannon->setAngle(angle);
         lastTouchPos = touchPos;
         allowToShoot = false;
     };
+    
     
     touchListener->onTouchEnded = [&](Touch* touch, Event* event)
     {

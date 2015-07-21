@@ -42,11 +42,16 @@ SceneManager::~SceneManager()
 #pragma mark Public Methods
 void SceneManager::enterGameScene(bool networked)
 {
-    Scene* scene = GameScene::createScene();
-   // this->gameScene = GameScene::create();
+    Scene* physicsScene = Scene::createWithPhysics();
+    physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    
+    this->gameScene = GameScene::create();
+    gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
+    physicsScene->addChild(gameScene);
+
 //    this->gameScene->setNetworkedSession(networked);
     
-    Director::getInstance()->pushScene(scene);
+    Director::getInstance()->pushScene(physicsScene);
 }
 
 void SceneManager::backToLobby()
