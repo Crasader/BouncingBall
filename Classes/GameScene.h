@@ -22,8 +22,11 @@ protected:
     cocos2d::Vector<Ball*> _balls;
     Ball* _ballWaitShooting;
     Cannon* _cannon;
+    cocos2d::Sprite* _edgeSp;
+    
     void update(float dt) override;
     bool allBallIsStoped();
+    void resetEgde();
     
     void updateScoreLabel(int score);
     bool onContactBegin(cocos2d::PhysicsContact &contact);

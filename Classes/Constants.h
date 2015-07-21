@@ -22,13 +22,22 @@ const static float MAX_SHOOTING_SPEED = 1000.0f;
 
 #pragma Collusion Setting
 //TODO: add other colors, butfirst use three color
+const static int NONE = 0x00;
 const static int BALL_CATEGORY = 0x01;
 const static int BLOCK_CATEGORY = 0x02;
-const static int EDGE_CATEGORY = 0x08;
+const static int EDGE_CATEGORY = 0x04;
 
 
-const static int BALL_CULLISION_MASK = BALL_CATEGORY | BLOCK_CATEGORY;
-const static int BALL_CONTACT_MASK = BALL_CATEGORY | BLOCK_CATEGORY;
+const static int BALL_CULLISION_MASK = BALL_CATEGORY | BLOCK_CATEGORY | EDGE_CATEGORY;
+const static int BALL_CONTACT_MASK = BALL_CATEGORY | BLOCK_CATEGORY | EDGE_CATEGORY;
+
+
+const static int EDGE_INIT_CULLISION_MASK = NONE;
+const static int EDGE_INIT_CONTACT_MASK = BALL_CATEGORY;
+
+const static int EDGE_RUNNING_CULLISION_MASK = BALL_CATEGORY;
+const static int EDGE_RUNNING_CONTACT_MASK = NONE;
+
 //TODO maybe color should be a tag
 
 

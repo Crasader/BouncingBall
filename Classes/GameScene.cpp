@@ -23,6 +23,7 @@ bool GameScene::init()
         return false;
     }
 
+    _edgeSp = nullptr;
     _totalScore = 0;
    
     return true;
@@ -59,6 +60,12 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         _totalScore += 1;
     }
     
+    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
+        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
+        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
+        return false;
+    }
+    
     updateScoreLabel(_totalScore);
 
     return true;
@@ -82,19 +89,23 @@ void GameScene::setupMap()
         rootNode->addChild(ball);
         this->_balls.pushBack(ball);
     }
-  
-    auto edgeSp = Sprite::create();
+    
+    
     float bottomHeight = rootNode->getChildByName<Sprite*>("BottomBound")->getContentSize().height;
     float upperHeight = rootNode->getChildByName<Sprite*>("UpperBound")->getContentSize().height;
     float height = visibleSize.height - bottomHeight - upperHeight;
     
     float sideWidth = rootNode->getChildByName<Sprite*>("SideBarShadowLeft")->getChildByName<Sprite*>("SideBarLeft")->getContentSize().width /2;
     float width = visibleSize.width - 2 * sideWidth;
-
-    auto boundBody = PhysicsBody::createEdgeBox(Size(width, height), PhysicsMaterial(0.0f,1.0f,0.0f), 3);
-    edgeSp->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2 + (bottomHeight - upperHeight)/2));
-    edgeSp->setPhysicsBody(boundBody);
-    this->addChild(edgeSp);
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(width, height), PhysicsMaterial(0.0f,1.0f,0.0f), 3);
+    edgeBody->setContactTestBitmask(EDGE_INIT_CONTACT_MASK);
+    edgeBody->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
+    edgeBody->setCategoryBitmask(EDGE_CATEGORY);
+    
+    _edgeSp = Sprite::create();
+    _edgeSp->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2 + (bottomHeight - upperHeight)/2));
+    _edgeSp->setPhysicsBody(edgeBody);
+    this->addChild(_edgeSp);
     
     this->addChild(rootNode);
     
@@ -111,6 +122,11 @@ void GameScene::setupMap()
     this->_scoreLabel->setColor(LABEL_COLOR);
     this->addChild(_scoreLabel);
     
+}
+void GameScene::resetEgde()
+{
+    _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_INIT_CONTACT_MASK);
+    _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
     
 }
 void GameScene::setupBall()
@@ -123,7 +139,9 @@ void GameScene::setupBall()
     
     _balls.pushBack(_ballWaitShooting);
     this->addChild(_ballWaitShooting);
+    resetEgde();
     _gameState = GameState::prepareShooting;
+
 
 }
 
