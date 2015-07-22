@@ -46,7 +46,8 @@ const static int EDGE_RUNNING_CONTACT_MASK = NONE;
 enum class GameState
 {
     prepareShooting,
-    shooting
+    shooting,
+    gameOver
 };
 enum class BallColor
 {
@@ -64,6 +65,14 @@ enum Category
     maximizing = 0x02, // 00000010
     minimized  = 0x04, // 00000100
     maximized  = 0x08  // 00001000
+};
+
+struct Goal
+{
+    int totalScore;
+    int timesHitRed;
+    int timesHitBlue;
+    int timesHitGreen;
 };
 
 

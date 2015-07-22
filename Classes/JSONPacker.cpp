@@ -15,14 +15,13 @@
 using namespace cocos2d;
 
 namespace JSONPacker {
-    //Read Map state
-    //Create Map State
+
+    //TODO: improve the efficient of this func
     const MapState unpackMapStateJSON(std::string json)
     {
         rapidjson::Document document;
         document.Parse<0>(json.c_str());
         
-      //  rapidjson::Value& balls = document["ball"];
         std::vector<BallConfig> ballsOnStage;
         for (int i =0; i < document["ball"].Capacity();++i)
         {
@@ -35,10 +34,11 @@ namespace JSONPacker {
             BallConfig config = {relativeX, relativeY, color, hp};
             ballsOnStage.push_back(config);
         }
+        
         std::vector<BallConfig> ballsInBag;
         for (int i =0; i < document["ballBag"].Capacity();++i)
         {
-            const rapidjson::Value& ball = document["ball"][i];
+            const rapidjson::Value& ball = document["ballBag"][i];
             float relativeX = ball["relativeX"].GetDouble();
             float relativeY = ball["relativeY"].GetDouble();
             std::string color = ball["color"].GetString();
@@ -48,7 +48,15 @@ namespace JSONPacker {
             ballsInBag.push_back(config);
         }
         
-        MapState mapState = { ballsOnStage, ballsInBag};
+        rapidjson::Value& goal = document["goal"];
+        Goal stageGoal;
+        
+        stageGoal.totalScore = goal["totalScore"].GetInt();
+        stageGoal.timesHitBlue = goal["timesHitBlue"].GetInt();
+        stageGoal.timesHitRed = goal["timesHitRed"].GetInt();
+        stageGoal.timesHitGreen = goal["timesHitGreen"].GetInt();
+        
+        MapState mapState = { ballsOnStage, ballsInBag, stageGoal};
         return mapState;
     }
     

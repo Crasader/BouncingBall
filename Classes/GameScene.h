@@ -5,6 +5,7 @@
 #include "CocosGUI.h"
 #include "Constants.h"
 #include "Ball.h"
+
 class Cannon;
 
 class GameScene : public cocos2d::Node
@@ -15,10 +16,11 @@ public:
     void onEnter() override;
     void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
 
-    // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
+    
 protected:
     cocos2d::PhysicsWorld* m_world;
+    cocos2d::Node* _mainScene;
     
     //Ball
     cocos2d::Vector<Ball*> _ballsOnState;
@@ -27,7 +29,9 @@ protected:
     
     Cannon* _cannon;
     cocos2d::Sprite* _edgeSp;
-    
+    const Goal _goal;
+    Goal _currentState;
+
     void update(float dt) override;
     bool allBallIsStoped();
     void resetEgde();
@@ -39,8 +43,15 @@ protected:
     void setupBall();
     void setupMap();
     
+    bool isGameOver();
+    bool isGoalAchieved();
     int _totalScore;
+    
+    
     cocos2d::ui::Text*  _scoreLabel;
+    cocos2d::ui::Text*  _redGoalLabel;
+    cocos2d::ui::Text*  _blueGoalLabel;
+    cocos2d::ui::Text*  _greenGoalLabel;
     
     GameState _gameState;
     

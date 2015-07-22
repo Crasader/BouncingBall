@@ -72,8 +72,6 @@
 		9E0CBC9C1B58582B0000EA9C /* Cannon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC991B58582B0000EA9C /* Cannon.cpp */; };
 		9E0CBC9F1B58583A0000EA9C /* CannonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */; };
 		9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */; };
-		9E0CBCA41B5997560000EA9C /* BallBag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBCA21B5997560000EA9C /* BallBag.cpp */; };
-		9E0CBCA51B5997560000EA9C /* BallBag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBCA21B5997560000EA9C /* BallBag.cpp */; };
 		9E21BA0A1B54A13400CAA983 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA091B54A0EF00CAA983 /* libcocos2d iOS.a */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -170,8 +168,6 @@
 		9E0CBC9A1B58582B0000EA9C /* Cannon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cannon.h; sourceTree = "<group>"; };
 		9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CannonReader.cpp; sourceTree = "<group>"; };
 		9E0CBC9E1B58583A0000EA9C /* CannonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CannonReader.h; sourceTree = "<group>"; };
-		9E0CBCA21B5997560000EA9C /* BallBag.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BallBag.cpp; sourceTree = "<group>"; };
-		9E0CBCA31B5997560000EA9C /* BallBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallBag.h; sourceTree = "<group>"; };
 		9E21B9F41B545BD000CAA983 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E21BA011B54A0EF00CAA983 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -390,8 +386,6 @@
 		9E0CBC731B55BB1D0000EA9C /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				9E0CBCA21B5997560000EA9C /* BallBag.cpp */,
-				9E0CBCA31B5997560000EA9C /* BallBag.h */,
 				9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */,
 				9E0CBC921B56F9360000EA9C /* JSONPacker.h */,
 				9E0CBC861B56CBC90000EA9C /* LevelLoader.h */,
@@ -563,7 +557,6 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
-				9E0CBCA41B5997560000EA9C /* BallBag.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */,
 				9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
 				9E0CBC561B55B77D0000EA9C /* Lobby.cpp in Sources */,
@@ -586,7 +579,6 @@
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */,
-				9E0CBCA51B5997560000EA9C /* BallBag.cpp in Sources */,
 				9E0CBC521B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
 				9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E0CBC801B55BFBE0000EA9C /* Item.cpp in Sources */,

@@ -31,6 +31,7 @@ namespace JSONPacker
     {
         std::vector<BallConfig> ballsOnStage;
         std::vector<BallConfig> ballsInBag;
+        Goal stageGoal;
  //       cocos2d::Vector<Block*> blocks;
         
     };

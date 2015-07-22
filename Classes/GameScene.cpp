@@ -13,12 +13,15 @@
 
 USING_NS_CC;
 
+#pragma mark -
+#pragma mark LifeCircle
+
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Node::init() )
+    if (! Node::init() )
     {
         return false;
     }
@@ -47,28 +50,7 @@ void GameScene::onEnter()
     this->scheduleUpdate();
 }
 
-bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
-{
-    PhysicsBody *a = contact.getShapeA()->getBody();
-    PhysicsBody *b = contact.getShapeB()->getBody();
-    
-    //Pass the first collusion of edge
-    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
-        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
-        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
-        return false;
-    }
-    
-    //TODO:make a emun type detection,fix this ugly code
-    if (a->getTag() == b->getTag()) {
-        _totalScore += 2;
-    } else {
-        _totalScore += 1;
-    }
-    updateScoreLabel(_totalScore);
 
-    return true;
-}
 void GameScene::setupMap()
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -78,17 +60,21 @@ void GameScene::setupMap()
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
      _cannon = rootNode->getChildByName<Cannon*>("Cannon");
+    _mainScene = rootNode;
+    
 
     std::string jsonStr = FileUtils::getInstance()->getStringFromFile("map1.json");
     const JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
  
+    //setup balls in stage
     for (auto ballconfig : mapState.ballsOnStage)
     {
         Ball* ball = Ball::createWithBallConfig(ballconfig);
-        rootNode->addChild(ball);
+        _mainScene->addChild(ball);
         this->_ballsOnState.pushBack(ball);
     }
     
+    //setup balls in bags
     for (auto ballconfig : mapState.ballsInBag) {
         Ball* ball = Ball::createWithBallConfig(ballconfig);
         this->_ballsInBag.pushBack(ball);
@@ -114,7 +100,7 @@ void GameScene::setupMap()
     _edgeSp->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2 + (bottomHeight - upperHeight)/2));
     _edgeSp->setPhysicsBody(edgeBody);
     this->addChild(_edgeSp);
-    
+
     
     //Setup UI
     ui::Button* backButton = ui::Button::create();
@@ -126,17 +112,45 @@ void GameScene::setupMap()
     
     this->_scoreLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
     this->_scoreLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
-    this->_scoreLabel->setPosition(Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.98f));
+    this->_scoreLabel->setPosition(Vec2(visibleSize.width * 0.2f, visibleSize.height * 0.98f));
     this->_scoreLabel->setColor(LABEL_COLOR);
+    
+    this->_redGoalLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
+    this->_redGoalLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
+    this->_redGoalLabel->setPosition(Vec2(visibleSize.width * 0.9f, visibleSize.height * 0.98f));
+    this->_redGoalLabel->setColor(LABEL_COLOR);
+    
+    this->_blueGoalLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
+    this->_blueGoalLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
+    this->_blueGoalLabel->setPosition(Vec2(visibleSize.width * 0.7f, visibleSize.height * 0.98f));
+    this->_blueGoalLabel->setColor(LABEL_COLOR);
+    
+    this->_greenGoalLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
+    this->_greenGoalLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
+    this->_greenGoalLabel->setPosition(Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.98f));
+    this->_greenGoalLabel->setColor(LABEL_COLOR);
+    
+    JSONPacker::BallConfig redGoalConfig = { 0.8f, 0.95f, "red", 1 };
+    JSONPacker::BallConfig blueGoalConfig = { 0.6f, 0.95f, "blue", 1 };
+    JSONPacker::BallConfig greenGoalConfig = { 0.4f, 0.95f, "green", 1 };
+    
+    Ball* uiBallRed = Ball::createWithBallConfig(redGoalConfig);
+
+    Ball* uiBallBlue = Ball::createWithBallConfig(blueGoalConfig);
+    Ball* uiBallGreen = Ball::createWithBallConfig(greenGoalConfig);
+    
+    _mainScene->addChild(uiBallRed);
+    _mainScene->addChild(uiBallBlue);
+    _mainScene->addChild(uiBallGreen);
+    
     this->addChild(_scoreLabel);
+    this->addChild(_redGoalLabel);
+    this->addChild(_blueGoalLabel);
+    this->addChild(_greenGoalLabel);
+    
     
 }
-void GameScene::resetEgde()
-{
-    _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_INIT_CONTACT_MASK);
-    _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
-    
-}
+
 void GameScene::setupBall()
 {
     _ballWaitShooting = _ballsInBag.front();
@@ -150,8 +164,51 @@ void GameScene::setupBall()
     this->addChild(_ballWaitShooting);
     resetEgde();
     _gameState = GameState::prepareShooting;
+}
 
 
+void GameScene::update(float dt)
+{
+    Node::update(dt);
+    if (_gameState == GameState::shooting && this->allBallIsStoped()) {
+        if (isGameOver()) {
+            //remove scene
+            //calculate stars
+        } else {
+            _ballWaitShooting->release();
+            _ballWaitShooting = nullptr;
+            setupBall();
+        }
+
+    }
+}
+
+#pragma mark -
+#pragma mark CallBack Methods
+
+bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
+{
+    PhysicsBody *a = contact.getShapeA()->getBody();
+    PhysicsBody *b = contact.getShapeB()->getBody();
+    
+    //Pass the first collusion of edge
+    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
+        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
+        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
+        return false;
+    }
+    
+    //TODO:make a emun type detection,fix this ugly code
+    if (a->getTag() == b->getTag()) {
+        _totalScore += 2;
+    } else {
+        _totalScore += 1;
+    }
+    
+    
+    updateScoreLabel(_totalScore);
+    
+    return true;
 }
 
 void GameScene::setupTouchHandling()
@@ -209,16 +266,6 @@ void GameScene::setupTouchHandling()
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
-void GameScene::update(float dt)
-{
-    Node::update(dt);
-    if (_gameState == GameState::shooting && this->allBallIsStoped()) {
-        _ballWaitShooting->release();
-        _ballWaitShooting = nullptr;
-        setupBall();
-    }
-}
-
 #pragma mark -
 #pragma mark UI Method
 void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
@@ -247,4 +294,30 @@ void GameScene::updateScoreLabel(int score)
 {
     std::string scoreString = StringUtils::toString(score);
     this->_scoreLabel->setString(scoreString);
+}
+
+void GameScene::resetEgde()
+{
+    _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_INIT_CONTACT_MASK);
+    _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
+    
+}
+
+bool GameScene::isGoalAchieved(){
+
+}
+
+bool GameScene::isGameOver()
+{
+    if (isGoalAchieved()) {
+        return true;
+    }
+    
+    if (_ballsInBag.empty()) {
+        return true;
+    }
+    return false;
+    //Get the Target Score
+    
+    //No ball in the Bag
 }
