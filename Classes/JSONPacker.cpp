@@ -47,16 +47,17 @@ namespace JSONPacker {
             BallConfig config = {relativeX, relativeY, color, hp};
             ballsInBag.push_back(config);
         }
+        std::string passCode = document["passCode"].GetString();
         
-        rapidjson::Value& goal = document["goal"];
-        Goal stageGoal;
         
-        stageGoal.totalScore = goal["totalScore"].GetInt();
-        stageGoal.timesHitBlue = goal["timesHitBlue"].GetInt();
-        stageGoal.timesHitRed = goal["timesHitRed"].GetInt();
-        stageGoal.timesHitGreen = goal["timesHitGreen"].GetInt();
+        rapidjson::Value& star = document["star"];
+        StarConfig starConfig;
+        starConfig.oneStar = star["one"].GetInt();
+        starConfig.twoStar = star["two"].GetInt();
+        starConfig.threeStar = star["three"].GetInt();
         
-        MapState mapState = { ballsOnStage, ballsInBag, stageGoal};
+        
+        MapState mapState = { ballsOnStage, ballsInBag, passCode, starConfig};
         return mapState;
     }
     

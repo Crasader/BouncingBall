@@ -4,7 +4,6 @@
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
         <Project Name="MainScene.csd" Type="Scene" />
-        <Project Name="Point.csd" Type="Node" />
         <Project Name="Surface.csd" Type="Node" />
         <Project Name="Cannon.csd" Type="Node" />
         <Folder Name="res">
@@ -31,6 +30,7 @@
           <Image Name="sideBar.png" />
           <Image Name="sideBarShadow.png" />
           <Image Name="upperBound.png" />
+          <Image Name="Coin.png" />
         </Folder>
       </RootFolder>
     </Group>

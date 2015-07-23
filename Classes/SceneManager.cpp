@@ -27,7 +27,7 @@ SceneManager* SceneManager::getInstance()
 
 SceneManager::SceneManager()
 {
-    this->gameScene = nullptr;
+    this->_gameScene = nullptr;
 //    this->networkingWrapper = std::unique_ptr<NetworkingWrapper>(new NetworkingWrapper());
 //    this->networkingWrapper->setDelegate(this);
 }
@@ -45,9 +45,9 @@ void SceneManager::enterGameScene(bool networked)
     Scene* physicsScene = Scene::createWithPhysics();
     physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
-    this->gameScene = GameScene::create();
-    gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
-    physicsScene->addChild(gameScene);
+    this->_gameScene = GameScene::create();
+    _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
+    physicsScene->addChild(_gameScene);
 
 //    this->gameScene->setNetworkedSession(networked);
     
@@ -56,11 +56,11 @@ void SceneManager::enterGameScene(bool networked)
 
 void SceneManager::backToLobby()
 {
-  //  if (gameScene) {
+    if (_gameScene) {
         Director::getInstance()->popScene();
- //       gameScene = nullptr;
+        _gameScene = nullptr;
  //       networkingWrapper->disconnect();
-  //  }
+    }
     
 }
 

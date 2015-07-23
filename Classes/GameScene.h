@@ -6,19 +6,22 @@
 #include "Constants.h"
 #include "Ball.h"
 
+
 class Cannon;
+class PassCode;
 
 class GameScene : public cocos2d::Node
 {
 public:
-    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-    virtual bool init();
-    void onEnter() override;
     void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
 
     CREATE_FUNC(GameScene);
     
 protected:
+    bool init() override;
+    void onEnter() override;
+    cocos2d::Scene* _physicsScene;
+    
     cocos2d::PhysicsWorld* m_world;
     cocos2d::Node* _mainScene;
     
@@ -29,8 +32,13 @@ protected:
     
     Cannon* _cannon;
     cocos2d::Sprite* _edgeSp;
-    const Goal _goal;
-    Goal _currentState;
+    PassCode* _passCode;
+    
+    int _currentScore;
+    
+    int _oneStarScore;
+    int _twoStarScore;
+    int _threeStarScore;
 
     void update(float dt) override;
     bool allBallIsStoped();
@@ -45,13 +53,14 @@ protected:
     
     bool isGameOver();
     bool isGoalAchieved();
-    int _totalScore;
     
+    void triggerGameOver();
+    
+    //Util Method
+    int evaluateStars(int currentScore);
+
     
     cocos2d::ui::Text*  _scoreLabel;
-    cocos2d::ui::Text*  _redGoalLabel;
-    cocos2d::ui::Text*  _blueGoalLabel;
-    cocos2d::ui::Text*  _greenGoalLabel;
     
     GameState _gameState;
     

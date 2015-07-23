@@ -10,6 +10,9 @@
 #include "CannonReader.h"
 
 #include "JSONPacker.h"
+#include "Coin.h"
+
+#include "PassCode.h"
 
 USING_NS_CC;
 
@@ -27,7 +30,7 @@ bool GameScene::init()
     }
 
     _edgeSp = nullptr;
-    _totalScore = 0;
+    _currentScore = 0;
    
     return true;
 }
@@ -80,7 +83,11 @@ void GameScene::setupMap()
         this->_ballsInBag.pushBack(ball);
     }
     
-    this->addChild(rootNode);
+    _oneStarScore = mapState.starConfig.oneStar;
+    _twoStarScore = mapState.starConfig.twoStar;
+    _threeStarScore = mapState.starConfig.threeStar;
+
+    
     
     //Setup Edge
     float bottomHeight = rootNode->getChildByName<Sprite*>("BottomBound")->getContentSize().height;
@@ -99,10 +106,20 @@ void GameScene::setupMap()
     _edgeSp = Sprite::create();
     _edgeSp->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2 + (bottomHeight - upperHeight)/2));
     _edgeSp->setPhysicsBody(edgeBody);
-    this->addChild(_edgeSp);
+    _mainScene->addChild(_edgeSp);
 
     
+    this->addChild(rootNode);
+    
     //Setup UI
+
+    _passCode = PassCode::createWithStr(mapState.passCode);
+    _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
+    _passCode->setPosition(Vec2(visibleSize.width * 0.2f, visibleSize.height * 0.95f));
+    this->addChild(_passCode);
+    
+
+    
     ui::Button* backButton = ui::Button::create();
     backButton->setAnchorPoint(Vec2(0.0f,1.0f));
     backButton->setPosition(Vec2(0.0f,visibleSize.height));
@@ -110,44 +127,18 @@ void GameScene::setupMap()
     backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
     this->addChild(backButton);
     
+    
+    Coin* uiCoin = Coin::create();
+    uiCoin->setAnchorPoint(Vec2(0.5f, 0.5f));
+    uiCoin->setPosition(Vec2(visibleSize.width * 0.8f, visibleSize.height * 0.95f));
+    this->addChild(uiCoin);
+    
     this->_scoreLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
-    this->_scoreLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
-    this->_scoreLabel->setPosition(Vec2(visibleSize.width * 0.2f, visibleSize.height * 0.98f));
+    this->_scoreLabel->setAnchorPoint(Vec2(0.5f, 0.5f));
+    this->_scoreLabel->setPosition(Vec2(visibleSize.width * 0.9f, visibleSize.height * 0.95f));
     this->_scoreLabel->setColor(LABEL_COLOR);
     
-    this->_redGoalLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
-    this->_redGoalLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
-    this->_redGoalLabel->setPosition(Vec2(visibleSize.width * 0.9f, visibleSize.height * 0.98f));
-    this->_redGoalLabel->setColor(LABEL_COLOR);
-    
-    this->_blueGoalLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
-    this->_blueGoalLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
-    this->_blueGoalLabel->setPosition(Vec2(visibleSize.width * 0.7f, visibleSize.height * 0.98f));
-    this->_blueGoalLabel->setColor(LABEL_COLOR);
-    
-    this->_greenGoalLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
-    this->_greenGoalLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
-    this->_greenGoalLabel->setPosition(Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.98f));
-    this->_greenGoalLabel->setColor(LABEL_COLOR);
-    
-    JSONPacker::BallConfig redGoalConfig = { 0.8f, 0.95f, "red", 1 };
-    JSONPacker::BallConfig blueGoalConfig = { 0.6f, 0.95f, "blue", 1 };
-    JSONPacker::BallConfig greenGoalConfig = { 0.4f, 0.95f, "green", 1 };
-    
-    Ball* uiBallRed = Ball::createWithBallConfig(redGoalConfig);
-
-    Ball* uiBallBlue = Ball::createWithBallConfig(blueGoalConfig);
-    Ball* uiBallGreen = Ball::createWithBallConfig(greenGoalConfig);
-    
-    _mainScene->addChild(uiBallRed);
-    _mainScene->addChild(uiBallBlue);
-    _mainScene->addChild(uiBallGreen);
-    
     this->addChild(_scoreLabel);
-    this->addChild(_redGoalLabel);
-    this->addChild(_blueGoalLabel);
-    this->addChild(_greenGoalLabel);
-    
     
 }
 
@@ -172,13 +163,32 @@ void GameScene::update(float dt)
     Node::update(dt);
     if (_gameState == GameState::shooting && this->allBallIsStoped()) {
         if (isGameOver()) {
-            //remove scene
-            //calculate stars
+            triggerGameOver();
         } else {
             _ballWaitShooting->release();
             _ballWaitShooting = nullptr;
             setupBall();
         }
+
+    }
+}
+
+void GameScene::triggerGameOver()
+{
+    if (isGoalAchieved()) {
+        //TODO: add animation to
+        int totalScore = _ballsInBag.size()*3 + _currentScore;
+        int starsNum = evaluateStars(totalScore);
+        std::string starStr = StringUtils::toString(starsNum);
+        std::string messageContent = "Your Got " + starStr + " Stars !";
+        
+        MessageBox(messageContent.c_str(), "Game Over!!");
+        SceneManager::getInstance()->backToLobby();
+        
+    } else {
+        std::string messageContent = "Your Failed !";
+        MessageBox(messageContent.c_str(), "Game Over!!");
+        SceneManager::getInstance()->backToLobby();
 
     }
 }
@@ -199,14 +209,25 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     }
     
     //TODO:make a emun type detection,fix this ugly code
-    if (a->getTag() == b->getTag()) {
-        _totalScore += 2;
+    
+    BallColor aColor = static_cast<BallColor>(a->getTag());
+    BallColor bColor = static_cast<BallColor>(b->getTag());
+    _passCode->EnterOneColor(aColor);
+    if (_passCode->EnterOneColor(bColor)) {
+        _passCode->EnterOneColor(aColor);
+    }
+    
+    if (aColor == bColor) {
+        Coin* coin = Coin::create();
+        coin->setPosition(a->getPosition());
+        _mainScene->addChild(coin);
+        coin->runGetCoinAnimation();
+        _currentScore += 1;
     } else {
-        _totalScore += 1;
     }
     
     
-    updateScoreLabel(_totalScore);
+    updateScoreLabel(_currentScore);
     
     return true;
 }
@@ -260,7 +281,6 @@ void GameScene::setupTouchHandling()
             _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
             _gameState = GameState::shooting;
         }
-       
     };
     
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
@@ -268,6 +288,9 @@ void GameScene::setupTouchHandling()
 
 #pragma mark -
 #pragma mark UI Method
+
+
+
 void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
@@ -304,7 +327,7 @@ void GameScene::resetEgde()
 }
 
 bool GameScene::isGoalAchieved(){
-
+    return _passCode->isPassCodeClear();
 }
 
 bool GameScene::isGameOver()
@@ -316,8 +339,20 @@ bool GameScene::isGameOver()
     if (_ballsInBag.empty()) {
         return true;
     }
-    return false;
-    //Get the Target Score
     
-    //No ball in the Bag
+    return false;
+}
+
+int GameScene::evaluateStars(int currentScore)
+{
+    if (currentScore >= _threeStarScore) {
+        return 3;
+    } else if (currentScore >= _twoStarScore) {
+        return 2;
+    } else if (currentScore >= _oneStarScore) {
+        return 1;
+    } else {
+        return 0;
+    }
+
 }

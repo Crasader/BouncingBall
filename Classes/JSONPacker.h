@@ -27,11 +27,19 @@ namespace JSONPacker
         
     };
     
+    struct StarConfig
+    {
+        int oneStar;
+        int twoStar;
+        int threeStar;
+    };
+    
     struct MapState
     {
         std::vector<BallConfig> ballsOnStage;
         std::vector<BallConfig> ballsInBag;
-        Goal stageGoal;
+        std::string passCode;
+        StarConfig starConfig;
  //       cocos2d::Vector<Block*> blocks;
         
     };

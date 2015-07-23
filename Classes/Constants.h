@@ -67,13 +67,5 @@ enum Category
     maximized  = 0x08  // 00001000
 };
 
-struct Goal
-{
-    int totalScore;
-    int timesHitRed;
-    int timesHitBlue;
-    int timesHitGreen;
-};
-
 
 #endif
