@@ -119,6 +119,27 @@
             <PreSize />
             <FileData Type="Normal" Path="Cannon.csd" Plist="" />
           </AbstractNodeData>
+          <AbstractNodeData Name="DogiShadow" ActionTag="-1992067084" Tag="249" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="84.4000" RightMargin="455.6000" TopMargin="1020.1200" BottomMargin="65.8800" ctype="SpriteObjectData">
+            <Size X="100.0000" Y="50.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="134.4000" Y="90.8800" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.2100" Y="0.0800" />
+            <PreSize X="0.1563" Y="0.0440" />
+            <FileData Type="Normal" Path="res/dogiShadow.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="Dogi" ActionTag="-783934955" Tag="246" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="131.2000" RightMargin="508.8000" TopMargin="1056.4800" BottomMargin="79.5200" InnerActionSpeed="1.0000" ctype="ProjectNodeObjectData">
+            <Size />
+            <AnchorPoint />
+            <Position X="131.2000" Y="79.5200" />
+            <Scale ScaleX="0.8500" ScaleY="0.8500" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.2050" Y="0.0700" />
+            <PreSize />
+            <FileData Type="Normal" Path="Dogi.csd" Plist="" />
+          </AbstractNodeData>
         </Children>
       </ObjectData>
     </Content>

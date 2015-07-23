@@ -8,6 +8,8 @@
 
 #include "Cannon.h"
 #include "CannonReader.h"
+#include "DogiReader.h"
+#include "Dogi.h"
 
 #include "JSONPacker.h"
 #include "Coin.h"
@@ -60,9 +62,12 @@ void GameScene::setupMap()
 
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
+    instance->registReaderObject("DogiReader" , (ObjectFactory::Instance) DogiReader::getInstance);
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
-     _cannon = rootNode->getChildByName<Cannon*>("Cannon");
+    _cannon = rootNode->getChildByName<Cannon*>("Cannon");
+    _dogi = rootNode->getChildByName<Dogi*>("Dogi");
+
     _mainScene = rootNode;
     
 
@@ -276,6 +281,7 @@ void GameScene::setupTouchHandling()
     {
         if (allowToShoot) {
             _cannon->runShootingAnimation();
+            _dogi->runShootingAnimation();
             _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
             _gameState = GameState::shooting;
         }

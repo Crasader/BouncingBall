@@ -4,7 +4,6 @@
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
         <Project Name="MainScene.csd" Type="Scene" />
-        <Project Name="Surface.csd" Type="Node" />
         <Project Name="Cannon.csd" Type="Node" />
         <Folder Name="res">
           <Image Name="backButton.png" />
@@ -16,7 +15,6 @@
           <Image Name="cannon3.png" />
           <Image Name="cannon4.png" />
           <Image Name="Cannon_Base.png" />
-          <Image Name="dogi.png" />
           <Image Name="green.png" />
           <Image Name="logo.png" />
           <Image Name="multiplayerButton.png" />
@@ -28,10 +26,15 @@
           <Image Name="Steering.png" />
           <Image Name="BackGround.png" />
           <Image Name="sideBar.png" />
-          <Image Name="sideBarShadow.png" />
           <Image Name="upperBound.png" />
           <Image Name="Coin.png" />
+          <Image Name="dogi1.png" />
+          <Image Name="dogi2.png" />
+          <Image Name="dogi3.png" />
+          <Image Name="dogiShadow.png" />
+          <Image Name="sideBarShadow.png" />
         </Folder>
+        <Project Name="Dogi.csd" Type="Node" />
       </RootFolder>
     </Group>
   </SolutionFolder>

@@ -77,6 +77,10 @@
 		9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
 		9E2C6B801B6047EC0096EA85 /* PassCode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */; };
 		9E2C6B811B6047EC0096EA85 /* PassCode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */; };
+		9E2C6B841B60B5B40096EA85 /* Dogi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B821B60B5B40096EA85 /* Dogi.cpp */; };
+		9E2C6B851B60B5B40096EA85 /* Dogi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B821B60B5B40096EA85 /* Dogi.cpp */; };
+		9E2C6B881B60B5C10096EA85 /* DogiReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */; };
+		9E2C6B891B60B5C10096EA85 /* DogiReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -178,6 +182,10 @@
 		9E2C6B791B601C310096EA85 /* Coin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coin.h; sourceTree = "<group>"; };
 		9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PassCode.cpp; sourceTree = "<group>"; };
 		9E2C6B7F1B6047EC0096EA85 /* PassCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassCode.h; sourceTree = "<group>"; };
+		9E2C6B821B60B5B40096EA85 /* Dogi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dogi.cpp; sourceTree = "<group>"; };
+		9E2C6B831B60B5B40096EA85 /* Dogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dogi.h; sourceTree = "<group>"; };
+		9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DogiReader.cpp; sourceTree = "<group>"; };
+		9E2C6B871B60B5C10096EA85 /* DogiReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogiReader.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -391,6 +399,10 @@
 				9E2C6B791B601C310096EA85 /* Coin.h */,
 				9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */,
 				9E2C6B7F1B6047EC0096EA85 /* PassCode.h */,
+				9E2C6B821B60B5B40096EA85 /* Dogi.cpp */,
+				9E2C6B831B60B5B40096EA85 /* Dogi.h */,
+				9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */,
+				9E2C6B871B60B5C10096EA85 /* DogiReader.h */,
 			);
 			name = GameObject;
 			sourceTree = "<group>";
@@ -575,11 +587,13 @@
 				9E0CBC561B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				9E0CBC4E1B556DC60000EA9C /* Ball.cpp in Sources */,
+				9E2C6B841B60B5B40096EA85 /* Dogi.cpp in Sources */,
 				9E0CBC9F1B58583A0000EA9C /* CannonReader.cpp in Sources */,
 				9E0CBC971B56FA160000EA9C /* SceneManager.cpp in Sources */,
 				9E2C6B801B6047EC0096EA85 /* PassCode.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				9E0CBC831B56C7660000EA9C /* ContactManager.cpp in Sources */,
+				9E2C6B881B60B5C10096EA85 /* DogiReader.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				9E0CBC9B1B58582B0000EA9C /* Cannon.cpp in Sources */,
 			);
@@ -601,9 +615,11 @@
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				9E0CBC981B56FA160000EA9C /* SceneManager.cpp in Sources */,
 				9E0CBC7C1B55BF860000EA9C /* ItemBox.cpp in Sources */,
+				9E2C6B851B60B5B40096EA85 /* Dogi.cpp in Sources */,
 				9E0CBC9C1B58582B0000EA9C /* Cannon.cpp in Sources */,
 				9E0CBC841B56C7660000EA9C /* ContactManager.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* GameScene.cpp in Sources */,
+				9E2C6B891B60B5C10096EA85 /* DogiReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 
 class Cannon;
 class PassCode;
+class Dogi;
 
 class GameScene : public cocos2d::Node
 {
@@ -31,6 +32,7 @@ protected:
     cocos2d::Vector<Ball*> _ballsInBag;
     
     Cannon* _cannon;
+    Dogi* _dogi;
     cocos2d::Sprite* _edgeSp;
     PassCode* _passCode;
     
