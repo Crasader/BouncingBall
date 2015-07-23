@@ -86,8 +86,6 @@ void GameScene::setupMap()
     _oneStarScore = mapState.starConfig.oneStar;
     _twoStarScore = mapState.starConfig.twoStar;
     _threeStarScore = mapState.starConfig.threeStar;
-
-    
     
     //Setup Edge
     float bottomHeight = rootNode->getChildByName<Sprite*>("BottomBound")->getContentSize().height;
