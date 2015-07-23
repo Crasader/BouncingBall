@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "cocos2d.h"
 #include "GameScene.h"
+#include "LevelSelect.h"
 using namespace cocos2d;
 
 #pragma mark -
@@ -35,23 +36,32 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-    
 }
 
 #pragma mark -
 #pragma mark Public Methods
-void SceneManager::enterGameScene(bool networked)
+
+
+void SceneManager::enterGameScene(std::string configFile)
 {
     Scene* physicsScene = Scene::createWithPhysics();
     physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
-    this->_gameScene = GameScene::create();
+    this->_gameScene = GameScene::createWithConfig(configFile);
     _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
     physicsScene->addChild(_gameScene);
 
 //    this->gameScene->setNetworkedSession(networked);
     
     Director::getInstance()->pushScene(physicsScene);
+}
+void SceneManager::enterLevelSelect()
+{
+    Scene* scene = Scene::create();
+    this->_levelSelect = LevelSelect::create();
+    scene->addChild(_levelSelect);
+    Director::getInstance()->pushScene(scene);
+    
 }
 
 void SceneManager::backToLobby()

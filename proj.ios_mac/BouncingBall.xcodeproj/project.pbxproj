@@ -72,6 +72,9 @@
 		9E0CBC9C1B58582B0000EA9C /* Cannon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC991B58582B0000EA9C /* Cannon.cpp */; };
 		9E0CBC9F1B58583A0000EA9C /* CannonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */; };
 		9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */; };
+		9E0E6BC51B615771003B2D87 /* LevelGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BC31B615771003B2D87 /* LevelGrid.cpp */; };
+		9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BC81B61578E003B2D87 /* LevelGridReader.cpp */; };
+		9E0E6BCD1B6160CC003B2D87 /* LevelSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BCB1B6160CC003B2D87 /* LevelSelect.cpp */; };
 		9E21BA0A1B54A13400CAA983 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA091B54A0EF00CAA983 /* libcocos2d iOS.a */; };
 		9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
 		9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
@@ -176,6 +179,12 @@
 		9E0CBC9A1B58582B0000EA9C /* Cannon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cannon.h; sourceTree = "<group>"; };
 		9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CannonReader.cpp; sourceTree = "<group>"; };
 		9E0CBC9E1B58583A0000EA9C /* CannonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CannonReader.h; sourceTree = "<group>"; };
+		9E0E6BC31B615771003B2D87 /* LevelGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGrid.cpp; sourceTree = "<group>"; };
+		9E0E6BC41B615771003B2D87 /* LevelGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelGrid.h; sourceTree = "<group>"; };
+		9E0E6BC81B61578E003B2D87 /* LevelGridReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGridReader.cpp; sourceTree = "<group>"; };
+		9E0E6BC91B61578E003B2D87 /* LevelGridReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelGridReader.h; sourceTree = "<group>"; };
+		9E0E6BCB1B6160CC003B2D87 /* LevelSelect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelect.cpp; sourceTree = "<group>"; };
+		9E0E6BCC1B6160CC003B2D87 /* LevelSelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelSelect.h; sourceTree = "<group>"; };
 		9E21B9F41B545BD000CAA983 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E21BA011B54A0EF00CAA983 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		9E2C6B781B601C310096EA85 /* Coin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coin.cpp; sourceTree = "<group>"; };
@@ -374,6 +383,8 @@
 		9E0CBC581B55B78A0000EA9C /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				9E0E6BCB1B6160CC003B2D87 /* LevelSelect.cpp */,
+				9E0E6BCC1B6160CC003B2D87 /* LevelSelect.h */,
 				9E0CBC951B56FA160000EA9C /* SceneManager.cpp */,
 				9E0CBC961B56FA160000EA9C /* SceneManager.h */,
 				46880B8619C43A87006E1F66 /* GameScene.cpp */,
@@ -387,6 +398,10 @@
 		9E0CBC591B55B7C20000EA9C /* GameObject */ = {
 			isa = PBXGroup;
 			children = (
+				9E0E6BC31B615771003B2D87 /* LevelGrid.cpp */,
+				9E0E6BC41B615771003B2D87 /* LevelGrid.h */,
+				9E0E6BC81B61578E003B2D87 /* LevelGridReader.cpp */,
+				9E0E6BC91B61578E003B2D87 /* LevelGridReader.h */,
 				9E0CBC9D1B58583A0000EA9C /* CannonReader.cpp */,
 				9E0CBC9E1B58583A0000EA9C /* CannonReader.h */,
 				9E0CBC991B58582B0000EA9C /* Cannon.cpp */,
@@ -577,10 +592,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E0CBC7F1B55BFBE0000EA9C /* Item.cpp in Sources */,
+				9E0E6BCD1B6160CC003B2D87 /* LevelSelect.cpp in Sources */,
 				9E0CBC7B1B55BF860000EA9C /* ItemBox.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */,
+				9E0E6BC51B615771003B2D87 /* LevelGrid.cpp in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */,
 				9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,

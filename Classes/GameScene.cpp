@@ -21,19 +21,26 @@ USING_NS_CC;
 #pragma mark -
 #pragma mark LifeCircle
 
-// on "init" you need to initialize your instance
-bool GameScene::init()
+GameScene* GameScene::createWithConfig(std::string configFile)
 {
-    //////////////////////////////
-    // 1. super init first
-    if (! Node::init() )
-    {
+    GameScene* gameScene = new (std::nothrow) GameScene();
+    if (gameScene && gameScene->initWithConfig(configFile)) {
+        gameScene->autorelease();
+        return gameScene;
+    } else {
+        CC_SAFE_DELETE(gameScene);
+        return nullptr;
+    }
+}
+bool GameScene::initWithConfig(std::string configFile)
+{
+    if (! Node::init()) {
         return false;
     }
-
+    _configFileName = configFile;
     _edgeSp = nullptr;
     _currentScore = 0;
-   
+    
     return true;
 }
 
@@ -70,10 +77,9 @@ void GameScene::setupMap()
 
     _mainScene = rootNode;
     
-
-    std::string jsonStr = FileUtils::getInstance()->getStringFromFile("map1.json");
-    const JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
- 
+    std::string jsonStr = FileUtils::getInstance()->getStringFromFile(_configFileName);
+    JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
+    
     //setup balls in stage
     for (auto ballconfig : mapState.ballsOnStage)
     {

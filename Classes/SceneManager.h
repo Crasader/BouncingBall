@@ -10,12 +10,14 @@
 #define __BouncingBall__SceneManager__
 
 class GameScene;
+class LevelSelect;
 //class SceneManager : NetworkingDelegate
 class SceneManager
 {
 public:
     static SceneManager* getInstance();
-    void enterGameScene(bool networked);
+    void enterGameScene(std::string configFile);
+    void enterLevelSelect();
     void backToLobby();
     
     void showPeerList();
@@ -24,7 +26,7 @@ public:
 private:
 //    std::unique_ptr<NetworkingWrapper> networkingWrapper;
     GameScene* _gameScene;
-    
+    LevelSelect* _levelSelect;
     SceneManager();
     ~SceneManager();
     

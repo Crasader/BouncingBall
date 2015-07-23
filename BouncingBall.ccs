@@ -33,8 +33,16 @@
           <Image Name="dogi3.png" />
           <Image Name="dogiShadow.png" />
           <Image Name="sideBarShadow.png" />
+          <Image Name="star.png" />
+          <Image Name="star1.png" />
+          <Image Name="star2.png" />
+          <Image Name="levelButton.png" />
+          <Image Name="star3.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
+        <Project Name="LevelGrid.csd" Type="Node" />
+        <TTF Name="Cloudy With a Chance of Love.ttf" />
+        <Fnt Name="font01.fnt" />
       </RootFolder>
     </Group>
   </SolutionFolder>
