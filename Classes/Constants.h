@@ -12,11 +12,11 @@
 #include "cocos2d.h"
 
 #pragma mark Ball Setting
-const static float MIN_SPEED = 2.2f;
-const static float BALL_DEFAULT_LINEAR_DAMPING = 0.5f;
+const static float MIN_SPEED = 5.0f;
+const static float BALL_DEFAULT_LINEAR_DAMPING = 0.8f;
 const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
 const static int BALL_DEFAULT_HP = 3;
-const static float MAX_SHOOTING_SPEED = 1000.0f;
+const static float MAX_SHOOTING_SPEED = 3000.0f;
 
 #pragma mark -
 #pragma mark Edge Setting

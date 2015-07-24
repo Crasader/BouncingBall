@@ -13,7 +13,12 @@ using namespace cocos2d;
 bool Ball::isStoped()
 {
     Vec2 velocity = this->getPhysicsBody()->getVelocity();
-    return (abs(velocity.x) < MIN_SPEED && abs(velocity.y) < MIN_SPEED);
+    if(abs(velocity.x) < MIN_SPEED && abs(velocity.y) < MIN_SPEED) {
+        this->getPhysicsBody()->setVelocity(Vec2(0.0f,0.0f));
+        return true;
+    } else {
+        return false;
+    }
 }
 void Ball::shoot(float speed, float angle)
 {
