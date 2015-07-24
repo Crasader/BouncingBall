@@ -6,10 +6,10 @@
       <ObjectData Name="Node" CustomClassName="LevelGrid" Tag="29" ctype="GameNodeObjectData">
         <Size />
         <Children>
-          <AbstractNodeData Name="star" ActionTag="-547182182" Tag="30" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-20.0000" BottomMargin="-20.0000" ctype="SpriteObjectData">
+          <AbstractNodeData Name="star" ActionTag="-547182182" Tag="30" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-40.0000" ctype="SpriteObjectData">
             <Size X="100.0000" Y="40.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position />
+            <Position Y="20.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -17,10 +17,10 @@
             <FileData Type="Normal" Path="res/star.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Button" ActionTag="648841729" Tag="33" IconVisible="False" LeftMargin="-51.5000" RightMargin="-51.5000" TopMargin="-127.5000" BottomMargin="22.5000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="73" Scale9Height="83" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
+          <AbstractNodeData Name="Button" ActionTag="648841729" Tag="33" IconVisible="False" LeftMargin="-51.5000" RightMargin="-51.5000" TopMargin="-147.5000" BottomMargin="42.5000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="73" Scale9Height="83" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
             <Size X="103.0000" Y="105.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position Y="75.0000" />
+            <Position Y="95.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -32,10 +32,10 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="star1" ActionTag="385929770" Tag="36" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-20.0000" BottomMargin="-20.0000" ctype="SpriteObjectData">
+          <AbstractNodeData Name="star1" ActionTag="385929770" Tag="36" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-40.0000" ctype="SpriteObjectData">
             <Size X="100.0000" Y="40.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position />
+            <Position Y="20.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -43,10 +43,10 @@
             <FileData Type="Normal" Path="res/star1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="star2" ActionTag="-1308381710" Tag="37" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-20.0000" BottomMargin="-20.0000" ctype="SpriteObjectData">
+          <AbstractNodeData Name="star2" ActionTag="-1308381710" Tag="37" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-40.0000" ctype="SpriteObjectData">
             <Size X="100.0000" Y="40.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position />
+            <Position Y="20.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -54,10 +54,10 @@
             <FileData Type="Normal" Path="res/star2.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="star3" ActionTag="-1461950483" Tag="39" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-20.0000" BottomMargin="-20.0000" ctype="SpriteObjectData">
+          <AbstractNodeData Name="star3" ActionTag="-1461950483" Tag="39" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-40.0000" ctype="SpriteObjectData">
             <Size X="100.0000" Y="40.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position />
+            <Position Y="20.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -65,10 +65,10 @@
             <FileData Type="Normal" Path="res/star3.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Label" ActionTag="1446440851" Tag="41" IconVisible="False" LeftMargin="-40.4913" RightMargin="-37.5087" TopMargin="-116.3410" BottomMargin="33.3410" LabelText="01" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="Label" ActionTag="1446440851" Tag="41" IconVisible="False" LeftMargin="-40.4913" RightMargin="-37.5087" TopMargin="-136.3400" BottomMargin="53.3400" LabelText="01" ctype="TextBMFontObjectData">
             <Size X="78.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="-1.4913" Y="74.8410" />
+            <Position X="-1.4913" Y="94.8400" />
             <Scale ScaleX="0.7500" ScaleY="0.7500" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />

@@ -16,12 +16,13 @@
 
 #include "PassCode.h"
 
-#include "CCUserDefault.h"
-
 #include "LevelClear.h"
 #include "levelClearReader.h"
 
 USING_NS_CC;
+
+
+//TODO: make Debug func for game over and map test
 
 #pragma mark -
 #pragma mark LifeCircle
@@ -155,9 +156,6 @@ void GameScene::setupMap()
     
     this->addChild(_scoreLabel);
     
-    
-    
-    
 }
 
 void GameScene::setupBall()
@@ -209,12 +207,12 @@ void GameScene::triggerGameOver()
         levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
         levelClear->runLevelClearAnimation(starsNum);
         this->addChild(levelClear);
+        
         _mainScene->runAction(FadeTo::create(0.5, 128));
-        
-        UserDefault::getInstance()->getIntegerForKey("bestScore");
+    
+        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level).c_str(), starsNum);
+        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
 
-        
-        
         _gameState = GameState::gameOver;
         
   //      std::string starStr = StringUtils::toString(starsNum);

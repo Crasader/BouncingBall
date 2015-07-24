@@ -40,7 +40,8 @@ const static int EDGE_INIT_CONTACT_MASK = BALL_CATEGORY;
 const static int EDGE_RUNNING_CULLISION_MASK = BALL_CATEGORY;
 const static int EDGE_RUNNING_CONTACT_MASK = NONE;
 
-
+const static int LOCKED_LEVEL = -1;
+const static int UNLOCKED_LEVEL = 0;
 
 //TODO maybe color should be a tag
 
