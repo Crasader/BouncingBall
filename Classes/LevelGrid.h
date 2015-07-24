@@ -16,11 +16,13 @@ class LevelGrid : public cocos2d::Node
 {
 public:
     CREATE_FUNC(LevelGrid);
-    bool init() override;
     void setDisplayStar(int starNums);
+    void setLevel(int level);
+    int getLevel();
     
 protected:
-    
+    int _level;
+    bool init() override;
 };
 
 #endif /* defined(__BouncingBall__LevelGrid__) */

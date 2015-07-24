@@ -7,7 +7,7 @@
 //
 
 #include "LevelGrid.h"
-
+#include "ui/CocosGUI.h"
 
 bool LevelGrid::init()
 {
@@ -32,4 +32,18 @@ void LevelGrid::setDisplayStar(int starNums)
         default:
             break;
     }
+}
+
+void LevelGrid::setLevel(int level)
+{
+    _level = level;
+    std::string labelStr = StringUtils::toString(_level);
+    ui::TextBMFont* label = this->getChildByName<ui::TextBMFont*>("Label");
+    label->setString(labelStr);
+    
+}
+
+int LevelGrid::getLevel()
+{
+    return _level;
 }

@@ -26,10 +26,10 @@ USING_NS_CC;
 #pragma mark -
 #pragma mark LifeCircle
 
-GameScene* GameScene::createWithConfig(std::string configFile)
+GameScene* GameScene::createWithLevel(int level)
 {
     GameScene* gameScene = new (std::nothrow) GameScene();
-    if (gameScene && gameScene->initWithConfig(configFile)) {
+    if (gameScene && gameScene->initWithLevel(level)) {
         gameScene->autorelease();
         return gameScene;
     } else {
@@ -38,12 +38,12 @@ GameScene* GameScene::createWithConfig(std::string configFile)
     }
 }
 
-bool GameScene::initWithConfig(std::string configFile)
+bool GameScene::initWithLevel(int level)
 {
     if (! Node::init()) {
         return false;
     }
-    _configFileName = configFile;
+    _level = level;
     _edgeSp = nullptr;
     _currentScore = 0;
     
@@ -83,7 +83,7 @@ void GameScene::setupMap()
 
     _mainScene = rootNode;
     
-    std::string jsonStr = FileUtils::getInstance()->getStringFromFile(_configFileName);
+    std::string jsonStr = FileUtils::getInstance()->getStringFromFile(getConfigFileName());
     JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
     
     //setup balls in stage
@@ -209,6 +209,12 @@ void GameScene::triggerGameOver()
         levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
         levelClear->runLevelClearAnimation(starsNum);
         this->addChild(levelClear);
+        _mainScene->runAction(FadeTo::create(0.5, 128));
+        
+        UserDefault::getInstance()->getIntegerForKey("bestScore");
+
+        
+        
         _gameState = GameState::gameOver;
         
   //      std::string starStr = StringUtils::toString(starsNum);
@@ -388,4 +394,9 @@ int GameScene::evaluateStars(int currentScore)
         return 0;
     }
 
+}
+
+std::string GameScene::getConfigFileName()
+{
+    return "map" + StringUtils::toString(_level) + ".json";
 }

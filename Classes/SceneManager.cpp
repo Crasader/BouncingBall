@@ -42,12 +42,12 @@ SceneManager::~SceneManager()
 #pragma mark Public Methods
 
 
-void SceneManager::enterGameScene(std::string configFile)
+void SceneManager::enterGameScene(int level)
 {
     Scene* physicsScene = Scene::createWithPhysics();
     physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
-    this->_gameScene = GameScene::createWithConfig(configFile);
+    this->_gameScene = GameScene::createWithLevel(level);
     _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
     physicsScene->addChild(_gameScene);
 

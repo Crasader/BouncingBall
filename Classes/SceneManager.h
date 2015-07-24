@@ -16,7 +16,7 @@ class SceneManager
 {
 public:
     static SceneManager* getInstance();
-    void enterGameScene(std::string configFile);
+    void enterGameScene(int level);
     void enterLevelSelect();
     void backToLobby();
     

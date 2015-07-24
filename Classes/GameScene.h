@@ -14,20 +14,20 @@ class Dogi;
 class GameScene : public cocos2d::Node
 {
 public:
-    static GameScene* createWithConfig(std::string configFile);
+    static GameScene* createWithLevel(int level);
     void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
 
  //   CREATE_FUNC(GameScene);
     
 protected:
-    bool initWithConfig(std::string configFile);
+    bool initWithLevel(int level);
 
     void onEnter() override;
     cocos2d::Scene* _physicsScene;
     
     cocos2d::PhysicsWorld* m_world;
     cocos2d::Node* _mainScene;
-    std::string _configFileName;
+    int _level;
     //Ball
     cocos2d::Vector<Ball*> _ballsOnState;
     Ball* _ballWaitShooting;
@@ -62,6 +62,7 @@ protected:
     
     //Util Method
     int evaluateStars(int currentScore);
+    std::string getConfigFileName();
 
     
     cocos2d::ui::Text*  _scoreLabel;
