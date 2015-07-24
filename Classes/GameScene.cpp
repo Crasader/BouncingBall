@@ -18,6 +18,9 @@
 
 #include "CCUserDefault.h"
 
+#include "LevelClear.h"
+#include "levelClearReader.h"
+
 USING_NS_CC;
 
 #pragma mark -
@@ -152,6 +155,9 @@ void GameScene::setupMap()
     
     this->addChild(_scoreLabel);
     
+    
+    
+    
 }
 
 void GameScene::setupBall()
@@ -189,13 +195,27 @@ void GameScene::triggerGameOver()
 {
     if (isGoalAchieved()) {
         //TODO: add animation to
+        
         int totalScore = _ballsInBag.size()*3 + _currentScore;
         int starsNum = evaluateStars(totalScore);
-        std::string starStr = StringUtils::toString(starsNum);
-        std::string messageContent = "Your Got " + starStr + " Stars !";
         
-        MessageBox(messageContent.c_str(), "Game Over!!");
-        SceneManager::getInstance()->backToLobby();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        
+        CSLoader* instance = CSLoader::getInstance();
+        instance->registReaderObject("LevelClearReader" , (ObjectFactory::Instance) LevelClearReader::getInstance);
+
+        LevelClear* levelClear = dynamic_cast<LevelClear*>(CSLoader::createNode("LevelClear.csb"));
+        levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
+        levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
+        levelClear->runLevelClearAnimation(starsNum);
+        this->addChild(levelClear);
+        _gameState = GameState::gameOver;
+        
+  //      std::string starStr = StringUtils::toString(starsNum);
+ //       std::string messageContent = "Your Got " + starStr + " Stars !";
+        
+ //       MessageBox(messageContent.c_str(), "Game Over!!");
+   //     SceneManager::getInstance()->backToLobby();
         
     } else {
         std::string messageContent = "Your Failed !";

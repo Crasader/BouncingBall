@@ -38,11 +38,17 @@
           <Image Name="star2.png" />
           <Image Name="levelButton.png" />
           <Image Name="star3.png" />
+          <Image Name="starPiece.png" />
+          <Image Name="levelClear.png" />
+          <Image Name="menuButton.png" />
+          <Image Name="nextButton.png" />
+          <Image Name="restartButton.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
         <TTF Name="Cloudy With a Chance of Love.ttf" />
         <Fnt Name="font01.fnt" />
+        <Project Name="LevelClear.csd" Type="Node" />
       </RootFolder>
     </Group>
   </SolutionFolder>

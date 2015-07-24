@@ -75,6 +75,10 @@
 		9E0E6BC51B615771003B2D87 /* LevelGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BC31B615771003B2D87 /* LevelGrid.cpp */; };
 		9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BC81B61578E003B2D87 /* LevelGridReader.cpp */; };
 		9E0E6BCD1B6160CC003B2D87 /* LevelSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BCB1B6160CC003B2D87 /* LevelSelect.cpp */; };
+		9E0E6BD51B6209BA003B2D87 /* LevelClear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */; };
+		9E0E6BD61B6209BA003B2D87 /* LevelClear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */; };
+		9E0E6BD71B6209BA003B2D87 /* LevelClearReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */; };
+		9E0E6BD81B6209BA003B2D87 /* LevelClearReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */; };
 		9E21BA0A1B54A13400CAA983 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA091B54A0EF00CAA983 /* libcocos2d iOS.a */; };
 		9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
 		9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
@@ -185,6 +189,10 @@
 		9E0E6BC91B61578E003B2D87 /* LevelGridReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelGridReader.h; sourceTree = "<group>"; };
 		9E0E6BCB1B6160CC003B2D87 /* LevelSelect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelect.cpp; sourceTree = "<group>"; };
 		9E0E6BCC1B6160CC003B2D87 /* LevelSelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelSelect.h; sourceTree = "<group>"; };
+		9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelClear.cpp; sourceTree = "<group>"; };
+		9E0E6BD21B6209BA003B2D87 /* LevelClear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelClear.h; sourceTree = "<group>"; };
+		9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelClearReader.cpp; sourceTree = "<group>"; };
+		9E0E6BD41B6209BA003B2D87 /* LevelClearReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelClearReader.h; sourceTree = "<group>"; };
 		9E21B9F41B545BD000CAA983 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E21BA011B54A0EF00CAA983 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		9E2C6B781B601C310096EA85 /* Coin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coin.cpp; sourceTree = "<group>"; };
@@ -398,6 +406,10 @@
 		9E0CBC591B55B7C20000EA9C /* GameObject */ = {
 			isa = PBXGroup;
 			children = (
+				9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */,
+				9E0E6BD21B6209BA003B2D87 /* LevelClear.h */,
+				9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */,
+				9E0E6BD41B6209BA003B2D87 /* LevelClearReader.h */,
 				9E0E6BC31B615771003B2D87 /* LevelGrid.cpp */,
 				9E0E6BC41B615771003B2D87 /* LevelGrid.h */,
 				9E0E6BC81B61578E003B2D87 /* LevelGridReader.cpp */,
@@ -597,11 +609,13 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
+				9E0E6BD51B6209BA003B2D87 /* LevelClear.cpp in Sources */,
 				9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */,
 				9E0E6BC51B615771003B2D87 /* LevelGrid.cpp in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */,
 				9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
+				9E0E6BD71B6209BA003B2D87 /* LevelClearReader.cpp in Sources */,
 				9E0CBC561B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				9E0CBC4E1B556DC60000EA9C /* Ball.cpp in Sources */,
@@ -629,10 +643,12 @@
 				9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */,
 				9E2C6B811B6047EC0096EA85 /* PassCode.cpp in Sources */,
+				9E0E6BD81B6209BA003B2D87 /* LevelClearReader.cpp in Sources */,
 				9E0CBC801B55BFBE0000EA9C /* Item.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				9E0CBC981B56FA160000EA9C /* SceneManager.cpp in Sources */,
 				9E0CBC7C1B55BF860000EA9C /* ItemBox.cpp in Sources */,
+				9E0E6BD61B6209BA003B2D87 /* LevelClear.cpp in Sources */,
 				9E2C6B851B60B5B40096EA85 /* Dogi.cpp in Sources */,
 				9E0CBC9C1B58582B0000EA9C /* Cannon.cpp in Sources */,
 				9E0CBC841B56C7660000EA9C /* ContactManager.cpp in Sources */,
