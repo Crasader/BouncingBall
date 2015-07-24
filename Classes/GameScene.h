@@ -17,12 +17,11 @@ public:
     static GameScene* createWithConfig(std::string configFile);
     void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
 
-    CREATE_FUNC(GameScene);
+ //   CREATE_FUNC(GameScene);
     
 protected:
     bool initWithConfig(std::string configFile);
 
-    bool init() override;
     void onEnter() override;
     cocos2d::Scene* _physicsScene;
     

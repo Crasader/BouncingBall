@@ -17,7 +17,7 @@
             <FileData Type="Normal" Path="res/star.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="button" ActionTag="648841729" Tag="33" IconVisible="False" LeftMargin="-51.5000" RightMargin="-51.5000" TopMargin="-127.5000" BottomMargin="22.5000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="73" Scale9Height="83" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
+          <AbstractNodeData Name="Button" ActionTag="648841729" Tag="33" IconVisible="False" LeftMargin="-51.5000" RightMargin="-51.5000" TopMargin="-127.5000" BottomMargin="22.5000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="73" Scale9Height="83" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
             <Size X="103.0000" Y="105.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position Y="75.0000" />
@@ -27,7 +27,7 @@
             <PreSize />
             <TextColor A="255" R="65" G="65" B="70" />
             <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
-            <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
+            <PressedFileData Type="Normal" Path="res/levelButton.png" Plist="" />
             <NormalFileData Type="Normal" Path="res/levelButton.png" Plist="" />
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
@@ -65,7 +65,7 @@
             <FileData Type="Normal" Path="res/star3.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="BitmapFontLabel_1" ActionTag="1446440851" Tag="41" IconVisible="False" LeftMargin="-40.4913" RightMargin="-37.5087" TopMargin="-116.3410" BottomMargin="33.3410" LabelText="01" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="Label" ActionTag="1446440851" Tag="41" IconVisible="False" LeftMargin="-40.4913" RightMargin="-37.5087" TopMargin="-116.3410" BottomMargin="33.3410" LabelText="01" ctype="TextBMFontObjectData">
             <Size X="78.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="-1.4913" Y="74.8410" />

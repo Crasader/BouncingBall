@@ -16,6 +16,8 @@
 
 #include "PassCode.h"
 
+#include "CCUserDefault.h"
+
 USING_NS_CC;
 
 #pragma mark -
@@ -32,6 +34,7 @@ GameScene* GameScene::createWithConfig(std::string configFile)
         return nullptr;
     }
 }
+
 bool GameScene::initWithConfig(std::string configFile)
 {
     if (! Node::init()) {

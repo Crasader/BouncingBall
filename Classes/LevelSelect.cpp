@@ -9,20 +9,16 @@
 #include "LevelSelect.h"
 #include "LevelGrid.h"
 #include "LevelGridReader.h"
+
 #include "UIConstants.h"
 #include "SceneManager.h"
 
-bool LevelSelect::init()
-{
-    if (! Node::init()) {
-        return false;
-    }
 
-    return true;
-}
+//TODO: make a locked menu for level select
 
 void LevelSelect::onEnter()
 {
+    Node::onEnter();
     Size visibleSize = Director::getInstance()->getVisibleSize();
     
     Sprite* backGround = Sprite::create("levelBackGround.png");
@@ -34,26 +30,41 @@ void LevelSelect::onEnter()
     
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("LevelGridReader" , (ObjectFactory::Instance) LevelGridReader::getInstance);
+    
     for (int row = 0; row < LEVELGIRD_ROW_NUM; row++ ) {
         for (int column = 0; column < LEVELGIRD_COLUMN_NUM; ++column) {
             LevelGrid* levelGrid = dynamic_cast<LevelGrid*>(CSLoader::createNode("LevelGrid.csb"));
             levelGrid->setAnchorPoint(Vec2(0.0f, 0.0f));
             float xPos = GRID_INIT_X_POS + column * (GRID_WIDTH+GRID_X_INTERVAL);
-            float yPos = GRID_INIT_Y_POS + row * (GRID_HEIGHT+GRID_Y_INTERVAL);
+            float yPos = GRID_INIT_Y_POS - row * (GRID_HEIGHT+GRID_Y_INTERVAL);
             levelGrid->setPosition(Vec2(xPos, yPos));
+            
+            int levelnum = row * LEVELGIRD_COLUMN_NUM + column + 1;
+            
+            ui::TextBMFont* label = levelGrid->getChildByName<ui::TextBMFont*>("Label");
+            std::string labelStr = StringUtils::toString(levelnum);
+            label->setString(labelStr);
+            
+            ui::Button* button = levelGrid->getChildByName<ui::Button*>("Button");
+            button->setTag(levelnum);
+            
+            button->setTouchEnabled(true);
+            button->setEnabled(true);
+            
+            button->addTouchEventListener(CC_CALLBACK_2(LevelSelect::levelButtonPressed, this));
+            
             this->addChild(levelGrid);
-            ui::Button* button = this->getChildByName<ui::Button*>("Button");
-            std::string labelStr = "1";
-            std::string configFile = "map" + labelStr + ".json";
-            button->addTouchEventListener()
 
         }
     }
     
 }
 
-void LevelSelect::levelButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType, std::string configFile)
+void LevelSelect::levelButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
+    auto button = dynamic_cast<ui::Button*>(pSender);
+    std::string configFile = "map" + StringUtils::toString(button->getTag()) + ".json";
+    
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
         SceneManager::getInstance()->enterGameScene(configFile);
     }

@@ -35,8 +35,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     cocos2d::Size targetSize = glview->getFrameSize();
+    FileUtils::getInstance()->addSearchPath("res/asset");
+    FileUtils::getInstance()->addSearchPath("res/mapConfig");
     FileUtils::getInstance()->addSearchPath("res");
-    FileUtils::getInstance()->addSearchPath("map");
 
     // create a scene. it's an autorelease object
     auto scene = Scene::create();

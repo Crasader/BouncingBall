@@ -18,10 +18,9 @@ public:
     CREATE_FUNC(LevelSelect);
     
 private:
-    bool init() override;
+    void loadUserData();
     void onEnter() override;
-    void setupUI();
-    void levelButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType, std::string configFile);
+    void levelButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
 };
 
 #endif /* defined(__BouncingBall__LevelSelect__) */

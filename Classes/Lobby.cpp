@@ -7,8 +7,6 @@
 //
 
 #include "Lobby.h"
-
-#include "Lobby.h"
 #include "SceneManager.h"
 
 using namespace cocos2d;
