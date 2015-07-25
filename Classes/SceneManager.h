@@ -8,11 +8,12 @@
 
 #ifndef __BouncingBall__SceneManager__
 #define __BouncingBall__SceneManager__
+#include "NetworkingWrapper.h"
 
 class GameScene;
 class LevelSelect;
-//class SceneManager : NetworkingDelegate
-class SceneManager
+
+class SceneManager : NetworkingDelegate
 {
 public:
     static SceneManager* getInstance();
@@ -24,13 +25,14 @@ public:
     void receiveMultiplayerInvitations();
     void sendData(const void* data, unsigned long length);
 private:
-//    std::unique_ptr<NetworkingWrapper> networkingWrapper;
+    std::unique_ptr<NetworkingWrapper> networkingWrapper;
     GameScene* _gameScene;
     LevelSelect* _levelSelect;
     SceneManager();
     ~SceneManager();
     
- //   void receivedData(const void* state, unsigned long length);
- //   void stateChanged(ConnectionState state);
+    
+    void receivedData(const void* state, unsigned long length);
+    void stateChanged(ConnectionState state);
 };
 #endif /* defined(__BouncingBall__SceneManager__) */

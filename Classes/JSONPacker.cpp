@@ -61,9 +61,65 @@ namespace JSONPacker {
         return mapState;
     }
     
-    std::string packMapStateJSON(const MapState mapState)
+    std::string packMultiSyncDataJSON(MultiSyncData multiSyncData)
     {
+        rapidjson::Document document;
+        document.SetObject();
+        /*
+     //   document.AddMember("multiplayState", multiSyncData.multiplayState, document.GetAllocator());
+        switch (multiSyncData.multiplayState) {
+            case MultiplayState::sendDeviceName:
+            {
+                document.AddMember("deviceName", multiSyncData.deviceName, document.GetAllocator());
+            }
+                break;
+            case MultiplayState::shooting:
+            {
+                document.AddMember("angle", multiSyncData.angle, document.GetAllocator());
+                document.AddMember("speed", multiSyncData.speed, document.GetAllocator());
+            }
+                break;
+            default:
+                break;
+        }
         
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+        document.Accept(writer);
+        
+        std::string returnString(buffer.GetString(), buffer.Size());
+         */
+       // return returnString;
+
+    }
+    
+    MultiSyncData unpackMultiSyncDataJSON(std::string json)
+    {
+        rapidjson::Document document;
+        document.Parse<0>(json.c_str());
+        
+        MultiSyncData data;
+ 
+ //       data.multiplayState = static_cast<MultiplayState>(document["multiplayState"].GetInt());
+        /*
+        switch (data.multiplayState) {
+            case MultiplayState::sendDeviceName:
+            {
+                data.deviceName = document["deviceName"].GetString();
+            }
+                break;
+            case MultiplayState::shooting:
+            {
+                data.angle = document["angle"].GetDouble();
+                data.speed = document["speed"].GetDouble();
+            }
+                break;
+            default:
+                break;
+        }
+         */
+        
+   //     return data;
     }
     
   }

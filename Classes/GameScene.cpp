@@ -317,6 +317,9 @@ void GameScene::setupTouchHandling()
             _dogi->runShootingAnimation();
             _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
             _gameState = GameState::shooting;
+            if (_isMultiplayer) {
+                //sendData
+            }
         }
     };
     

@@ -43,6 +43,7 @@
           <Image Name="menuButton.png" />
           <Image Name="nextButton.png" />
           <Image Name="restartButton.png" />
+          <Image Name="Aimshot.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />

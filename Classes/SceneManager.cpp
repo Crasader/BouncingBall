@@ -29,8 +29,8 @@ SceneManager* SceneManager::getInstance()
 SceneManager::SceneManager()
 {
     this->_gameScene = nullptr;
-//    this->networkingWrapper = std::unique_ptr<NetworkingWrapper>(new NetworkingWrapper());
-//    this->networkingWrapper->setDelegate(this);
+    this->networkingWrapper = std::unique_ptr<NetworkingWrapper>(new NetworkingWrapper());
+    this->networkingWrapper->setDelegate(this);
 }
 
 
@@ -78,27 +78,27 @@ void SceneManager::backToLobby()
 
 void SceneManager::showPeerList()
 {
- //   networkingWrapper->showPeerList();
+    networkingWrapper->showPeerList();
 }
 
 void SceneManager::receiveMultiplayerInvitations()
 {
-//    networkingWrapper->startAdvertisingAvailability();
+    networkingWrapper->startAdvertisingAvailability();
 }
 
 void SceneManager::sendData(const void *data, unsigned long length)
 {
- //   networkingWrapper->sendData(data, length);
+    networkingWrapper->sendData(data, length);
 }
 
 #pragma mark -
 #pragma mark NetworkingWapperDelegate Methods
 
-/*
+
 void SceneManager::receivedData(const void *data, unsigned long length)
 {
-    if (gameScene) {
-        gameScene->receivedData(data, length);
+    if (_gameScene) {
+   //     _gameScene->receivedData(data, length);
     }
 }
 
@@ -113,11 +113,10 @@ void SceneManager::stateChanged(ConnectionState state)
             break;
         case ConnectionState::CONNECTED:
             CCLOG("Connected");
-            if (! gameScene) {
+            if (! _gameScene) {
                 this->networkingWrapper->stopAdvertisingAvailability();
-                this->enterGameScene(true);
+           //     this->enterGameScene(true);
             }
             break;
     }
 }
-*/

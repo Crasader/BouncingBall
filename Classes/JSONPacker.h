@@ -43,10 +43,20 @@ namespace JSONPacker
  //       cocos2d::Vector<Block*> blocks;
         
     };
+    
+    struct MultiSyncData
+    {
+        MultiplayState multiplayState;
+        float angle;
+        float speed;
+        std::string deviceName;
+    };
 
     //TODO: improve this speed
     const MapState unpackMapStateJSON(std::string json);
-    std::string packMapStateJSON(MapState mapstate);
+    
+    std::string packMultiSyncDataJSON(MultiSyncData multiSyncData);
+    MultiSyncData unpackMultiSyncDataJSON(std::string json);
 }
 
 

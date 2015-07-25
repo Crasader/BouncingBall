@@ -20,6 +20,7 @@ public:
  //   CREATE_FUNC(GameScene);
     
 protected:
+    bool _isMultiplayer;
     bool initWithLevel(int level);
 
     void onEnter() override;

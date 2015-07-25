@@ -10,7 +10,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		41E34A81ACA2320B6C76C445 /* res in Resources */ = {isa = PBXBuildFile; fileRef = FA144D09A52357282113E0F8 /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* GameScene.cpp */; };
@@ -48,7 +47,6 @@
 		521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6219F0C34300D177D7 /* Default-667h@2x.png */; };
 		521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6319F0C34300D177D7 /* Default-736h@3x.png */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
-		7AB94C6A95BCF2B4CA3DF1DC /* res in Resources */ = {isa = PBXBuildFile; fileRef = FA144D09A52357282113E0F8 /* res */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		9E0CBC4A1B556C7C0000EA9C /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA071B54A0EF00CAA983 /* libcocos2d Mac.a */; };
 		9E0CBC4E1B556DC60000EA9C /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC4C1B556DC60000EA9C /* Ball.cpp */; };
@@ -79,6 +77,13 @@
 		9E0E6BD61B6209BA003B2D87 /* LevelClear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */; };
 		9E0E6BD71B6209BA003B2D87 /* LevelClearReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */; };
 		9E0E6BD81B6209BA003B2D87 /* LevelClearReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */; };
+		9E0E6BE01B62D906003B2D87 /* NetworkingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BDC1B62D906003B2D87 /* NetworkingWrapper.mm */; };
+		9E0E6BE11B62D906003B2D87 /* NetworkingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BDC1B62D906003B2D87 /* NetworkingWrapper.mm */; };
+		9E0E6BE21B62D906003B2D87 /* NetworkManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BDE1B62D906003B2D87 /* NetworkManager.mm */; };
+		9E0E6BE31B62D906003B2D87 /* NetworkManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6BDE1B62D906003B2D87 /* NetworkManager.mm */; };
+		9E0E6BE51B62D95B003B2D87 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E0E6BE41B62D95B003B2D87 /* MultipeerConnectivity.framework */; };
+		9E0E6C931B6307C4003B2D87 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 9E0E6C921B6307C4003B2D87 /* res */; };
+		9E0E6C941B6307C4003B2D87 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 9E0E6C921B6307C4003B2D87 /* res */; };
 		9E21BA0A1B54A13400CAA983 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA091B54A0EF00CAA983 /* libcocos2d iOS.a */; };
 		9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
 		9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
@@ -193,6 +198,13 @@
 		9E0E6BD21B6209BA003B2D87 /* LevelClear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelClear.h; sourceTree = "<group>"; };
 		9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelClearReader.cpp; sourceTree = "<group>"; };
 		9E0E6BD41B6209BA003B2D87 /* LevelClearReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelClearReader.h; sourceTree = "<group>"; };
+		9E0E6BDB1B62D906003B2D87 /* NetworkingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingWrapper.h; sourceTree = "<group>"; };
+		9E0E6BDC1B62D906003B2D87 /* NetworkingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NetworkingWrapper.mm; sourceTree = "<group>"; };
+		9E0E6BDD1B62D906003B2D87 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		9E0E6BDE1B62D906003B2D87 /* NetworkManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NetworkManager.mm; sourceTree = "<group>"; };
+		9E0E6BDF1B62D906003B2D87 /* NetworkManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManagerDelegate.h; sourceTree = "<group>"; };
+		9E0E6BE41B62D95B003B2D87 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		9E0E6C921B6307C4003B2D87 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		9E21B9F41B545BD000CAA983 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E21BA011B54A0EF00CAA983 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		9E2C6B781B601C310096EA85 /* Coin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coin.cpp; sourceTree = "<group>"; };
@@ -210,7 +222,6 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
-		FA144D09A52357282113E0F8 /* res */ = {isa = PBXFileReference; lastKnownFileType = "?"; name = res; path = ../Resources/res; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E0E6BE51B62D95B003B2D87 /* MultipeerConnectivity.framework in Frameworks */,
 				9E21BA0A1B54A13400CAA983 /* libcocos2d iOS.a in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
@@ -295,6 +307,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E0E6BE41B62D95B003B2D87 /* MultipeerConnectivity.framework */,
 				8262943D1AAF051F00CB7CF7 /* Security.framework */,
 				52B47A461A53D09B004E4C60 /* Security.framework */,
 				D6B0611A1803AB670077942B /* CoreMotion.framework */,
@@ -319,7 +332,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FA144D09A52357282113E0F8 /* res */,
+				9E0E6C921B6307C4003B2D87 /* res */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -454,6 +467,11 @@
 		9E0CBC741B55BB7D0000EA9C /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				9E0E6BDB1B62D906003B2D87 /* NetworkingWrapper.h */,
+				9E0E6BDC1B62D906003B2D87 /* NetworkingWrapper.mm */,
+				9E0E6BDD1B62D906003B2D87 /* NetworkManager.h */,
+				9E0E6BDE1B62D906003B2D87 /* NetworkManager.mm */,
+				9E0E6BDF1B62D906003B2D87 /* NetworkManagerDelegate.h */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -583,7 +601,7 @@
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
-				41E34A81ACA2320B6C76C445 /* res in Resources */,
+				9E0E6C931B6307C4003B2D87 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,7 +610,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
-				7AB94C6A95BCF2B4CA3DF1DC /* res in Resources */,
+				9E0E6C941B6307C4003B2D87 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,10 +626,12 @@
 				9E0CBC7B1B55BF860000EA9C /* ItemBox.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */,
+				9E0E6BE01B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E0E6BD51B6209BA003B2D87 /* LevelClear.cpp in Sources */,
 				9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */,
 				9E0E6BC51B615771003B2D87 /* LevelGrid.cpp in Sources */,
+				9E0E6BE21B62D906003B2D87 /* NetworkManager.mm in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */,
 				9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
@@ -636,8 +656,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E0CBC941B56F9360000EA9C /* JSONPacker.cpp in Sources */,
+				9E0E6BE11B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */,
+				9E0E6BE31B62D906003B2D87 /* NetworkManager.mm in Sources */,
 				9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */,
 				9E0CBC521B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
 				9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
