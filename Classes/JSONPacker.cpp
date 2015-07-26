@@ -29,7 +29,6 @@ namespace JSONPacker {
             float relativeX = ball["relativeX"].GetDouble();
             float relativeY = ball["relativeY"].GetDouble();
             std::string color = ball["color"].GetString();
-            int hp = ball["hp"].GetInt();
 
             BallConfig config = {relativeX, relativeY, color, hp};
             ballsOnStage.push_back(config);
@@ -42,7 +41,6 @@ namespace JSONPacker {
             float relativeX = ball["relativeX"].GetDouble();
             float relativeY = ball["relativeY"].GetDouble();
             std::string color = ball["color"].GetString();
-            int hp = ball["hp"].GetInt();
             
             BallConfig config = {relativeX, relativeY, color, hp};
             ballsInBag.push_back(config);
