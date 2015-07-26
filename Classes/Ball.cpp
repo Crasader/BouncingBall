@@ -123,7 +123,7 @@ PhysicsBody* Ball::createBallPhysicsBody(BallColor color)
     ballBody->setLinearDamping(BALL_DEFAULT_LINEAR_DAMPING);
     ballBody->setContactTestBitmask(BALL_CONTACT_MASK);
     ballBody->setCategoryBitmask(BALL_CATEGORY);
-    ballBody->setCollisionBitmask(BALL_CULLISION_MASK);
+    ballBody->setCollisionBitmask(BALL_COLLISION_MASK);
     ballBody->setTag(static_cast<int>(color));
     return ballBody;
 }

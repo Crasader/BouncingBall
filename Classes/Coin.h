@@ -16,6 +16,9 @@ class Coin : public cocos2d::Sprite
 public:
     CREATE_FUNC(Coin);
     void runGetCoinAnimation();
+    void runAppearAnimation();
+    void enableCollision();
+    void initCollision();
 private:
     bool init() override;
     cocos2d::Spawn* _action;

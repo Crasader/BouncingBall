@@ -5,6 +5,7 @@
 #include "CocosGUI.h"
 #include "Constants.h"
 #include "Ball.h"
+#include "Coin.h"
 
 
 class Cannon;
@@ -41,6 +42,10 @@ protected:
     cocos2d::Sprite* _edgeSp;
     PassCode* _passCode;
     
+    
+    //coin
+    cocos2d::Vector<Coin*> _coinOnStage;
+    
     int _currentScore;
     int _oneStarScore;
     int _twoStarScore;
@@ -68,6 +73,7 @@ protected:
     int evaluateStars(int currentScore);
     std::string getConfigFileName();
     void resetAllBallHp();
+    void enableAllCoin();
 
     
     cocos2d::ui::Text*  _scoreLabel;

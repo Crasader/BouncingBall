@@ -191,6 +191,7 @@ void GameScene::update(float dt)
             _ballWaitShooting->release();
             _ballWaitShooting = nullptr;
             resetAllBallHp();
+            enableAllCoin();
             setupBall();
         }
 
@@ -255,24 +256,45 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     
     //TODO:make a emun type detection,fix this ugly code
     
-    BallColor aColor = static_cast<BallColor>(a->getTag());
-    BallColor bColor = static_cast<BallColor>(b->getTag());
-    _passCode->EnterOneColor(aColor);
-    if (_passCode->EnterOneColor(bColor)) {
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        BallColor aColor = static_cast<BallColor>(a->getTag());
+        BallColor bColor = static_cast<BallColor>(b->getTag());
         _passCode->EnterOneColor(aColor);
+        if (_passCode->EnterOneColor(bColor)) {
+            _passCode->EnterOneColor(aColor);
+        }
+        
+        if (aColor == bColor) {
+            Coin* coin = Coin::create();
+            coin->setPosition(a->getPosition());
+            _mainScene->addChild(coin);
+            coin->runGetCoinAnimation();
+            _currentScore += 1;
+            updateScoreLabel(_currentScore);
+        } else {
+        }
+        
+      
     }
     
-    if (aColor == bColor) {
-        Coin* coin = Coin::create();
-        coin->setPosition(a->getPosition());
-        _mainScene->addChild(coin);
-        coin->runGetCoinAnimation();
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == COIN_CATEGORY) {
+        Coin* coin = dynamic_cast<Coin*>(b->getNode());
+        coin->removeFromParent();
+        auto it = _coinOnStage.find(coin);
+        _coinOnStage.erase(it);
+        
         _currentScore += 1;
-    } else {
+        updateScoreLabel(_currentScore);
     }
-    
-    
-    updateScoreLabel(_currentScore);
+    if (a->getCategoryBitmask() == COIN_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        Coin* coin = dynamic_cast<Coin*>(a->getNode());
+        coin->removeFromParent();
+        auto it = _coinOnStage.find(coin);
+        _coinOnStage.erase(it);
+        _currentScore += 1;
+        updateScoreLabel(_currentScore);
+    }
+
     
     return true;
 }
@@ -281,6 +303,8 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
 {
     PhysicsBody *a = contact.getShapeA()->getBody();
     PhysicsBody *b = contact.getShapeB()->getBody();
+    
+    //BALL hit BALL
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
         Ball* ballA = dynamic_cast<Ball*>(a->getNode());
         Ball* ballB = dynamic_cast<Ball*>(b->getNode());
@@ -300,6 +324,14 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
             _mainScene->addChild(ballExplode);
             ballExplode->runExplodeAnimation();
             ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
+            for(int i=0 ;i < 5 ;++i) {
+                Coin* coin = Coin::create();
+                coin->setPosition(pos);
+                _mainScene->addChild(coin);
+                coin->initCollision();
+                coin->runAppearAnimation();
+                _coinOnStage.pushBack(coin);
+            }
             
         }
         
@@ -316,10 +348,20 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
             ballExplode->runExplodeAnimation();
             ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
             
+            for(int i=0 ;i < 5 ;++i) {
+                Coin* coin = Coin::create();
+                coin->setPosition(pos);
+                _mainScene->addChild(coin);
+                coin->initCollision();
+                coin->runAppearAnimation();
+                _coinOnStage.pushBack(coin);
+            }
+            
         }
-
        
     }
+    
+ 
 }
 
 void GameScene::setupTouchHandling()
@@ -462,5 +504,12 @@ void GameScene::resetAllBallHp()
 {
     for (auto ball : _ballsOnState) {
         ball->setHp(BALL_DEFAULT_HP);
+    }
+}
+
+void GameScene::enableAllCoin()
+{
+    for (auto coin : _coinOnStage) {
+        coin->enableCollision();
     }
 }
