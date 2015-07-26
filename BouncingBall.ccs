@@ -44,12 +44,16 @@
           <Image Name="nextButton.png" />
           <Image Name="restartButton.png" />
           <Image Name="Aimshot.png" />
+          <Image Name="expload3.png" />
+          <Image Name="explode1.png" />
+          <Image Name="explode2.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
         <TTF Name="Cloudy With a Chance of Love.ttf" />
         <Fnt Name="font01.fnt" />
         <Project Name="LevelClear.csd" Type="Node" />
+        <Project Name="BallExplode.csd" Type="Node" />
       </RootFolder>
     </Group>
   </SolutionFolder>

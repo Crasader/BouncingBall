@@ -15,7 +15,8 @@
 const static float MIN_SPEED = 5.0f;
 const static float BALL_DEFAULT_LINEAR_DAMPING = 1.0f;
 const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
-const static int BALL_DEFAULT_HP = 3;
+const static int BALL_DEFAULT_HP = 1;
+const static int BALL_INFINITY_HP = 99;
 const static float MAX_SHOOTING_SPEED = 1500.0f;
 
 #pragma mark -

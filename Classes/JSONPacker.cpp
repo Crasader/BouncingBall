@@ -30,7 +30,7 @@ namespace JSONPacker {
             float relativeY = ball["relativeY"].GetDouble();
             std::string color = ball["color"].GetString();
 
-            BallConfig config = {relativeX, relativeY, color, hp};
+            BallConfig config = {relativeX, relativeY, color};
             ballsOnStage.push_back(config);
         }
         
@@ -42,7 +42,7 @@ namespace JSONPacker {
             float relativeY = ball["relativeY"].GetDouble();
             std::string color = ball["color"].GetString();
             
-            BallConfig config = {relativeX, relativeY, color, hp};
+            BallConfig config = {relativeX, relativeY, color};
             ballsInBag.push_back(config);
         }
         std::string passCode = document["passCode"].GetString();

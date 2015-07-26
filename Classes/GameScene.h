@@ -10,6 +10,7 @@
 class Cannon;
 class PassCode;
 class Dogi;
+class BallExplode;
 
 class GameScene : public cocos2d::Node
 {
@@ -34,13 +35,13 @@ protected:
     Ball* _ballWaitShooting;
     cocos2d::Vector<Ball*> _ballsInBag;
     
+    //pointer instance
     Cannon* _cannon;
     Dogi* _dogi;
     cocos2d::Sprite* _edgeSp;
     PassCode* _passCode;
     
     int _currentScore;
-    
     int _oneStarScore;
     int _twoStarScore;
     int _threeStarScore;
@@ -51,6 +52,8 @@ protected:
     
     void updateScoreLabel(int score);
     bool onContactBegin(cocos2d::PhysicsContact &contact);
+    void onContactEnd(cocos2d::PhysicsContact &contact);
+
     void setupTouchHandling();
     void setupContactHandling();
     void setupBall();
@@ -64,6 +67,7 @@ protected:
     //Util Method
     int evaluateStars(int currentScore);
     std::string getConfigFileName();
+    void resetAllBallHp();
 
     
     cocos2d::ui::Text*  _scoreLabel;

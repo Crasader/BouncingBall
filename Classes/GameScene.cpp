@@ -19,6 +19,9 @@
 #include "LevelClear.h"
 #include "levelClearReader.h"
 
+#include "BallExplode.h"
+#include "BallExplodeReader.h"
+
 USING_NS_CC;
 
 
@@ -64,6 +67,7 @@ void GameScene::onEnter()
     
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
+    contactListener->onContactPostSolve = CC_CALLBACK_1(GameScene::onContactEnd, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
     setupTouchHandling();
     this->scheduleUpdate();
@@ -77,11 +81,14 @@ void GameScene::setupMap()
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
     instance->registReaderObject("DogiReader" , (ObjectFactory::Instance) DogiReader::getInstance);
+    instance->registReaderObject("BallExplodeReader" , (ObjectFactory::Instance) BallExplodeReader::getInstance);
+
+    
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
     _cannon = rootNode->getChildByName<Cannon*>("Cannon");
     _dogi = rootNode->getChildByName<Dogi*>("Dogi");
-
+    
     _mainScene = rootNode;
     
     std::string jsonStr = FileUtils::getInstance()->getStringFromFile(getConfigFileName());
@@ -166,7 +173,7 @@ void GameScene::setupBall()
     
     Vec2 ballPos = _cannon->getPosition();
     _ballWaitShooting->setPosition(ballPos);
-    
+    _ballWaitShooting->setHp(BALL_INFINITY_HP);
     _ballsOnState.pushBack(_ballWaitShooting);
     this->addChild(_ballWaitShooting);
     resetEgde();
@@ -183,6 +190,7 @@ void GameScene::update(float dt)
         } else {
             _ballWaitShooting->release();
             _ballWaitShooting = nullptr;
+            resetAllBallHp();
             setupBall();
         }
 
@@ -201,6 +209,7 @@ void GameScene::triggerGameOver()
         
         CSLoader* instance = CSLoader::getInstance();
         instance->registReaderObject("LevelClearReader" , (ObjectFactory::Instance) LevelClearReader::getInstance);
+
 
         LevelClear* levelClear = dynamic_cast<LevelClear*>(CSLoader::createNode("LevelClear.csb"));
         levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -266,6 +275,51 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     updateScoreLabel(_currentScore);
     
     return true;
+}
+
+void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
+{
+    PhysicsBody *a = contact.getShapeA()->getBody();
+    PhysicsBody *b = contact.getShapeB()->getBody();
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        Ball* ballA = dynamic_cast<Ball*>(a->getNode());
+        Ball* ballB = dynamic_cast<Ball*>(b->getNode());
+        ballA->gotHit();
+        ballB->gotHit();
+        
+        //TODO: refacotring
+        if (ballA->getHp() <= 0) {
+            Vec2 pos = ballA->getPosition();
+            ballA->removeFromParent();
+            
+            auto it = _ballsOnState.find(ballA);
+            _ballsOnState.erase(it);
+            
+            BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
+            ballExplode->setPosition(pos);
+            _mainScene->addChild(ballExplode);
+            ballExplode->runExplodeAnimation();
+            ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
+            
+        }
+        
+        if (ballB->getHp() <= 0) {
+            Vec2 pos = ballB->getPosition();
+            ballB->removeFromParent();
+            
+            auto it = _ballsOnState.find(ballB);
+            _ballsOnState.erase(it);
+            
+            BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
+            ballExplode->setPosition(pos);
+            _mainScene->addChild(ballExplode);
+            ballExplode->runExplodeAnimation();
+            ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
+            
+        }
+
+       
+    }
 }
 
 void GameScene::setupTouchHandling()
@@ -366,8 +420,10 @@ void GameScene::resetEgde()
     
 }
 
+
 bool GameScene::isGoalAchieved(){
-    return _passCode->isPassCodeClear();
+    return false;
+  //  return _passCode->isPassCodeClear();
 }
 
 bool GameScene::isGameOver()
@@ -400,4 +456,11 @@ int GameScene::evaluateStars(int currentScore)
 std::string GameScene::getConfigFileName()
 {
     return "map" + StringUtils::toString(_level) + ".json";
+}
+
+void GameScene::resetAllBallHp()
+{
+    for (auto ball : _ballsOnState) {
+        ball->setHp(BALL_DEFAULT_HP);
+    }
 }

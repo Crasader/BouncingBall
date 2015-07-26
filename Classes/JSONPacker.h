@@ -19,7 +19,6 @@ namespace JSONPacker
         float relativeX;
         float relativeY;
         std::string color;
-        int hp;
     };
     
     struct BlockConfig

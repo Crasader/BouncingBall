@@ -89,7 +89,7 @@ bool Ball::initWithBallConfig(JSONPacker::BallConfig config)
     if (! Sprite::initWithFile(fileName)) {
         return false;
     }
-    this->_hp = config.hp;
+    this->_hp = BALL_DEFAULT_HP;
     this->_color = getBallColorFromStr(config.color);
     auto ballBody = createBallPhysicsBody(_color);
     this->setPhysicsBody(ballBody);
@@ -126,4 +126,21 @@ PhysicsBody* Ball::createBallPhysicsBody(BallColor color)
     ballBody->setCollisionBitmask(BALL_CULLISION_MASK);
     ballBody->setTag(static_cast<int>(color));
     return ballBody;
+}
+
+void Ball::gotHit()
+{
+    _hp--;
+
+}
+
+
+void Ball::setHp(int hp)
+{
+    _hp = hp;
+}
+
+int Ball::getHp()
+{
+    return _hp;
 }

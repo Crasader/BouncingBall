@@ -84,6 +84,10 @@
 		9E0E6BE51B62D95B003B2D87 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E0E6BE41B62D95B003B2D87 /* MultipeerConnectivity.framework */; };
 		9E0E6C931B6307C4003B2D87 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 9E0E6C921B6307C4003B2D87 /* res */; };
 		9E0E6C941B6307C4003B2D87 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 9E0E6C921B6307C4003B2D87 /* res */; };
+		9E0E6C991B654F66003B2D87 /* BallExplode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C951B654F66003B2D87 /* BallExplode.cpp */; };
+		9E0E6C9A1B654F66003B2D87 /* BallExplode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C951B654F66003B2D87 /* BallExplode.cpp */; };
+		9E0E6C9B1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */; };
+		9E0E6C9C1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */; };
 		9E21BA0A1B54A13400CAA983 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA091B54A0EF00CAA983 /* libcocos2d iOS.a */; };
 		9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
 		9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B781B601C310096EA85 /* Coin.cpp */; };
@@ -205,16 +209,20 @@
 		9E0E6BDF1B62D906003B2D87 /* NetworkManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManagerDelegate.h; sourceTree = "<group>"; };
 		9E0E6BE41B62D95B003B2D87 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		9E0E6C921B6307C4003B2D87 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		9E0E6C951B654F66003B2D87 /* BallExplode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BallExplode.cpp; path = ../Classes/BallExplode.cpp; sourceTree = "<group>"; };
+		9E0E6C961B654F66003B2D87 /* BallExplode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BallExplode.h; path = ../Classes/BallExplode.h; sourceTree = "<group>"; };
+		9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BallExplodeReader.cpp; path = ../Classes/BallExplodeReader.cpp; sourceTree = "<group>"; };
+		9E0E6C981B654F66003B2D87 /* BallExplodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BallExplodeReader.h; path = ../Classes/BallExplodeReader.h; sourceTree = "<group>"; };
 		9E21B9F41B545BD000CAA983 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E21BA011B54A0EF00CAA983 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		9E2C6B781B601C310096EA85 /* Coin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coin.cpp; sourceTree = "<group>"; };
 		9E2C6B791B601C310096EA85 /* Coin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coin.h; sourceTree = "<group>"; };
 		9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PassCode.cpp; sourceTree = "<group>"; };
 		9E2C6B7F1B6047EC0096EA85 /* PassCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassCode.h; sourceTree = "<group>"; };
-		9E2C6B821B60B5B40096EA85 /* Dogi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dogi.cpp; sourceTree = "<group>"; };
-		9E2C6B831B60B5B40096EA85 /* Dogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dogi.h; sourceTree = "<group>"; };
-		9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DogiReader.cpp; sourceTree = "<group>"; };
-		9E2C6B871B60B5C10096EA85 /* DogiReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogiReader.h; sourceTree = "<group>"; };
+		9E2C6B821B60B5B40096EA85 /* Dogi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Dogi.cpp; path = ../Classes/Dogi.cpp; sourceTree = "<group>"; };
+		9E2C6B831B60B5B40096EA85 /* Dogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dogi.h; path = ../Classes/Dogi.h; sourceTree = "<group>"; };
+		9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DogiReader.cpp; path = ../Classes/DogiReader.cpp; sourceTree = "<group>"; };
+		9E2C6B871B60B5C10096EA85 /* DogiReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogiReader.h; path = ../Classes/DogiReader.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -346,6 +354,7 @@
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				9E0CBC741B55BB7D0000EA9C /* Networking */,
+				9E0E6C9E1B654F7A003B2D87 /* AnimationClass */,
 				9E0CBC581B55B78A0000EA9C /* Scene */,
 				9E0CBC591B55B7C20000EA9C /* GameObject */,
 				9E0CBC731B55BB1D0000EA9C /* Util */,
@@ -419,6 +428,8 @@
 		9E0CBC591B55B7C20000EA9C /* GameObject */ = {
 			isa = PBXGroup;
 			children = (
+				9E2C6B781B601C310096EA85 /* Coin.cpp */,
+				9E2C6B791B601C310096EA85 /* Coin.h */,
 				9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */,
 				9E0E6BD21B6209BA003B2D87 /* LevelClear.h */,
 				9E0E6BD31B6209BA003B2D87 /* LevelClearReader.cpp */,
@@ -435,14 +446,8 @@
 				9E0CBC4D1B556DC60000EA9C /* Ball.h */,
 				9E0CBC7D1B55BFBE0000EA9C /* Item.cpp */,
 				9E0CBC7E1B55BFBE0000EA9C /* Item.h */,
-				9E2C6B781B601C310096EA85 /* Coin.cpp */,
-				9E2C6B791B601C310096EA85 /* Coin.h */,
 				9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */,
 				9E2C6B7F1B6047EC0096EA85 /* PassCode.h */,
-				9E2C6B821B60B5B40096EA85 /* Dogi.cpp */,
-				9E2C6B831B60B5B40096EA85 /* Dogi.h */,
-				9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */,
-				9E2C6B871B60B5C10096EA85 /* DogiReader.h */,
 			);
 			name = GameObject;
 			sourceTree = "<group>";
@@ -474,6 +479,22 @@
 				9E0E6BDF1B62D906003B2D87 /* NetworkManagerDelegate.h */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		9E0E6C9E1B654F7A003B2D87 /* AnimationClass */ = {
+			isa = PBXGroup;
+			children = (
+				9E0E6C951B654F66003B2D87 /* BallExplode.cpp */,
+				9E0E6C961B654F66003B2D87 /* BallExplode.h */,
+				9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */,
+				9E0E6C981B654F66003B2D87 /* BallExplodeReader.h */,
+				9E2C6B821B60B5B40096EA85 /* Dogi.cpp */,
+				9E2C6B831B60B5B40096EA85 /* Dogi.h */,
+				9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */,
+				9E2C6B871B60B5C10096EA85 /* DogiReader.h */,
+			);
+			name = AnimationClass;
+			path = ../proj.ios_mac;
 			sourceTree = "<group>";
 		};
 		9E21BA021B54A0EF00CAA983 /* Products */ = {
@@ -625,6 +646,7 @@
 				9E0E6BCD1B6160CC003B2D87 /* LevelSelect.cpp in Sources */,
 				9E0CBC7B1B55BF860000EA9C /* ItemBox.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				9E0E6C991B654F66003B2D87 /* BallExplode.cpp in Sources */,
 				9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */,
 				9E0E6BE01B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
@@ -632,6 +654,7 @@
 				9E2C6B7A1B601C310096EA85 /* Coin.cpp in Sources */,
 				9E0E6BC51B615771003B2D87 /* LevelGrid.cpp in Sources */,
 				9E0E6BE21B62D906003B2D87 /* NetworkManager.mm in Sources */,
+				9E0E6C9B1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */,
 				9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
@@ -657,6 +680,8 @@
 			files = (
 				9E0CBC941B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				9E0E6BE11B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
+				9E0E6C9C1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */,
+				9E0E6C9A1B654F66003B2D87 /* BallExplode.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				9E0E6BE31B62D906003B2D87 /* NetworkManager.mm in Sources */,

@@ -22,6 +22,10 @@ public:
     void shoot(float speed, float angle);
     bool isStoped();
     CREATE_FUNC(Ball);
+    void runDestroyAnimation();
+    void gotHit();
+    void setHp(int hp);
+    int getHp();
 
 private:
     int _hp;

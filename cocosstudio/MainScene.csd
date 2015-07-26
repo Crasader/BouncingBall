@@ -109,7 +109,7 @@
             <FileData Type="Normal" Path="res/Cannon_Base.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Cannon" ActionTag="2068163570" Tag="209" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="320.0000" RightMargin="320.0000" TopMargin="1022.4000" BottomMargin="113.6000" InnerActionSpeed="0.1667" ctype="ProjectNodeObjectData">
+          <AbstractNodeData Name="Cannon" ActionTag="2068163570" Tag="209" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="320.0000" RightMargin="320.0000" TopMargin="1022.4000" BottomMargin="113.6000" InnerActionSpeed="0.3333" ctype="ProjectNodeObjectData">
             <Size />
             <AnchorPoint />
             <Position X="320.0000" Y="113.6000" />
@@ -130,7 +130,7 @@
             <FileData Type="Normal" Path="res/dogiShadow.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Dogi" ActionTag="-783934955" Tag="246" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="131.2000" RightMargin="508.8000" TopMargin="1056.4800" BottomMargin="79.5200" InnerActionSpeed="1.0000" ctype="ProjectNodeObjectData">
+          <AbstractNodeData Name="Dogi" ActionTag="-783934955" Tag="246" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="131.2000" RightMargin="508.8000" TopMargin="1056.4800" BottomMargin="79.5200" InnerActionSpeed="0.3333" ctype="ProjectNodeObjectData">
             <Size />
             <AnchorPoint />
             <Position X="131.2000" Y="79.5200" />
