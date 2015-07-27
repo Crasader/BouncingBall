@@ -50,7 +50,7 @@ void SceneManager::enterGameScene(int level)
     this->_gameScene = GameScene::createWithLevel(level);
     _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
     //
-    physicsScene->getPhysicsWorld()->setSubsteps(2);
+    physicsScene->getPhysicsWorld()->setSubsteps(3);
     physicsScene->addChild(_gameScene);
 
 //    this->gameScene->setNetworkedSession(networked);

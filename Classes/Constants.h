@@ -23,7 +23,7 @@ const static float MAX_SHOOTING_SPEED = 1500.0f;
 #pragma mark Edge Setting
 const static cocos2d::PhysicsMaterial EDGE_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
 
-const static cocos2d::PhysicsMaterial DEFAULT_COIN_MATERIAL = cocos2d::PhysicsMaterial(1.0f, 0.0f, 1.0f);
+const static cocos2d::PhysicsMaterial DEFAULT_COIN_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 0.0f, 1.0f);
 
 #pragma Collusion Setting
 //TODO: add other colors, butfirst use three color
@@ -41,9 +41,9 @@ const static int COIN_INIT_COLLISION_MASK = COIN_CATEGORY | EDGE_CATEGORY ;
 const static int COIN_INIT_CONTACT_MARK = NONE;
 
 const static int COIN_RUNNING_COLLISION_MASK = NONE ;
-const static int COIN_RUNNING_CONTACT_MARK = BALL_CATEGORY ;
+const static int COIN_RUNNING_CONTACT_MASK = BALL_CATEGORY ;
 
-const static int EDGE_INIT_CULLISION_MASK = NONE;
+const static int EDGE_INIT_CULLISION_MASK = COIN_CATEGORY;
 const static int EDGE_INIT_CONTACT_MASK = BALL_CATEGORY;
 
 const static int EDGE_RUNNING_CULLISION_MASK = BALL_CATEGORY | COIN_CATEGORY;

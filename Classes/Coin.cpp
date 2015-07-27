@@ -57,5 +57,5 @@ void Coin::enableCollision()
 {
     this->setOpacity(255);
     this->getPhysicsBody()->setCollisionBitmask(COIN_RUNNING_COLLISION_MASK);
-    this->getPhysicsBody()->setContactTestBitmask(COIN_RUNNING_CONTACT_MARK);
+    this->getPhysicsBody()->setContactTestBitmask(COIN_RUNNING_CONTACT_MASK);
 }
