@@ -26,6 +26,8 @@
 #include "BallExplode.h"
 #include "BallExplodeReader.h"
 
+#include "Bomb.h"
+
 USING_NS_CC;
 
 
@@ -258,6 +260,17 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
         return false;
     }
+    
+    if (a->getCategoryBitmask() == BOMB_CATEGORY) {
+        CCLOG("A bombbbbbbb");
+        _gameState = GameState::prepareShooting;
+        return false;
+    }
+    if (b->getCategoryBitmask() == BOMB_CATEGORY) {
+        CCLOG("B bombbbbbbb");
+         _gameState = GameState::prepareShooting;
+        return false;
+    }
 
     //TODO:make a emun type detection,fix this ugly code
     
@@ -391,10 +404,31 @@ void GameScene::setupTouchHandling()
             {
                 if (_itemBox->getChildByName<Sprite*>("itemBackGround")->getBoundingBox().containsPoint(touchPos)) {
                     ItemCategory itemCategory = _itemBox->pickUpItemFromPos(touchPos);
-                    if (ItemCategory::none == itemCategory) {
-                        // noning
-                    } else {
-                        // use item
+                    if (ItemCategory::none != itemCategory) {
+                        switch (itemCategory) {
+                            case ItemCategory::bomb:
+                            {
+                                Bomb* bomb = Bomb::create();
+                                _gameState = GameState::usingBomb;
+                                Vec2 bombPos = _cannon->getPosition();
+                                bomb->setPosition(bombPos);
+                                bomb->setName("bomb");
+                                _mainScene->addChild(bomb);
+                                
+                                _ballsOnState.popBack();
+                                _ballsInBag.pushBack(_ballWaitShooting);
+                                _ballWaitShooting->removeFromParent();
+                                _ballWaitShooting = nullptr;
+                                
+                                resetEgde();
+                                enableAllCoin();
+                                
+                            }
+                                break;
+                                //TODO add other item
+                            default:
+                                break;
+                        }
                     }
                     return false;
                 }
@@ -406,6 +440,11 @@ void GameScene::setupTouchHandling()
             case GameState::shooting:
             {
                 allowToShoot = false;
+                return true;
+            }
+            case GameState::usingBomb:
+            {
+                allowToShoot = true;
                 return true;
             }
         }
@@ -426,15 +465,36 @@ void GameScene::setupTouchHandling()
     
     touchListener->onTouchEnded = [&](Touch* touch, Event* event)
     {
-        if (allowToShoot) {
-            _cannon->runShootingAnimation();
-            _dogi->runShootingAnimation();
-            _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
-            _gameState = GameState::shooting;
-            if (_isMultiplayer) {
-                //sendData
+        switch (_gameState) {
+            case GameState::prepareShooting:
+            {
+                if (allowToShoot) {
+                    _cannon->runShootingAnimation();
+                    _dogi->runShootingAnimation();
+                    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+                    _gameState = GameState::shooting;
+                    if (_isMultiplayer) {
+                        //sendData
+                    }
+                }
             }
+                break;
+            case GameState::usingBomb:
+            {
+                if (allowToShoot) {
+                    _cannon->runShootingAnimation();
+                    //add Fire animation
+                    _dogi->runShootingAnimation();
+                    Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
+                    bomb->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+                    _gameState = GameState::shootingBomb;
+                }
+            }
+                
+            default:
+                break;
         }
+     
     };
     
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);

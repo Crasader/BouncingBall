@@ -43,6 +43,7 @@ protected:
     cocos2d::Sprite* _edgeSp;
     PassCode* _passCode;
     ItemBox* _itemBox;
+    cocos2d::Sprite* _currentItem;
     
     
     
