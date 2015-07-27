@@ -49,7 +49,6 @@ void Coin::runAppearAnimation()
     _action = Spawn::create(
                             JumpTo::create(0.5, newPos, 30, 1),
                             FadeTo::create(0.5f,128),
-                     //       RotateBy::create(0.5f, Vec3(0, 1080, 0)),
                             nullptr);
     this->runAction(_action);
 }

@@ -74,7 +74,6 @@ protected:
     std::string getConfigFileName();
     void resetAllBallHp();
     void enableAllCoin();
-
     
     cocos2d::ui::Text*  _scoreLabel;
     

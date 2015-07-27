@@ -38,19 +38,19 @@
         </Timeline>
         <Timeline ActionTag="-450043310" Property="FileData">
           <TextureFrame FrameIndex="1" Tween="False">
-            <TextureFile Type="Normal" Path="res/dogi1.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/dogi1.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="2" Tween="False">
-            <TextureFile Type="Normal" Path="res/dogi2.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/dogi2.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="3" Tween="False">
-            <TextureFile Type="Normal" Path="res/dogi3.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/dogi3.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="4" Tween="False">
-            <TextureFile Type="Normal" Path="res/dogi1.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/dogi1.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="5" Tween="False">
-            <TextureFile Type="Normal" Path="res/dogi1.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/dogi1.png" Plist="" />
           </TextureFrame>
         </Timeline>
       </Animation>
@@ -70,7 +70,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/dogi1.png" Plist="" />
+            <FileData Type="Normal" Path="asset/dogi1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>

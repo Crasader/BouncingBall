@@ -14,7 +14,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/star.png" Plist="" />
+            <FileData Type="Normal" Path="asset/star.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="Button" ActionTag="648841729" Tag="33" IconVisible="False" LeftMargin="-51.5000" RightMargin="-51.5000" TopMargin="-147.5000" BottomMargin="42.5000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="73" Scale9Height="83" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
@@ -27,8 +27,8 @@
             <PreSize />
             <TextColor A="255" R="65" G="65" B="70" />
             <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
-            <PressedFileData Type="Normal" Path="res/levelButton.png" Plist="" />
-            <NormalFileData Type="Normal" Path="res/levelButton.png" Plist="" />
+            <PressedFileData Type="Normal" Path="asset/levelButton.png" Plist="" />
+            <NormalFileData Type="Normal" Path="asset/levelButton.png" Plist="" />
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
@@ -40,7 +40,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/star1.png" Plist="" />
+            <FileData Type="Normal" Path="asset/star1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="star2" ActionTag="-1308381710" Tag="37" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-40.0000" ctype="SpriteObjectData">
@@ -51,7 +51,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/star2.png" Plist="" />
+            <FileData Type="Normal" Path="asset/star2.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="star3" ActionTag="-1461950483" Tag="39" Alpha="0" IconVisible="False" LeftMargin="-50.0000" RightMargin="-50.0000" TopMargin="-40.0000" ctype="SpriteObjectData">
@@ -62,7 +62,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/star3.png" Plist="" />
+            <FileData Type="Normal" Path="asset/star3.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="Label" ActionTag="1446440851" Tag="41" IconVisible="False" LeftMargin="-40.4913" RightMargin="-37.5087" TopMargin="-136.3400" BottomMargin="53.3400" LabelText="01" ctype="TextBMFontObjectData">

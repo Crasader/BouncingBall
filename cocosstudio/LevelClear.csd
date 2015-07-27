@@ -284,7 +284,7 @@
                 <TextColor A="255" R="65" G="65" B="70" />
                 <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
                 <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
-                <NormalFileData Type="Normal" Path="res/restartButton.png" Plist="" />
+                <NormalFileData Type="Normal" Path="asset/restartButton.png" Plist="" />
                 <OutlineColor A="255" R="255" G="0" B="0" />
                 <ShadowColor A="255" R="110" G="110" B="110" />
               </AbstractNodeData>
@@ -299,7 +299,7 @@
                 <TextColor A="255" R="65" G="65" B="70" />
                 <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
                 <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
-                <NormalFileData Type="Normal" Path="res/nextButton.png" Plist="" />
+                <NormalFileData Type="Normal" Path="asset/nextButton.png" Plist="" />
                 <OutlineColor A="255" R="255" G="0" B="0" />
                 <ShadowColor A="255" R="110" G="110" B="110" />
               </AbstractNodeData>
@@ -314,7 +314,7 @@
                 <TextColor A="255" R="65" G="65" B="70" />
                 <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
                 <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
-                <NormalFileData Type="Normal" Path="res/menuButton.png" Plist="" />
+                <NormalFileData Type="Normal" Path="asset/menuButton.png" Plist="" />
                 <OutlineColor A="255" R="255" G="0" B="0" />
                 <ShadowColor A="255" R="110" G="110" B="110" />
               </AbstractNodeData>
@@ -325,7 +325,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/levelClear.png" Plist="" />
+            <FileData Type="Normal" Path="asset/levelClear.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="starPiece1" ActionTag="732578899" Tag="44" IconVisible="False" LeftMargin="-150.2160" RightMargin="71.2160" TopMargin="-113.4341" BottomMargin="33.4341" ctype="SpriteObjectData">
@@ -336,7 +336,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/starPiece.png" Plist="" />
+            <FileData Type="Normal" Path="asset/starPiece.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="starPiece2" ActionTag="1652749831" Tag="45" IconVisible="False" LeftMargin="-40.9289" RightMargin="-38.0711" TopMargin="-123.4447" BottomMargin="43.4447" ctype="SpriteObjectData">
@@ -347,7 +347,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/starPiece.png" Plist="" />
+            <FileData Type="Normal" Path="asset/starPiece.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="starPiece3" ActionTag="1760834229" Tag="46" IconVisible="False" LeftMargin="67.3889" RightMargin="-146.3889" TopMargin="-114.9625" BottomMargin="34.9625" ctype="SpriteObjectData">
@@ -358,7 +358,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/starPiece.png" Plist="" />
+            <FileData Type="Normal" Path="asset/starPiece.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>

@@ -5,13 +5,13 @@
       <Animation Duration="3" Speed="0.3333" ActivedAnimationName="Explode">
         <Timeline ActionTag="2132910788" Property="FileData">
           <TextureFrame FrameIndex="1" Tween="False">
-            <TextureFile Type="Normal" Path="res/explode1.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/explode1.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="2" Tween="False">
-            <TextureFile Type="Normal" Path="res/explode2.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/explode2.png" Plist="" />
           </TextureFrame>
           <TextureFrame FrameIndex="3" Tween="False">
-            <TextureFile Type="Normal" Path="res/expload3.png" Plist="" />
+            <TextureFile Type="Normal" Path="asset/expload3.png" Plist="" />
           </TextureFrame>
         </Timeline>
       </Animation>
@@ -31,7 +31,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="res/explode1.png" Plist="" />
+            <FileData Type="Normal" Path="asset/explode1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>

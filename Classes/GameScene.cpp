@@ -129,6 +129,7 @@ void GameScene::setupMap()
     _edgeSp = Sprite::create();
     _edgeSp->setPosition(Vec2(visibleSize.width/2,visibleSize.height/2 + (bottomHeight - upperHeight)/2));
     _edgeSp->setPhysicsBody(edgeBody);
+    _edgeSp->setContentSize(Size(edgeWidth, edgeHeight));
     _mainScene->addChild(_edgeSp);
 
     
