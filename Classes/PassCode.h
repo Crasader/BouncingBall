@@ -19,6 +19,7 @@ public:
     BallColor getCurrentPassCodeColor();
     bool isPassCodeClear();
     bool EnterOneColor(BallColor color);
+    void resetPassCode();
 
     
 private:

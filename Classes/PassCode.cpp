@@ -20,6 +20,7 @@ PassCode* PassCode::createWithStr(std::string str)
         return nullptr;
     }
 }
+
 bool PassCode::initWithPassCode(std::string str)
 {
     if (! Node::init()) {
@@ -86,4 +87,13 @@ bool PassCode::EnterOneColor(BallColor color)
 void PassCode::turnOnCurrentColor()
 {
     _passCode.at(_currentPassCodePos)->setOpacity(255);
+}
+
+void PassCode::resetPassCode()
+{
+    for (auto piece : _passCode) {
+        piece->setOpacity(100);
+    };
+    _currentPassCodePos = 0;
+    
 }

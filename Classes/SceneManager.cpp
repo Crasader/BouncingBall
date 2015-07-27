@@ -45,12 +45,12 @@ SceneManager::~SceneManager()
 void SceneManager::enterGameScene(int level)
 {
     Scene* physicsScene = Scene::createWithPhysics();
-  //  physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
     this->_gameScene = GameScene::createWithLevel(level);
     _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
     //
-    physicsScene->getPhysicsWorld()->setSubsteps(3);
+    physicsScene->getPhysicsWorld()->setSubsteps(2);
     physicsScene->addChild(_gameScene);
 
 //    this->gameScene->setNetworkedSession(networked);

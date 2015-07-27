@@ -27,7 +27,6 @@
           <Image Name="BackGround.png" />
           <Image Name="sideBar.png" />
           <Image Name="upperBound.png" />
-          <Image Name="Coin.png" />
           <Image Name="dogi1.png" />
           <Image Name="dogi2.png" />
           <Image Name="dogi3.png" />
@@ -43,10 +42,17 @@
           <Image Name="menuButton.png" />
           <Image Name="nextButton.png" />
           <Image Name="restartButton.png" />
-          <Image Name="Aimshot.png" />
           <Image Name="expload3.png" />
           <Image Name="explode1.png" />
           <Image Name="explode2.png" />
+          <Image Name="Rock.png" />
+          <Image Name="arrow.png" />
+          <Image Name="itemBackGround.png" />
+          <Image Name="itemBox.png" />
+          <Image Name="nextBall.png" />
+          <Image Name="line.png" />
+          <Image Name="coin.png" />
+          <Image Name="aimshot.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
@@ -54,6 +60,8 @@
         <Fnt Name="font01.fnt" />
         <Project Name="LevelClear.csd" Type="Node" />
         <Project Name="BallExplode.csd" Type="Node" />
+        <Project Name="testScene.csd" Type="Scene" />
+        <Project Name="ItemBox.csd" Type="Node" />
       </RootFolder>
     </Group>
   </SolutionFolder>

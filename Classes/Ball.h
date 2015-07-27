@@ -16,7 +16,7 @@
 class Ball : public cocos2d::Sprite
 {
 public:
-    static Ball* createWithBallConfig(JSONPacker::BallConfig config);
+    static Ball* createWithColor(std::string color);
     static Ball* createRandomBall();
     bool init() override;
     void shoot(float speed, float angle);
@@ -30,7 +30,7 @@ public:
 private:
     int _hp;
     BallColor _color;
-    bool initWithBallConfig(JSONPacker::BallConfig config);
+    bool initWithColor(std::string color);
     BallColor getBallColorFromStr(std::string color);
     cocos2d::PhysicsBody* createBallPhysicsBody(BallColor color);
 

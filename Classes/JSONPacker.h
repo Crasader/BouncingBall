@@ -16,15 +16,10 @@ namespace JSONPacker
 {
     struct BallConfig
     {
-        float relativeX;
-        float relativeY;
+        cocos2d::Vec2 pos;
         std::string color;
     };
     
-    struct BlockConfig
-    {
-        
-    };
     
     struct StarConfig
     {
@@ -36,11 +31,11 @@ namespace JSONPacker
     struct MapState
     {
         std::vector<BallConfig> ballsOnStage;
-        std::vector<BallConfig> ballsInBag;
+        std::vector<std::string> ballsInBag;
+        std::vector<cocos2d::Vec2> rocks;
+        std::vector<cocos2d::Vec2> coins;
         std::string passCode;
         StarConfig starConfig;
- //       cocos2d::Vector<Block*> blocks;
-        
     };
     
     struct MultiSyncData

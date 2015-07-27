@@ -26,25 +26,43 @@ namespace JSONPacker {
         for (int i =0; i < document["ball"].Capacity();++i)
         {
             const rapidjson::Value& ball = document["ball"][i];
-            float relativeX = ball["relativeX"].GetDouble();
-            float relativeY = ball["relativeY"].GetDouble();
+            float xPos = ball["xPos"].GetDouble();
+            float yPos = ball["yPos"].GetDouble();
+            Vec2 pos = Vec2(xPos, yPos);
             std::string color = ball["color"].GetString();
 
-            BallConfig config = {relativeX, relativeY, color};
+            BallConfig config = {pos, color};
             ballsOnStage.push_back(config);
         }
         
-        std::vector<BallConfig> ballsInBag;
+        std::vector<std::string> ballsInBag;
         for (int i =0; i < document["ballBag"].Capacity();++i)
         {
-            const rapidjson::Value& ball = document["ballBag"][i];
-            float relativeX = ball["relativeX"].GetDouble();
-            float relativeY = ball["relativeY"].GetDouble();
-            std::string color = ball["color"].GetString();
-            
-            BallConfig config = {relativeX, relativeY, color};
-            ballsInBag.push_back(config);
+            std::string color = document["ballBag"][i].GetString();
+
+            ballsInBag.push_back(color);
         }
+        
+        std::vector<Vec2> rocks;
+        for (int i =0; i < document["rock"].Capacity();++i)
+        {
+            const rapidjson::Value& rock = document["rock"][i];
+            float xPos = rock["xPos"].GetDouble();
+            float yPos = rock["yPos"].GetDouble();
+            Vec2 pos = Vec2(xPos, yPos);
+            rocks.push_back(pos);
+        }
+        
+        std::vector<Vec2> coins;
+        for (int i =0; i < document["coin"].Capacity();++i)
+        {
+            const rapidjson::Value& coin = document["coin"][i];
+            float xPos = coin["xPos"].GetDouble();
+            float yPos = coin["yPos"].GetDouble();
+            Vec2 pos = Vec2(xPos, yPos);
+            coins.push_back(pos);
+        }
+        
         std::string passCode = document["passCode"].GetString();
         
         
@@ -55,7 +73,7 @@ namespace JSONPacker {
         starConfig.threeStar = star["three"].GetInt();
         
         
-        MapState mapState = { ballsOnStage, ballsInBag, passCode, starConfig};
+        MapState mapState = { ballsOnStage, ballsInBag, rocks, coins, passCode, starConfig };
         return mapState;
     }
     

@@ -71,10 +71,10 @@ bool Ball::init()
     return true;
 }
 
-Ball* Ball::createWithBallConfig(JSONPacker::BallConfig config)
+Ball* Ball::createWithColor(std::string color)
 {
     Ball* ball = new (std::nothrow) Ball();
-    if (ball && ball->initWithBallConfig(config)) {
+    if (ball && ball->initWithColor(color)) {
         ball->autorelease();
         return ball;
     } else {
@@ -83,17 +83,17 @@ Ball* Ball::createWithBallConfig(JSONPacker::BallConfig config)
     }
 }
 
-bool Ball::initWithBallConfig(JSONPacker::BallConfig config)
+
+bool Ball::initWithColor(std::string color)
 {
-    std::string fileName = config.color + ".png";
+    std::string fileName = color + ".png";
     if (! Sprite::initWithFile(fileName)) {
         return false;
     }
     this->_hp = BALL_DEFAULT_HP;
-    this->_color = getBallColorFromStr(config.color);
+    this->_color = getBallColorFromStr(color);
     auto ballBody = createBallPhysicsBody(_color);
     this->setPhysicsBody(ballBody);
-    this->setNormalizedPosition(Vec2(config.relativeX, config.relativeY));
     return true;
 }
 

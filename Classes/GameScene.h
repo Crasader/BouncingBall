@@ -12,6 +12,7 @@ class Cannon;
 class PassCode;
 class Dogi;
 class BallExplode;
+class ItemBox;
 
 class GameScene : public cocos2d::Node
 {
@@ -41,6 +42,8 @@ protected:
     Dogi* _dogi;
     cocos2d::Sprite* _edgeSp;
     PassCode* _passCode;
+    ItemBox* _itemBox;
+    
     
     
     //coin
@@ -75,8 +78,7 @@ protected:
     void resetAllBallHp();
     void enableAllCoin();
     
-    cocos2d::ui::Text*  _scoreLabel;
-    
+    cocos2d::ui::TextBMFont* _scoreLabel;
     GameState _gameState;
     
     void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);

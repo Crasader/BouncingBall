@@ -11,8 +11,12 @@
 #include "DogiReader.h"
 #include "Dogi.h"
 
+#include "ItemBoxReader.h"
+#include "ItemBox.h"
+
 #include "JSONPacker.h"
 #include "Coin.h"
+#include "Rock.h"
 
 #include "PassCode.h"
 
@@ -82,12 +86,15 @@ void GameScene::setupMap()
     instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
     instance->registReaderObject("DogiReader" , (ObjectFactory::Instance) DogiReader::getInstance);
     instance->registReaderObject("BallExplodeReader" , (ObjectFactory::Instance) BallExplodeReader::getInstance);
+    instance->registReaderObject("ItemBoxReader" , (ObjectFactory::Instance) ItemBoxReader::getInstance);
 
-    
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
     _cannon = rootNode->getChildByName<Cannon*>("Cannon");
     _dogi = rootNode->getChildByName<Dogi*>("Dogi");
+    _scoreLabel = rootNode->getChildByName<ui::TextBMFont*>("ScoreLabel");
+    _itemBox = rootNode->getChildByName<ItemBox*>("ItemBox");
+    
     
     _mainScene = rootNode;
     
@@ -95,17 +102,33 @@ void GameScene::setupMap()
     JSONPacker::MapState mapState = JSONPacker::unpackMapStateJSON(jsonStr);
     
     //setup balls in stage
-    for (auto ballconfig : mapState.ballsOnStage)
+    for (auto ballConfig : mapState.ballsOnStage)
     {
-        Ball* ball = Ball::createWithBallConfig(ballconfig);
+        Ball* ball = Ball::createWithColor(ballConfig.color);
+        ball->setPosition(ballConfig.pos);
         _mainScene->addChild(ball);
         this->_ballsOnState.pushBack(ball);
     }
     
     //setup balls in bags
-    for (auto ballconfig : mapState.ballsInBag) {
-        Ball* ball = Ball::createWithBallConfig(ballconfig);
+    for (auto ballColor : mapState.ballsInBag) {
+        Ball* ball = Ball::createWithColor(ballColor);
         this->_ballsInBag.pushBack(ball);
+    }
+    
+    for (auto rockPos : mapState.rocks) {
+        Rock* rock = Rock::create();
+        rock->setPosition(rockPos);
+        _mainScene->addChild(rock);
+    }
+    
+    for (auto coinPos : mapState.coins) {
+        Coin* coin = Coin::create();
+        coin->setPosition(coinPos);
+        coin->initCollision();
+        coin->enableCollision();
+        _coinOnStage.pushBack(coin);
+        _mainScene->addChild(coin);
     }
     
     _oneStarScore = mapState.starConfig.oneStar;
@@ -139,30 +162,15 @@ void GameScene::setupMap()
 
     _passCode = PassCode::createWithStr(mapState.passCode);
     _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
-    _passCode->setPosition(Vec2(visibleSize.width * 0.2f, visibleSize.height * 0.95f));
+    _passCode->setPosition(Vec2(visibleSize.width * 0.3f, visibleSize.height * 0.95f));
     this->addChild(_passCode);
     
-
-    
     ui::Button* backButton = ui::Button::create();
-    backButton->setAnchorPoint(Vec2(0.0f,1.0f));
-    backButton->setPosition(Vec2(0.0f,visibleSize.height));
+    backButton->setAnchorPoint(Vec2(0.0f,0.5f));
+    backButton->setPosition(Vec2(0.0f,visibleSize.height* 0.95f));
     backButton->loadTextures("backButton.png", "backButtonPressed.png");
     backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
     this->addChild(backButton);
-    
-    
-    Coin* uiCoin = Coin::create();
-    uiCoin->setAnchorPoint(Vec2(0.5f, 0.5f));
-    uiCoin->setPosition(Vec2(visibleSize.width * 0.8f, visibleSize.height * 0.95f));
-    this->addChild(uiCoin);
-    
-    this->_scoreLabel = ui::Text::create("0",FONT_NAME,FONT_SIZE);
-    this->_scoreLabel->setAnchorPoint(Vec2(0.5f, 0.5f));
-    this->_scoreLabel->setPosition(Vec2(visibleSize.width * 0.9f, visibleSize.height * 0.95f));
-    this->_scoreLabel->setColor(LABEL_COLOR);
-    
-    this->addChild(_scoreLabel);
     
 }
 
@@ -174,7 +182,6 @@ void GameScene::setupBall()
     
     Vec2 ballPos = _cannon->getPosition();
     _ballWaitShooting->setPosition(ballPos);
-    _ballWaitShooting->setHp(BALL_INFINITY_HP);
     _ballsOnState.pushBack(_ballWaitShooting);
     this->addChild(_ballWaitShooting);
     resetEgde();
@@ -186,6 +193,12 @@ void GameScene::update(float dt)
 {
     Node::update(dt);
     if (_gameState == GameState::shooting && this->allBallIsStoped()) {
+        if (isGoalAchieved()) {
+            _passCode->resetPassCode();
+            _itemBox->addItem(ItemCategory::bomb);
+            //item box add
+            //get random item
+        }
         if (isGameOver()) {
             triggerGameOver();
         } else {
@@ -201,11 +214,14 @@ void GameScene::update(float dt)
 
 void GameScene::triggerGameOver()
 {
-    if (isGoalAchieved()) {
-        //TODO: add animation to
+        int starsNum = evaluateStars(_currentScore);
         
-        int totalScore = _ballsInBag.size()*3 + _currentScore;
-        int starsNum = evaluateStars(totalScore);
+        if (starsNum == 0) {
+            std::string messageContent = "Your Failed !";
+            MessageBox(messageContent.c_str(), "Game Over!!");
+            SceneManager::getInstance()->backToLobby();
+            return ;
+        }
         
         Size visibleSize = Director::getInstance()->getVisibleSize();
         
@@ -226,18 +242,6 @@ void GameScene::triggerGameOver()
 
         _gameState = GameState::gameOver;
         
-  //      std::string starStr = StringUtils::toString(starsNum);
- //       std::string messageContent = "Your Got " + starStr + " Stars !";
-        
- //       MessageBox(messageContent.c_str(), "Game Over!!");
-   //     SceneManager::getInstance()->backToLobby();
-        
-    } else {
-        std::string messageContent = "Your Failed !";
-        MessageBox(messageContent.c_str(), "Game Over!!");
-        SceneManager::getInstance()->backToLobby();
-
-    }
 }
 
 #pragma mark -
@@ -254,7 +258,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
         return false;
     }
-    
+
     //TODO:make a emun type detection,fix this ugly code
     
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
@@ -325,7 +329,8 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
             _mainScene->addChild(ballExplode);
             ballExplode->runExplodeAnimation();
             ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
-            for(int i=0 ;i < 5 ;++i) {
+            
+            for(int i=0 ;i < 3 ;++i) {
                 Coin* coin = Coin::create();
                 coin->setPosition(pos);
                 _mainScene->addChild(coin);
@@ -349,7 +354,7 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
             ballExplode->runExplodeAnimation();
             ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
             
-            for(int i=0 ;i < 5 ;++i) {
+            for(int i=0 ;i < 3 ;++i) {
                 Coin* coin = Coin::create();
                 coin->setPosition(pos);
                 _mainScene->addChild(coin);
@@ -379,11 +384,23 @@ void GameScene::setupTouchHandling()
         Vec2 touchPos = this->convertTouchToNodeSpace(touch);
         lastTouchPos = touchPos;
         firstTouchPos = touchPos;
+        
+        // if itemBox->touchPosHasItem(pos)
         switch (_gameState) {
             case GameState::prepareShooting:
             {
+                if (_itemBox->getChildByName<Sprite*>("itemBackGround")->getBoundingBox().containsPoint(touchPos)) {
+                    ItemCategory itemCategory = _itemBox->pickUpItemFromPos(touchPos);
+                    if (ItemCategory::none == itemCategory) {
+                        // noning
+                    } else {
+                        // use item
+                    }
+                    return false;
+                }
                 allowToShoot = true;
                 return true;
+               
             }
                 break;
             case GameState::shooting:
@@ -465,15 +482,11 @@ void GameScene::resetEgde()
 
 
 bool GameScene::isGoalAchieved(){
-    return false;
-  //  return _passCode->isPassCodeClear();
+    return _passCode->isPassCodeClear();
 }
 
 bool GameScene::isGameOver()
 {
-    if (isGoalAchieved()) {
-        return true;
-    }
     
     if (_ballsInBag.empty()) {
         return true;

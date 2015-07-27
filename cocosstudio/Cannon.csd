@@ -43,7 +43,7 @@
                 <CColor A="255" R="255" G="255" B="255" />
                 <PrePosition X="0.5000" Y="0.7253" />
                 <PreSize X="0.2778" Y="0.2500" />
-                <FileData Type="Normal" Path="asset/Aimshot.png" Plist="" />
+                <FileData Type="Normal" Path="asset/aimshot.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />
               </AbstractNodeData>
               <AbstractNodeData Name="Aimshot_2" ActionTag="39285392" Tag="63" Alpha="127" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="65.0000" RightMargin="65.0000" TopMargin="-20.0659" BottomMargin="170.0659" ctype="SpriteObjectData">
@@ -54,7 +54,7 @@
                 <CColor A="255" R="255" G="255" B="255" />
                 <PrePosition X="0.5000" Y="0.9753" />
                 <PreSize X="0.2778" Y="0.2500" />
-                <FileData Type="Normal" Path="asset/Aimshot.png" Plist="" />
+                <FileData Type="Normal" Path="asset/aimshot.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />
               </AbstractNodeData>
               <AbstractNodeData Name="Aimshot_3" ActionTag="1923387436" Tag="64" Alpha="127" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="65.0000" RightMargin="65.0000" TopMargin="-70.0661" BottomMargin="220.0661" ctype="SpriteObjectData">
@@ -65,7 +65,7 @@
                 <CColor A="255" R="255" G="255" B="255" />
                 <PrePosition X="0.5000" Y="1.2253" />
                 <PreSize X="0.2778" Y="0.2500" />
-                <FileData Type="Normal" Path="asset/Aimshot.png" Plist="" />
+                <FileData Type="Normal" Path="asset/aimshot.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />
               </AbstractNodeData>
               <AbstractNodeData Name="Aimshot_4" ActionTag="827292404" Tag="65" Alpha="127" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="65.0000" RightMargin="65.0000" TopMargin="-120.0659" BottomMargin="270.0659" ctype="SpriteObjectData">
@@ -76,7 +76,7 @@
                 <CColor A="255" R="255" G="255" B="255" />
                 <PrePosition X="0.5000" Y="1.4753" />
                 <PreSize X="0.2778" Y="0.2500" />
-                <FileData Type="Normal" Path="asset/Aimshot.png" Plist="" />
+                <FileData Type="Normal" Path="asset/aimshot.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />
               </AbstractNodeData>
               <AbstractNodeData Name="Aimshot_5" ActionTag="-1319966423" Tag="66" Alpha="127" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="65.0000" RightMargin="65.0000" TopMargin="-170.0000" BottomMargin="320.0000" ctype="SpriteObjectData">
@@ -87,7 +87,7 @@
                 <CColor A="255" R="255" G="255" B="255" />
                 <PrePosition X="0.5000" Y="1.7250" />
                 <PreSize X="0.2778" Y="0.2500" />
-                <FileData Type="Normal" Path="asset/Aimshot.png" Plist="" />
+                <FileData Type="Normal" Path="asset/aimshot.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />
               </AbstractNodeData>
               <AbstractNodeData Name="Aimshot_6" ActionTag="-2077752619" Tag="67" Alpha="127" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="65.0000" RightMargin="65.0000" TopMargin="-220.0000" BottomMargin="370.0000" ctype="SpriteObjectData">
@@ -98,7 +98,7 @@
                 <CColor A="255" R="255" G="255" B="255" />
                 <PrePosition X="0.5000" Y="1.9750" />
                 <PreSize X="0.2778" Y="0.2500" />
-                <FileData Type="Normal" Path="asset/Aimshot.png" Plist="" />
+                <FileData Type="Normal" Path="asset/aimshot.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />
               </AbstractNodeData>
             </Children>
