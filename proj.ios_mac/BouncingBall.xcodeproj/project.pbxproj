@@ -80,10 +80,10 @@
 		9E0E6BE51B62D95B003B2D87 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E0E6BE41B62D95B003B2D87 /* MultipeerConnectivity.framework */; };
 		9E0E6C931B6307C4003B2D87 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 9E0E6C921B6307C4003B2D87 /* res */; };
 		9E0E6C941B6307C4003B2D87 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 9E0E6C921B6307C4003B2D87 /* res */; };
-		9E0E6C991B654F66003B2D87 /* BallExplode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C951B654F66003B2D87 /* BallExplode.cpp */; };
-		9E0E6C9A1B654F66003B2D87 /* BallExplode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C951B654F66003B2D87 /* BallExplode.cpp */; };
-		9E0E6C9B1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */; };
-		9E0E6C9C1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */; };
+		9E0E6C991B654F66003B2D87 /* Explode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C951B654F66003B2D87 /* Explode.cpp */; };
+		9E0E6C9A1B654F66003B2D87 /* Explode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C951B654F66003B2D87 /* Explode.cpp */; };
+		9E0E6C9B1B654F66003B2D87 /* ExplodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C971B654F66003B2D87 /* ExplodeReader.cpp */; };
+		9E0E6C9C1B654F66003B2D87 /* ExplodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6C971B654F66003B2D87 /* ExplodeReader.cpp */; };
 		9E0E6CA51B66A1BB003B2D87 /* Rock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6CA31B66A1BB003B2D87 /* Rock.cpp */; };
 		9E0E6CA61B66A1BB003B2D87 /* Rock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6CA31B66A1BB003B2D87 /* Rock.cpp */; };
 		9E0E6CAC1B66DA8C003B2D87 /* Bomb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6CAA1B66DA8C003B2D87 /* Bomb.cpp */; };
@@ -206,10 +206,10 @@
 		9E0E6BDF1B62D906003B2D87 /* NetworkManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManagerDelegate.h; sourceTree = "<group>"; };
 		9E0E6BE41B62D95B003B2D87 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		9E0E6C921B6307C4003B2D87 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
-		9E0E6C951B654F66003B2D87 /* BallExplode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BallExplode.cpp; path = ../Classes/BallExplode.cpp; sourceTree = "<group>"; };
-		9E0E6C961B654F66003B2D87 /* BallExplode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BallExplode.h; path = ../Classes/BallExplode.h; sourceTree = "<group>"; };
-		9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BallExplodeReader.cpp; path = ../Classes/BallExplodeReader.cpp; sourceTree = "<group>"; };
-		9E0E6C981B654F66003B2D87 /* BallExplodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BallExplodeReader.h; path = ../Classes/BallExplodeReader.h; sourceTree = "<group>"; };
+		9E0E6C951B654F66003B2D87 /* Explode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Explode.cpp; path = ../Classes/Explode.cpp; sourceTree = "<group>"; };
+		9E0E6C961B654F66003B2D87 /* Explode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Explode.h; path = ../Classes/Explode.h; sourceTree = "<group>"; };
+		9E0E6C971B654F66003B2D87 /* ExplodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExplodeReader.cpp; path = ../Classes/ExplodeReader.cpp; sourceTree = "<group>"; };
+		9E0E6C981B654F66003B2D87 /* ExplodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExplodeReader.h; path = ../Classes/ExplodeReader.h; sourceTree = "<group>"; };
 		9E0E6CA31B66A1BB003B2D87 /* Rock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rock.cpp; sourceTree = "<group>"; };
 		9E0E6CA41B66A1BB003B2D87 /* Rock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rock.h; sourceTree = "<group>"; };
 		9E0E6CAA1B66DA8C003B2D87 /* Bomb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bomb.cpp; sourceTree = "<group>"; };
@@ -493,10 +493,10 @@
 		9E0E6C9E1B654F7A003B2D87 /* AnimationClass */ = {
 			isa = PBXGroup;
 			children = (
-				9E0E6C951B654F66003B2D87 /* BallExplode.cpp */,
-				9E0E6C961B654F66003B2D87 /* BallExplode.h */,
-				9E0E6C971B654F66003B2D87 /* BallExplodeReader.cpp */,
-				9E0E6C981B654F66003B2D87 /* BallExplodeReader.h */,
+				9E0E6C951B654F66003B2D87 /* Explode.cpp */,
+				9E0E6C961B654F66003B2D87 /* Explode.h */,
+				9E0E6C971B654F66003B2D87 /* ExplodeReader.cpp */,
+				9E0E6C981B654F66003B2D87 /* ExplodeReader.h */,
 				9E2C6B821B60B5B40096EA85 /* Dogi.cpp */,
 				9E2C6B831B60B5B40096EA85 /* Dogi.h */,
 				9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */,
@@ -653,7 +653,7 @@
 			files = (
 				9E0E6BCD1B6160CC003B2D87 /* LevelSelect.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				9E0E6C991B654F66003B2D87 /* BallExplode.cpp in Sources */,
+				9E0E6C991B654F66003B2D87 /* Explode.cpp in Sources */,
 				9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */,
 				9E0E6BE01B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
@@ -664,7 +664,7 @@
 				9E0E6CB21B66DCB0003B2D87 /* ItemBoxReader.cpp in Sources */,
 				9E0E6BC51B615771003B2D87 /* LevelGrid.cpp in Sources */,
 				9E0E6BE21B62D906003B2D87 /* NetworkManager.mm in Sources */,
-				9E0E6C9B1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */,
+				9E0E6C9B1B654F66003B2D87 /* ExplodeReader.cpp in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */,
 				9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
@@ -692,8 +692,8 @@
 				9E0E6CA61B66A1BB003B2D87 /* Rock.cpp in Sources */,
 				9E0CBC941B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				9E0E6BE11B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
-				9E0E6C9C1B654F66003B2D87 /* BallExplodeReader.cpp in Sources */,
-				9E0E6C9A1B654F66003B2D87 /* BallExplode.cpp in Sources */,
+				9E0E6C9C1B654F66003B2D87 /* ExplodeReader.cpp in Sources */,
+				9E0E6C9A1B654F66003B2D87 /* Explode.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				9E0E6BE31B62D906003B2D87 /* NetworkManager.mm in Sources */,

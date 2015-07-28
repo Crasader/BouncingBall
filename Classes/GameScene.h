@@ -12,7 +12,7 @@
 class Cannon;
 class PassCode;
 class Dogi;
-class BallExplode;
+class Explode;
 class ItemBox;
 
 class GameScene : public cocos2d::Node

@@ -53,13 +53,16 @@
           <Image Name="line.png" />
           <Image Name="coin.png" />
           <Image Name="aimshot.png" />
+          <Image Name="bombExplode1.png" />
+          <Image Name="bombExplode2.png" />
+          <Image Name="bombExplode3.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
         <TTF Name="Cloudy With a Chance of Love.ttf" />
         <Fnt Name="font01.fnt" />
         <Project Name="LevelClear.csd" Type="Node" />
-        <Project Name="BallExplode.csd" Type="Node" />
+        <Project Name="Explode.csd" Type="Node" />
         <Project Name="testScene.csd" Type="Scene" />
         <Project Name="ItemBox.csd" Type="Node" />
       </RootFolder>

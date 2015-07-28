@@ -23,8 +23,8 @@
 #include "LevelClear.h"
 #include "levelClearReader.h"
 
-#include "BallExplode.h"
-#include "BallExplodeReader.h"
+#include "Explode.h"
+#include "ExplodeReader.h"
 
 #include "Bomb.h"
 
@@ -166,7 +166,6 @@ void GameScene::updateBallPreview()
    
 }
 
-
 #pragma mark - 
 #pragma mark - Setup Method
 
@@ -177,7 +176,7 @@ void GameScene::setupMap()
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
     instance->registReaderObject("DogiReader" , (ObjectFactory::Instance) DogiReader::getInstance);
-    instance->registReaderObject("BallExplodeReader" , (ObjectFactory::Instance) BallExplodeReader::getInstance);
+    instance->registReaderObject("ExplodeReader" , (ObjectFactory::Instance) ExplodeReader::getInstance);
     instance->registReaderObject("ItemBoxReader" , (ObjectFactory::Instance) ItemBoxReader::getInstance);
 
     
@@ -292,10 +291,10 @@ void GameScene::setupBall()
 
 void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 pos)
 {
-    BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
+    Explode* ballExplode = dynamic_cast<Explode*>(CSLoader::createNode("Explode.csb"));
     ballExplode->setPosition(pos);
     _mainScene->addChild(ballExplode);
-    ballExplode->runExplodeAnimation();
+    ballExplode->runBallExplodeAnimation();
     ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
     
     for(int i=0 ;i < 3 ;++i) {
@@ -400,6 +399,12 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     //Bomb hitted
     if (a->getCategoryBitmask() == BOMB_CATEGORY || b->getCategoryBitmask() == BOMB_CATEGORY) {
         Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
+        
+        Explode* bombExplode = dynamic_cast<Explode*>(CSLoader::createNode("Explode.csb"));
+        bombExplode->setPosition(bomb->getPosition());
+        _mainScene->addChild(bombExplode);
+        bombExplode->runBombExplodeAnimation();
+        bombExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
         
         // Destory coin in range
         for (Vector<Coin*>::iterator it = _coinOnStage.begin(); it !=_coinOnStage.end();) {

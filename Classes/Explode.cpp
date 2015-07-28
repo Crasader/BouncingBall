@@ -1,20 +1,20 @@
 //
-//  BallExplode.cpp
+//  Explode.cpp
 //  BouncingBall
 //
 //  Created by Liang Fan on 7/27/15.
 //
 //
 
-#include "BallExplode.h"
+#include "Explode.h"
 
-bool BallExplode::init() {
+bool Explode::init() {
     if (!Node::init()) {
         return false;
     }
 
     // load the character animation timeline
-    this->_timeline = CSLoader::createTimeline("BallExplode.csb");
+    this->_timeline = CSLoader::createTimeline("Explode.csb");
     // retain the character animation timeline so it doesn't get deallocated
     this->_timeline->retain();
 
@@ -22,15 +22,22 @@ bool BallExplode::init() {
 }
 
 
-void BallExplode::onExit()
+void Explode::onExit()
 {
     _timeline->release();
     Node::onExit();
 }
 
-void BallExplode::runExplodeAnimation()
+void Explode::runBallExplodeAnimation()
 {
     this->stopAllActions();
     this->runAction(_timeline);
-    _timeline->play("Explode",false);
+    _timeline->play("BallExplode",false);
+}
+
+void Explode::runBombExplodeAnimation()
+{
+    this->stopAllActions();
+    this->runAction(_timeline);
+    _timeline->play("BombExplode",false);
 }
