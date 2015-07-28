@@ -59,6 +59,7 @@ protected:
     int _threeStarScore;
 
     void update(float dt) override;
+    void updateBallPreview();
     bool allBallIsStoped();
     void resetEgde();
     
@@ -87,7 +88,6 @@ protected:
     
     void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
     void ballHolderButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
-    
     
     void createCoinByPosWhenBallHpIsZero(cocos2d::Vec2 pos);
     void createItemWhenTouchedItemBox(ItemCategory itemCategory);

@@ -153,6 +153,18 @@ void GameScene::triggerGameOver()
     
 }
 
+void GameScene::updateBallPreview()
+{
+    //update preview
+    if (_ballsInBag.begin() == _ballsInBag.end()) {
+        _ballPreview->removeFromParent();
+    } else {
+        std::string fileName = _ballsInBag.front()->getBallFileName();
+        _ballPreview->setVisible(false);
+    }
+   
+}
+
 
 #pragma mark - 
 #pragma mark - Setup Method
@@ -270,11 +282,9 @@ void GameScene::setupBall()
     _mainScene->addChild(_ballWaitShooting);
     
     _ballsInBag.erase(_ballsInBag.begin());
-    resetEgde();
     
-    //update preview
-    std::string fileName = _ballsInBag.front()->getBallFileName();
-    _ballPreview->setTexture(fileName);
+    resetEgde();
+    updateBallPreview();
     
 }
 
@@ -316,8 +326,7 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
                 _ballWaitShooting = nullptr;
             }
             
-            std::string fileName = _ballsInBag.front()->getBallFileName();
-            _ballPreview->setTexture(fileName);
+            updateBallPreview();
             
             resetEgde();
             enableAllCoin();

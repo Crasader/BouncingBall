@@ -43,6 +43,7 @@ void ItemBox::addItem(ItemCategory itemCategory)
         this->addChild(displayItem);
     }
 }
+
 ItemCategory ItemBox::pickUpItemFromPos(cocos2d::Vec2 pos)
 {
     for (int i=0; i < _items.size(); ++i) {
