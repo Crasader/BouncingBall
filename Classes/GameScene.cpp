@@ -157,10 +157,11 @@ void GameScene::updateBallPreview()
 {
     //update preview
     if (_ballsInBag.begin() == _ballsInBag.end()) {
-        _ballPreview->removeFromParent();
-    } else {
-        std::string fileName = _ballsInBag.front()->getBallFileName();
         _ballPreview->setVisible(false);
+    } else {
+        _ballPreview->setVisible(true);
+        std::string fileName = _ballsInBag.front()->getBallFileName();
+        _ballPreview->setTexture(fileName);
     }
    
 }
@@ -452,8 +453,11 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
     
     if (a->getCategoryBitmask() == BALL_CATEGORY) {
         Ball* ball = dynamic_cast<Ball*>(a->getNode());
-        ball->gotHit();
-        //TODO: refacotring
+
+        if (b->getCategoryBitmask() == BALL_CATEGORY) {
+              ball->gotHit();
+        }
+        //TODO: refactoring
         if (ball->getHp() <= 0) {
             Vec2 pos = ball->getPosition();
             ball->removeFromParent();
@@ -468,7 +472,9 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
     
     if (b->getCategoryBitmask() == BALL_CATEGORY) {
         Ball* ball = dynamic_cast<Ball*>(b->getNode());
-        ball->gotHit();
+        if (a->getCategoryBitmask() == BALL_CATEGORY) {
+            ball->gotHit();
+        }
         if (ball->getHp() <= 0) {
             Vec2 pos = ball->getPosition();
             ball->removeFromParent();
