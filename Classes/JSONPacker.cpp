@@ -77,65 +77,74 @@ namespace JSONPacker {
         return mapState;
     }
     
-    std::string packMultiSyncDataJSON(MultiSyncData multiSyncData)
+    std::string packMultiInputDataJSON(MultiInputData multiInputData)
     {
         rapidjson::Document document;
         document.SetObject();
         /*
-     //   document.AddMember("multiplayState", multiSyncData.multiplayState, document.GetAllocator());
-        switch (multiSyncData.multiplayState) {
+        document.AddMember("multiplayState", multiInputData.multiplayState, document.GetAllocator());
+        document.AddMember("gameState", multiInputData.gameState, document.GetAllocator());
+         */
+        
+        /*
+        switch (multiInputData.multiplayState) {
             case MultiplayState::sendDeviceName:
             {
-                document.AddMember("deviceName", multiSyncData.deviceName, document.GetAllocator());
+                document.AddMember("deviceName", multiInputData.deviceName, document.GetAllocator());
             }
                 break;
-            case MultiplayState::shooting:
+            case MultiplayState::playing:
             {
-                document.AddMember("angle", multiSyncData.angle, document.GetAllocator());
-                document.AddMember("speed", multiSyncData.speed, document.GetAllocator());
+                switch (multiInputData.gameState) {
+                    case GameState::prepareShooting:
+                        break;
+                        
+                    default:
+                        break;
+                }
+
             }
                 break;
             default:
                 break;
         }
+         */
         
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
         document.Accept(writer);
         
         std::string returnString(buffer.GetString(), buffer.Size());
-         */
-       // return returnString;
+        return returnString;
 
     }
     
-    MultiSyncData unpackMultiSyncDataJSON(std::string json)
+    MultiInputData unpackMultiInputDataJSON(std::string json)
     {
         rapidjson::Document document;
         document.Parse<0>(json.c_str());
         
-        MultiSyncData data;
- 
- //       data.multiplayState = static_cast<MultiplayState>(document["multiplayState"].GetInt());
-        /*
+        MultiInputData data;
+ /*
+        data.multiplayState = static_cast<MultiplayState>(document["multiplayState"].GetInt());
+        
         switch (data.multiplayState) {
             case MultiplayState::sendDeviceName:
             {
                 data.deviceName = document["deviceName"].GetString();
             }
                 break;
-            case MultiplayState::shooting:
+            case MultiplayState::playing:
             {
-                data.angle = document["angle"].GetDouble();
-                data.speed = document["speed"].GetDouble();
             }
                 break;
             default:
                 break;
         }
-         */
+  */
         
-   //     return data;
+        
+        return data;
     }
     
-  }
+}

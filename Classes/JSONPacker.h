@@ -38,19 +38,23 @@ namespace JSONPacker
         StarConfig starConfig;
     };
     
-    struct MultiSyncData
+    struct MultiInputData
     {
         MultiplayState multiplayState;
+
+        GameState gameState;
+        BallColor ballColor;
+        ItemCategory itemUsed;
         float angle;
-        float speed;
+        cocos2d::Vec2 pos;
         std::string deviceName;
     };
 
     //TODO: improve this speed
     const MapState unpackMapStateJSON(std::string json);
     
-    std::string packMultiSyncDataJSON(MultiSyncData multiSyncData);
-    MultiSyncData unpackMultiSyncDataJSON(std::string json);
+    std::string packMultiInputDataJSON(MultiInputData multiInputData);
+    MultiInputData unpackMultiInputDataJSON(std::string json);
 }
 
 

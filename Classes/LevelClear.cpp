@@ -59,7 +59,6 @@ void LevelClear::runLevelClearAnimation(int starNums)
 void LevelClear::menuButtonPressed(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType eEventType)
 {
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        //   SceneManager::getInstance()->enterGameScene(false);
         SceneManager::getInstance()->backToLobby();
     }
 }

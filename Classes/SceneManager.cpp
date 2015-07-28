@@ -41,20 +41,22 @@ SceneManager::~SceneManager()
 #pragma mark -
 #pragma mark Public Methods
 
+std::string SceneManager::getDeviceName()
+{
+    return networkingWrapper->getDeviceName();
+}
 
-void SceneManager::enterGameScene(int level)
+void SceneManager::enterGameScene(int level, bool networked)
 {
     Scene* physicsScene = Scene::createWithPhysics();
     physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
     this->_gameScene = GameScene::createWithLevel(level);
+    this->_gameScene->setMultiplay(networked);
     _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
-    //
     physicsScene->getPhysicsWorld()->setSubsteps(3);
     physicsScene->addChild(_gameScene);
 
-//    this->gameScene->setNetworkedSession(networked);
-    
     Director::getInstance()->pushScene(physicsScene);
 }
 void SceneManager::enterLevelSelect()
@@ -71,7 +73,7 @@ void SceneManager::backToLobby()
     if (_gameScene) {
         Director::getInstance()->popScene();
         _gameScene = nullptr;
- //       networkingWrapper->disconnect();
+        networkingWrapper->disconnect();
     }
     
 }
@@ -98,7 +100,7 @@ void SceneManager::sendData(const void *data, unsigned long length)
 void SceneManager::receivedData(const void *data, unsigned long length)
 {
     if (_gameScene) {
-   //     _gameScene->receivedData(data, length);
+        _gameScene->receivedData(data, length);
     }
 }
 
@@ -115,7 +117,7 @@ void SceneManager::stateChanged(ConnectionState state)
             CCLOG("Connected");
             if (! _gameScene) {
                 this->networkingWrapper->stopAdvertisingAvailability();
-           //     this->enterGameScene(true);
+                this->enterGameScene(10000,true);
             }
             break;
     }

@@ -17,13 +17,17 @@ class SceneManager : NetworkingDelegate
 {
 public:
     static SceneManager* getInstance();
-    void enterGameScene(int level);
+    void enterGameScene(int level, bool networked);
+    
     void enterLevelSelect();
     void backToLobby();
     
     void showPeerList();
     void receiveMultiplayerInvitations();
     void sendData(const void* data, unsigned long length);
+    std::string getDeviceName();
+    
+    
 private:
     std::unique_ptr<NetworkingWrapper> networkingWrapper;
     GameScene* _gameScene;

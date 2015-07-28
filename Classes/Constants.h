@@ -76,12 +76,15 @@ enum class GameState
     usingBomb,
     shootingBomb,
     bombFinish,
+    wait
+    
+    //only for multiPlay
 };
 enum class MultiplayState
 {
     sendDeviceName,
-    wait,
-    shooting,
+    waiting,
+    playing,
     gameOver
 };
 

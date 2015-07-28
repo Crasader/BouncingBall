@@ -82,7 +82,7 @@ void LevelSelect::levelButtonPressed(Ref* pSender, ui::Widget::TouchEventType eE
     LevelGrid* levelGrid = dynamic_cast<LevelGrid*>(button->getParent());
 
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        SceneManager::getInstance()->enterGameScene(levelGrid->getLevel());
+        SceneManager::getInstance()->enterGameScene(levelGrid->getLevel(), false);
     }
 }
 

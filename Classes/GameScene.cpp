@@ -30,6 +30,7 @@
 
 USING_NS_CC;
 
+//TODO make item box bigger
 
 //TODO: make Debug func for game over and map test
 
@@ -570,7 +571,7 @@ void GameScene::setupTouchHandling()
                     _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
                     _gameState = GameState::shooting;
                     
-                    if (_isMultiplayer) {
+                    if (_isMultiplay) {
                         //sendData
                     }
                 }
@@ -693,3 +694,136 @@ void GameScene::enableAllCoin()
         coin->enableCollision();
     }
 }
+
+#pragma mark -
+#pragma makr MultiPlay
+
+void GameScene::setMultiplay(bool isMultiplay)
+{
+    _isMultiplay = isMultiplay;
+}
+
+void GameScene::receivedData(const void *data, unsigned long length)
+{
+    const char* cstr = reinterpret_cast<const char*>(data);
+    std::string json = std::string(cstr, length);
+    
+    JSONPacker::MultiInputData multiInputData = JSONPacker::unpackMultiInputDataJSON(json);
+    
+    performInput(multiInputData);
+}
+
+void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
+{
+    JSONPacker::MultiInputData dataToSend;
+    switch (multiInputData.multiplayState) {
+        case MultiplayState::sendDeviceName:
+        {
+            if (isMyselfHost(multiInputData.deviceName)) {
+                if (canPlayfirst()) {
+                    _multiplayState = MultiplayState::playing;
+                } else {
+                    _multiplayState = MultiplayState::waiting;
+                }
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+bool GameScene::isMyselfHost(std::string deviceName)
+{
+    std::string myDeviceName = SceneManager::getInstance()->getDeviceName();
+    
+    //TODO: if device name is same, there will be some error
+    if (myDeviceName > deviceName) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool GameScene::canPlayfirst()
+{
+    std::random_device seed_gen;
+    std::default_random_engine engine(seed_gen());
+    std::uniform_int_distribution<> dist(0, 1);
+    
+    if (dist(engine) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
+/*
+void GameScene::setMultiplayState(MultiplayState multiplayState)
+{
+    _multiplayState = multiplayState;
+    JSONPacker::MultiInputData multiInputData;
+    switch (multiplayState) {
+        case MultiplayState::sendDeviceName:
+        {
+            multiInputData.multiplayState = multiplayState;
+            multiInputData.deviceName = SceneManager::getInstance()->getDeviceName();
+            sendData(multiInputData);
+        }
+            break;
+        default:
+            break;
+    }
+}
+ */
+
+void GameScene::sendData(JSONPacker::MultiInputData multiInputData)
+{
+    std::string json = JSONPacker::packMultiInputDataJSON(multiInputData);
+    SceneManager::getInstance()->sendData(json.c_str(), json.length());
+}
+
+
+void GameScene::setGameState(GameState gameState)
+{
+    _gameState = gameState;
+    if (_isMultiplay) {
+        switch (gameState) {
+            case GameState::prepareShooting:
+            {
+                //send ball info
+            }
+                break;
+            case GameState::wait:
+            {
+                
+            }
+                
+            default:
+                break;
+        }
+    }
+}
+//sync game status
+
+/*
+ before
+  1.send each device name to others
+  2.use to device name to decide who is host
+  3. host randomly choose who is first to play
+  4. host send info to guest
+ Game Scene(loop)
+ 1. every state change send a data to other device
+ 2. other device similate the input of device
+ 3. define a finished status ot change (if necessary sync the data on stage so that two device share the same items)
+ After
+ Who get the target send game over to others
+ 
+ 
+ 
+ rule: try to get the Target coin( e.g 40)
+       coin will keep invisible until you own turn
+ 
+ */

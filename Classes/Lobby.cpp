@@ -27,7 +27,7 @@ void Lobby::onEnter()
 {
     Node::onEnter();
     
-  //  SceneManager::getInstance()->receiveMultiplayerInvitations();
+    SceneManager::getInstance()->receiveMultiplayerInvitations();
     
     setupUI();
 }
@@ -56,7 +56,6 @@ void Lobby::setupUI()
 void Lobby::SinglePlayerPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-     //   SceneManager::getInstance()->enterGameScene(false);
         SceneManager::getInstance()->enterLevelSelect();
     }
 }

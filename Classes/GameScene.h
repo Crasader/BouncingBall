@@ -20,9 +20,12 @@ class GameScene : public cocos2d::Node
 public:
     static GameScene* createWithLevel(int level);
     void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
+    void receivedData(const void* data, unsigned long length);
+    void setGameState(GameState gameState);
+    void setMultiplay(bool isMultiplay);
     
 protected:
-    bool _isMultiplayer;
+    bool _isMultiplay;
     bool initWithLevel(int level);
     void onEnter() override;
     
@@ -30,6 +33,7 @@ protected:
     
     cocos2d::ui::TextBMFont* _scoreLabel;
     GameState _gameState;
+    MultiplayState  _multiplayState;
     
     cocos2d::PhysicsWorld* m_world;
     cocos2d::Node* _mainScene;
@@ -90,6 +94,12 @@ protected:
 
     void createCoinByPosWhenBallHpIsZero(cocos2d::Vec2 pos);
     void createItemWhenTouchedItemBox(ItemCategory itemCategory);
+    
+    //for multiPlay
+    void performInput(JSONPacker::MultiInputData multiInputData);
+    bool isMyselfHost(std::string deviceName);
+    bool canPlayfirst();
+    void sendData(JSONPacker::MultiInputData multiInputData);
 };
 
 
