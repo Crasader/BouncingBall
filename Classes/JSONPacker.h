@@ -40,10 +40,7 @@ namespace JSONPacker
     
     struct MultiInputData
     {
-        MultiplayState multiplayState;
-
         GameState gameState;
-        BallColor ballColor;
         ItemCategory itemUsed;
         float angle;
         cocos2d::Vec2 pos;

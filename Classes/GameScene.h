@@ -33,7 +33,6 @@ protected:
     
     cocos2d::ui::TextBMFont* _scoreLabel;
     GameState _gameState;
-    MultiplayState  _multiplayState;
     
     cocos2d::PhysicsWorld* m_world;
     cocos2d::Node* _mainScene;
@@ -100,6 +99,8 @@ protected:
     bool isMyselfHost(std::string deviceName);
     bool canPlayfirst();
     void sendData(JSONPacker::MultiInputData multiInputData);
+    void displayTurnInfo(std::string info);
+    
 };
 
 

@@ -69,8 +69,13 @@ void GameScene::onEnter()
    
     setupBall();
     
-    _gameState = GameState::prepareShooting;
-
+    if  (_isMultiplay) {
+        setGameState(GameState::sendDeviceName);
+    } else {
+        setGameState(GameState::prepareShooting);
+    }
+    
+    
     //contact call back
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
@@ -278,6 +283,7 @@ void GameScene::setupMap()
     _ballPreview->setPosition(_nextBallHolder->getPosition());
     _mainScene->addChild(_ballPreview);
     
+
 }
 
 void GameScene::setupBall()
@@ -620,11 +626,41 @@ void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType
     
 }
 
+#pragma mark - 
+#pragma mark Setter/Getter
 
+void GameScene::setGameState(GameState gameState)
+{
+    _gameState = gameState;
+    if (_isMultiplay) {
+        JSONPacker::MultiInputData multiInputData;
+        switch (gameState) {
+            case GameState::sendDeviceName:
+            {
+                multiInputData.deviceName = SceneManager::getInstance()->getDeviceName();
+                sendData(multiInputData);
+            }
+                break;
+            case GameState::prepareShooting:
+            {
+                multiInputData.gameState = GameState::prepareShooting;
+                sendData(multiInputData);
+            }
+                break;
+            case GameState::waiting:
+            {
+                multiInputData.gameState = GameState::waiting;
+                sendData(multiInputData);
+            }
+            default:
+                break;
+        }
+    }
+}
 
 
 #pragma mark -
-#pragma mark Util Methods;
+#pragma mark Util Methods
 
 void GameScene::updateScoreLabel(int score)
 {
@@ -716,19 +752,54 @@ void GameScene::receivedData(const void *data, unsigned long length)
 void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
 {
     JSONPacker::MultiInputData dataToSend;
-    switch (multiInputData.multiplayState) {
-        case MultiplayState::sendDeviceName:
+    switch (multiInputData.gameState) {
+        case GameState::sendDeviceName:
         {
-            if (isMyselfHost(multiInputData.deviceName)) {
+            if (multiInputData.gameState == GameState::sendDeviceName && isMyselfHost(multiInputData.deviceName)) {
                 if (canPlayfirst()) {
-                    _multiplayState = MultiplayState::playing;
+                    displayTurnInfo("YOU GO FIRST!");
+                    setGameState(GameState::prepareShooting);
                 } else {
-                    _multiplayState = MultiplayState::waiting;
+                    displayTurnInfo("YOU GO SECOND!");
+                    setGameState(GameState::waiting);
                 }
             }
         }
             break;
+        case GameState::prepareShooting:
+        {
+            switch (_gameState) {
+                case GameState::sendDeviceName:
+                    displayTurnInfo("YOU GO SECOND!");
+                    setGameState(GameState::waiting);
+                    break;
+                case GameState::waiting:
+                    CCLOG("everything sames good");
+                    
+                default:
+                    break;
+            }
             
+        }
+            break;
+        case GameState::waiting:
+        {
+            switch (_gameState) {
+                case GameState::sendDeviceName:
+                    displayTurnInfo("YOU GO FIRST!");
+                    setGameState(GameState::prepareShooting);
+                    break;
+                case GameState::prepareShooting:
+                    CCLOG("everything sames good");
+                case GameState::waiting:
+                    CCLOG("it's my turn");
+                    setGameState(GameState::prepareShooting);
+                    
+                default:
+                    break;
+            }
+            
+        }
         default:
             break;
     }
@@ -760,24 +831,6 @@ bool GameScene::canPlayfirst()
     
 }
 
-/*
-void GameScene::setMultiplayState(MultiplayState multiplayState)
-{
-    _multiplayState = multiplayState;
-    JSONPacker::MultiInputData multiInputData;
-    switch (multiplayState) {
-        case MultiplayState::sendDeviceName:
-        {
-            multiInputData.multiplayState = multiplayState;
-            multiInputData.deviceName = SceneManager::getInstance()->getDeviceName();
-            sendData(multiInputData);
-        }
-            break;
-        default:
-            break;
-    }
-}
- */
 
 void GameScene::sendData(JSONPacker::MultiInputData multiInputData)
 {
@@ -785,30 +838,24 @@ void GameScene::sendData(JSONPacker::MultiInputData multiInputData)
     SceneManager::getInstance()->sendData(json.c_str(), json.length());
 }
 
-
-void GameScene::setGameState(GameState gameState)
+void GameScene::displayTurnInfo(std::string info)
 {
-    _gameState = gameState;
-    if (_isMultiplay) {
-        switch (gameState) {
-            case GameState::prepareShooting:
-            {
-                //send ball info
-            }
-                break;
-            case GameState::wait:
-            {
-                
-            }
-                
-            default:
-                break;
-        }
-    }
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
+    ui::TextBMFont* infoLabel = ui::TextBMFont::create(info, "font01.fnt");
+    infoLabel->setAnchorPoint(Vec2(0.5,0.5));
+    infoLabel->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+    infoLabel->setOpacity(0);
+    _mainScene->addChild(infoLabel);
+    infoLabel->runAction(Sequence::create(FadeIn::create(1.0f),DelayTime::create(1), RemoveSelf::create(),nullptr));
+    
 }
-//sync game status
 
+
+
+//sync game status
 /*
+
  before
   1.send each device name to others
   2.use to device name to decide who is host
@@ -819,11 +866,8 @@ void GameScene::setGameState(GameState gameState)
  2. other device similate the input of device
  3. define a finished status ot change (if necessary sync the data on stage so that two device share the same items)
  After
- Who get the target send game over to others
- 
- 
+ Who get the target send game over to another
  
  rule: try to get the Target coin( e.g 40)
        coin will keep invisible until you own turn
- 
- */
+  */

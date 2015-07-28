@@ -81,34 +81,24 @@ namespace JSONPacker {
     {
         rapidjson::Document document;
         document.SetObject();
-        /*
-        document.AddMember("multiplayState", multiInputData.multiplayState, document.GetAllocator());
-        document.AddMember("gameState", multiInputData.gameState, document.GetAllocator());
-         */
         
-        /*
-        switch (multiInputData.multiplayState) {
-            case MultiplayState::sendDeviceName:
+        int gameState = static_cast<int>(multiInputData.gameState);
+        
+        document.AddMember("gameState",gameState, document.GetAllocator());
+        
+        switch (multiInputData.gameState) {
+            case GameState::sendDeviceName:
             {
-                document.AddMember("deviceName", multiInputData.deviceName, document.GetAllocator());
+                document.AddMember("deviceName", multiInputData.deviceName.c_str(), document.GetAllocator());
             }
                 break;
-            case MultiplayState::playing:
+            case GameState::prepareShooting:
             {
-                switch (multiInputData.gameState) {
-                    case GameState::prepareShooting:
-                        break;
-                        
-                    default:
-                        break;
-                }
-
             }
                 break;
             default:
                 break;
         }
-         */
         
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -125,24 +115,22 @@ namespace JSONPacker {
         document.Parse<0>(json.c_str());
         
         MultiInputData data;
- /*
-        data.multiplayState = static_cast<MultiplayState>(document["multiplayState"].GetInt());
+ 
+        data.gameState = static_cast<GameState>(document["gameState"].GetInt());
         
-        switch (data.multiplayState) {
-            case MultiplayState::sendDeviceName:
+        switch (data.gameState) {
+            case GameState::sendDeviceName:
             {
                 data.deviceName = document["deviceName"].GetString();
             }
                 break;
-            case MultiplayState::playing:
-            {
-            }
+            case GameState::prepareShooting:
+                break;
+            case GameState::waiting:
                 break;
             default:
                 break;
         }
-  */
-        
         
         return data;
     }

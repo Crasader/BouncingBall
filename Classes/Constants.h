@@ -70,22 +70,16 @@ const static int UNLOCKED_LEVEL = 0;
 
 enum class GameState
 {
+    sendDeviceName, //only multi
     prepareShooting,
     shooting,
     gameOver,
     usingBomb,
     shootingBomb,
     bombFinish,
-    wait
+    waiting         //only multi
     
     //only for multiPlay
-};
-enum class MultiplayState
-{
-    sendDeviceName,
-    waiting,
-    playing,
-    gameOver
 };
 
 enum class BallColor
