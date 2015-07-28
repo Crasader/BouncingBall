@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "Ball.h"
 #include "Coin.h"
+#include "Rock.h"
 
 
 class Cannon;
@@ -36,6 +37,7 @@ protected:
     cocos2d::Vector<Ball*> _ballsOnState;
     Ball* _ballWaitShooting;
     cocos2d::Vector<Ball*> _ballsInBag;
+
     
     //pointer instance
     Cannon* _cannon;
@@ -46,9 +48,9 @@ protected:
     cocos2d::Sprite* _currentItem;
     
     
-    
-    //coin
+    //coin && rock
     cocos2d::Vector<Coin*> _coinOnStage;
+    cocos2d::Vector<Rock*> _rocksOnStage;
     
     int _currentScore;
     int _oneStarScore;

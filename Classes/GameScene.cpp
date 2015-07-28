@@ -121,6 +121,7 @@ void GameScene::setupMap()
     for (auto rockPos : mapState.rocks) {
         Rock* rock = Rock::create();
         rock->setPosition(rockPos);
+        _rocksOnStage.pushBack(rock);
         _mainScene->addChild(rock);
     }
     
@@ -263,6 +264,8 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     
     if (a->getCategoryBitmask() == BOMB_CATEGORY) {
         CCLOG("A bombbbbbbb");
+        //get range of bomb
+        //for all items on stage;
         _gameState = GameState::prepareShooting;
         return false;
     }
@@ -289,10 +292,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
             coin->runGetCoinAnimation();
             _currentScore += 1;
             updateScoreLabel(_currentScore);
-        } else {
         }
-        
-      
     }
     
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == COIN_CATEGORY) {
@@ -323,12 +323,9 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
     PhysicsBody *b = contact.getShapeB()->getBody();
     
     //BALL hit BALL
-    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+    if (a->getCategoryBitmask() == BALL_CATEGORY) {
         Ball* ballA = dynamic_cast<Ball*>(a->getNode());
-        Ball* ballB = dynamic_cast<Ball*>(b->getNode());
         ballA->gotHit();
-        ballB->gotHit();
-        
         //TODO: refacotring
         if (ballA->getHp() <= 0) {
             Vec2 pos = ballA->getPosition();
@@ -353,33 +350,35 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
             }
             
         }
-        
-        if (ballB->getHp() <= 0) {
-            Vec2 pos = ballB->getPosition();
-            ballB->removeFromParent();
-            
-            auto it = _ballsOnState.find(ballB);
-            _ballsOnState.erase(it);
-            
-            BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
-            ballExplode->setPosition(pos);
-            _mainScene->addChild(ballExplode);
-            ballExplode->runExplodeAnimation();
-            ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
-            
-            for(int i=0 ;i < 3 ;++i) {
-                Coin* coin = Coin::create();
-                coin->setPosition(pos);
-                _mainScene->addChild(coin);
-                coin->initCollision();
-                coin->runAppearAnimation();
-                _coinOnStage.pushBack(coin);
-            }
-            
-        }
-       
     }
     
+      if (b->getCategoryBitmask() == BALL_CATEGORY) {
+            Ball* ballB = dynamic_cast<Ball*>(b->getNode());
+            ballB->gotHit();
+            if (ballB->getHp() <= 0) {
+                Vec2 pos = ballB->getPosition();
+                ballB->removeFromParent();
+                
+                auto it = _ballsOnState.find(ballB);
+                _ballsOnState.erase(it);
+                
+                BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
+                ballExplode->setPosition(pos);
+                _mainScene->addChild(ballExplode);
+                ballExplode->runExplodeAnimation();
+                ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
+                
+                for(int i=0 ;i < 3 ;++i) {
+                    Coin* coin = Coin::create();
+                    coin->setPosition(pos);
+                    _mainScene->addChild(coin);
+                    coin->initCollision();
+                    coin->runAppearAnimation();
+                    _coinOnStage.pushBack(coin);
+                }
+            
+            }
+      }
  
 }
 
