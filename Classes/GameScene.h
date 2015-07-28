@@ -20,19 +20,20 @@ class GameScene : public cocos2d::Node
 public:
     static GameScene* createWithLevel(int level);
     void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
-
- //   CREATE_FUNC(GameScene);
     
 protected:
     bool _isMultiplayer;
     bool initWithLevel(int level);
-
     void onEnter() override;
+    
     cocos2d::Scene* _physicsScene;
+    
+    cocos2d::ui::TextBMFont* _scoreLabel;
+    GameState _gameState;
     
     cocos2d::PhysicsWorld* m_world;
     cocos2d::Node* _mainScene;
-    int _level;
+
     //Ball
     cocos2d::Vector<Ball*> _ballsOnState;
     Ball* _ballWaitShooting;
@@ -57,23 +58,21 @@ protected:
     int _oneStarScore;
     int _twoStarScore;
     int _threeStarScore;
+    int _level;
 
     void update(float dt) override;
     void updateBallPreview();
-    bool allBallIsStoped();
-    void resetEgde();
     
-    void updateScoreLabel(int score);
+    void setupContactHandling();
     bool onContactBegin(cocos2d::PhysicsContact &contact);
     void onContactEnd(cocos2d::PhysicsContact &contact);
 
     void setupTouchHandling();
-    void setupContactHandling();
+    void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
+    void ballHolderButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
+    
     void setupBall();
     void setupMap();
-    
-    bool isGameOver();
-    bool canUserGetItem();
     void triggerGameOver();
     
     
@@ -82,13 +81,13 @@ protected:
     std::string getConfigFileName();
     void resetAllBallHp();
     void enableAllCoin();
+    bool allBallIsStoped();
+    void resetEgde();
+    void updateScoreLabel(int score);
     
-    cocos2d::ui::TextBMFont* _scoreLabel;
-    GameState _gameState;
-    
-    void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
-    void ballHolderButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
-    
+    bool isGameOver();
+    bool canUserGetItem();
+
     void createCoinByPosWhenBallHpIsZero(cocos2d::Vec2 pos);
     void createItemWhenTouchedItemBox(ItemCategory itemCategory);
 };

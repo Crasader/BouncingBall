@@ -112,6 +112,8 @@ void GameScene::update(float dt)
         case GameState::bombFinish:
         {
             setupBall();
+            enableAllCoin();
+            resetAllBallHp();
             _gameState = GameState::prepareShooting;
         }
             break;
