@@ -67,18 +67,95 @@ void GameScene::onEnter()
     setupMap();
    
     setupBall();
-
-    //TODO: use level loadler to load the all node of game scene
-    //code below this should be move to level loader
     
+    _gameState = GameState::prepareShooting;
+
+    //contact call back
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
     contactListener->onContactPostSolve = CC_CALLBACK_1(GameScene::onContactEnd, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+    
     setupTouchHandling();
     this->scheduleUpdate();
 }
 
+#pragma mark-
+#pragma mark Life Cycle
+
+void GameScene::update(float dt)
+{
+    Node::update(dt);
+    switch (_gameState) {
+        case GameState::shooting:
+        {
+            if (this->allBallIsStoped()) {
+                if (canUserGetItem()) {
+                    _passCode->resetPassCode();
+                    //TODO: make item random
+                    _itemBox->addItem(ItemCategory::bomb);
+                }
+                if (isGameOver()) {
+                    triggerGameOver();
+                } else {
+                    _ballWaitShooting = nullptr;
+                    resetAllBallHp();
+                    enableAllCoin();
+                    setupBall();
+                    _gameState = GameState::prepareShooting;
+                }
+                
+            }
+            
+        }
+            break;
+        case GameState::bombFinish:
+        {
+            setupBall();
+            _gameState = GameState::prepareShooting;
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+void GameScene::triggerGameOver()
+{
+    int starsNum = evaluateStars(_currentScore);
+    
+    //TODO: improve this
+    if (starsNum == 0) {
+        std::string messageContent = "Your Failed !";
+        MessageBox(messageContent.c_str(), "Game Over!!");
+        SceneManager::getInstance()->backToLobby();
+        return ;
+    }
+    
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    CSLoader* instance = CSLoader::getInstance();
+    instance->registReaderObject("LevelClearReader" , (ObjectFactory::Instance) LevelClearReader::getInstance);
+    
+    
+    LevelClear* levelClear = dynamic_cast<LevelClear*>(CSLoader::createNode("LevelClear.csb"));
+    levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
+    levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
+    levelClear->runLevelClearAnimation(starsNum);
+    this->addChild(levelClear);
+    
+    _mainScene->runAction(FadeTo::create(0.5, 128));
+    
+    UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level).c_str(), starsNum);
+    UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
+    
+    _gameState = GameState::gameOver;
+    
+}
+
+
+#pragma mark - 
+#pragma mark - Setup Method
 
 void GameScene::setupMap()
 {
@@ -119,6 +196,7 @@ void GameScene::setupMap()
         this->_ballsInBag.pushBack(ball);
     }
     
+    //setup rocks
     for (auto rockPos : mapState.rocks) {
         Rock* rock = Rock::create();
         rock->setPosition(rockPos);
@@ -126,6 +204,7 @@ void GameScene::setupMap()
         _mainScene->addChild(rock);
     }
     
+    //setupCoins
     for (auto coinPos : mapState.coins) {
         Coin* coin = Coin::create();
         coin->setPosition(coinPos);
@@ -166,14 +245,14 @@ void GameScene::setupMap()
     _passCode = PassCode::createWithStr(mapState.passCode);
     _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
     _passCode->setPosition(Vec2(visibleSize.width * 0.3f, visibleSize.height * 0.95f));
-    this->addChild(_passCode);
+    _mainScene->addChild(_passCode);
     
     ui::Button* backButton = ui::Button::create();
     backButton->setAnchorPoint(Vec2(0.0f,0.5f));
     backButton->setPosition(Vec2(0.0f,visibleSize.height* 0.95f));
     backButton->loadTextures("backButton.png", "backButtonPressed.png");
     backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
-    this->addChild(backButton);
+    _mainScene->addChild(backButton);
     
     std::string fileName = _ballsInBag.front()->getBallFileName();
     _ballPreview = Sprite::create(fileName);
@@ -185,77 +264,77 @@ void GameScene::setupMap()
 void GameScene::setupBall()
 {
     _ballWaitShooting = _ballsInBag.front();
-    _ballWaitShooting->retain();
-     _ballsInBag.erase(_ballsInBag.begin());
     
     Vec2 ballPos = _cannon->getPosition();
     _ballWaitShooting->setPosition(ballPos);
     _mainScene->addChild(_ballWaitShooting);
-    resetEgde();
-    _gameState = GameState::prepareShooting;
     
+    _ballsInBag.erase(_ballsInBag.begin());
+    resetEgde();
+    
+    //update preview
     std::string fileName = _ballsInBag.front()->getBallFileName();
     _ballPreview->setTexture(fileName);
-
+    
 }
 
-void GameScene::update(float dt)
-{
-    Node::update(dt);
-    if (_gameState == GameState::shooting && this->allBallIsStoped()) {
-        if (isGoalAchieved()) {
-            _passCode->resetPassCode();
-            _itemBox->addItem(ItemCategory::bomb);
-            //item box add
-            //get random item
-        }
-        if (isGameOver()) {
-            triggerGameOver();
-        } else {
-            _ballWaitShooting->release();
-            _ballWaitShooting = nullptr;
-            resetAllBallHp();
-            enableAllCoin();
-            setupBall();
-        }
 
+void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 pos)
+{
+    BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
+    ballExplode->setPosition(pos);
+    _mainScene->addChild(ballExplode);
+    ballExplode->runExplodeAnimation();
+    ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
+    
+    for(int i=0 ;i < 3 ;++i) {
+        Coin* coin = Coin::create();
+        coin->setPosition(pos);
+        _mainScene->addChild(coin);
+        _coinOnStage.pushBack(coin);
+        
+        coin->initCollision();
+        coin->runAppearAnimation();
+        
     }
 }
 
-void GameScene::triggerGameOver()
+void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
 {
-        int starsNum = evaluateStars(_currentScore);
-        
-        if (starsNum == 0) {
-            std::string messageContent = "Your Failed !";
-            MessageBox(messageContent.c_str(), "Game Over!!");
-            SceneManager::getInstance()->backToLobby();
-            return ;
+    switch (itemCategory) {
+        case ItemCategory::bomb:
+        {
+            Bomb* bomb = Bomb::create();
+            Vec2 bombPos = _cannon->getPosition();
+            bomb->setPosition(bombPos);
+            bomb->setName("bomb");
+            _mainScene->addChild(bomb);
+            
+            if (_ballWaitShooting) {
+                _ballsInBag.insert(0, _ballWaitShooting);
+                _ballWaitShooting->removeFromParent();
+                _ballWaitShooting = nullptr;
+            }
+            
+            std::string fileName = _ballsInBag.front()->getBallFileName();
+            _ballPreview->setTexture(fileName);
+            
+            resetEgde();
+            enableAllCoin();
+            
+            _gameState = GameState::usingBomb;
+            
         }
-        
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        
-        CSLoader* instance = CSLoader::getInstance();
-        instance->registReaderObject("LevelClearReader" , (ObjectFactory::Instance) LevelClearReader::getInstance);
-
-
-        LevelClear* levelClear = dynamic_cast<LevelClear*>(CSLoader::createNode("LevelClear.csb"));
-        levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
-        levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
-        levelClear->runLevelClearAnimation(starsNum);
-        this->addChild(levelClear);
-        
-        _mainScene->runAction(FadeTo::create(0.5, 128));
-    
-        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level).c_str(), starsNum);
-        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
-
-        _gameState = GameState::gameOver;
-        
+            break;
+            //TODO add other item
+        default:
+            break;
+    }
 }
 
+
 #pragma mark -
-#pragma mark CallBack Methods
+#pragma mark Contact Event
 
 bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 {
@@ -269,9 +348,8 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         return false;
     }
 
-
-    //TODO:make a emun type detection,fix this ugly code
     
+    // Ball hit Ball
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
         BallColor aColor = static_cast<BallColor>(a->getTag());
         BallColor bColor = static_cast<BallColor>(b->getTag());
@@ -290,6 +368,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         }
     }
     
+    //Ball hit Coin
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == COIN_CATEGORY) {
         Coin* coin = dynamic_cast<Coin*>(b->getNode());
         coin->removeFromParent();
@@ -308,10 +387,11 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         updateScoreLabel(_currentScore);
     }
 
+    //Bomb hitted
     if (a->getCategoryBitmask() == BOMB_CATEGORY || b->getCategoryBitmask() == BOMB_CATEGORY) {
         Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
         
-        // destory coin in range
+        // Destory coin in range
         for (Vector<Coin*>::iterator it = _coinOnStage.begin(); it !=_coinOnStage.end();) {
             if (bomb->getBombRange().containsPoint((*it)->getPosition())) {
                 (*it)->removeFromParent();
@@ -321,6 +401,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
             }
         }
         
+        // Destroy rock in range
         for (Vector<Rock*>::iterator it = _rocksOnStage.begin(); it !=_rocksOnStage.end();) {
             if (bomb->getBombRange().containsPoint((*it)->getPosition())) {
                 (*it)->removeFromParent();
@@ -330,39 +411,30 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
             }
         }
         
+        // Set Ball HP to zero
         for (Vector<Ball*>::iterator it = _ballsOnState.begin(); it !=_ballsOnState.end();) {
             if (bomb->getBombRange().containsPoint((*it)->getPosition())) {
                 Vec2 pos = (*it)->getPosition();
                 (*it)->removeFromParent();
-                
                 _ballsOnState.erase(it);
                 
-                BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
-                ballExplode->setPosition(pos);
-                _mainScene->addChild(ballExplode);
-                ballExplode->runExplodeAnimation();
-                ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
-                
-                for(int i=0 ;i < 3 ;++i) {
-                    Coin* coin = Coin::create();
-                    coin->setPosition(pos);
-                    _mainScene->addChild(coin);
-                    coin->initCollision();
-                    coin->runAppearAnimation();
-                    _coinOnStage.pushBack(coin);
-                }
-
+                createCoinByPosWhenBallHpIsZero(pos);
             } else {
                 it++;
             }
         }
+        
+        //temp code to prevent too fast contact
         bomb->getPhysicsBody()->setContactTestBitmask(NONE);
         bomb->removeFromParent();
-        setupBall();
+        _gameState = GameState::bombFinish;
+        return false;
     }
     
     return true;
 }
+
+
 
 void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
 {
@@ -370,64 +442,39 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
     PhysicsBody *b = contact.getShapeB()->getBody();
     
     if (a->getCategoryBitmask() == BALL_CATEGORY) {
-        Ball* ballA = dynamic_cast<Ball*>(a->getNode());
-        ballA->gotHit();
+        Ball* ball = dynamic_cast<Ball*>(a->getNode());
+        ball->gotHit();
         //TODO: refacotring
-        if (ballA->getHp() <= 0) {
-            Vec2 pos = ballA->getPosition();
-            ballA->removeFromParent();
+        if (ball->getHp() <= 0) {
+            Vec2 pos = ball->getPosition();
+            ball->removeFromParent();
             
-            auto it = _ballsOnState.find(ballA);
+            auto it = _ballsOnState.find(ball);
             _ballsOnState.erase(it);
             
-            BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
-            ballExplode->setPosition(pos);
-            _mainScene->addChild(ballExplode);
-            ballExplode->runExplodeAnimation();
-            ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
-            
-            for(int i=0 ;i < 3 ;++i) {
-                Coin* coin = Coin::create();
-                coin->setPosition(pos);
-                _mainScene->addChild(coin);
-                coin->initCollision();
-                coin->runAppearAnimation();
-                _coinOnStage.pushBack(coin);
-            }
-            
+            createCoinByPosWhenBallHpIsZero(pos);
         }
+        
     }
     
-      if (b->getCategoryBitmask() == BALL_CATEGORY) {
-            Ball* ballB = dynamic_cast<Ball*>(b->getNode());
-            ballB->gotHit();
-            if (ballB->getHp() <= 0) {
-                Vec2 pos = ballB->getPosition();
-                ballB->removeFromParent();
-                
-                auto it = _ballsOnState.find(ballB);
-                _ballsOnState.erase(it);
-                
-                BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
-                ballExplode->setPosition(pos);
-                _mainScene->addChild(ballExplode);
-                ballExplode->runExplodeAnimation();
-                ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
-                
-                for(int i=0 ;i < 3 ;++i) {
-                    Coin* coin = Coin::create();
-                    coin->setPosition(pos);
-                    _mainScene->addChild(coin);
-                    coin->initCollision();
-                    coin->runAppearAnimation();
-                    _coinOnStage.pushBack(coin);
-                }
+    if (b->getCategoryBitmask() == BALL_CATEGORY) {
+        Ball* ball = dynamic_cast<Ball*>(b->getNode());
+        ball->gotHit();
+        if (ball->getHp() <= 0) {
+            Vec2 pos = ball->getPosition();
+            ball->removeFromParent();
             
-            }
-      }
- 
+            auto it = _ballsOnState.find(ball);
+            _ballsOnState.erase(it);
+      
+            createCoinByPosWhenBallHpIsZero(pos);
+        }
+    }
+
 }
 
+#pragma mark -
+#pragma touch Event
 void GameScene::setupTouchHandling()
 {
     auto touchListener = EventListenerTouchOneByOne::create();
@@ -443,41 +490,14 @@ void GameScene::setupTouchHandling()
         lastTouchPos = touchPos;
         firstTouchPos = touchPos;
         
-        // if itemBox->touchPosHasItem(pos)
         switch (_gameState) {
             case GameState::prepareShooting:
             {
-                if (_itemBox->getChildByName<Sprite*>("itemBackGround")->getBoundingBox().containsPoint(touchPos)) {
+                Vec2 localPosInItemBox = touchPos - _itemBox->getPosition();
+                if (_itemBox->isClicked(localPosInItemBox)) {
                     ItemCategory itemCategory = _itemBox->pickUpItemFromPos(touchPos);
                     if (ItemCategory::none != itemCategory) {
-                        switch (itemCategory) {
-                            case ItemCategory::bomb:
-                            {
-                                Bomb* bomb = Bomb::create();
-                                _gameState = GameState::usingBomb;
-                                Vec2 bombPos = _cannon->getPosition();
-                                bomb->setPosition(bombPos);
-                                bomb->setName("bomb");
-                                _mainScene->addChild(bomb);
-                                
-                                if (_ballWaitShooting) {
-                                    _ballsInBag.insert(0, _ballWaitShooting);
-                                    _ballWaitShooting->removeFromParent();
-                                    _ballWaitShooting = nullptr;
-                                }
-                                
-                                std::string fileName = _ballsInBag.front()->getBallFileName();
-                                _ballPreview->setTexture(fileName);
-                              
-                                resetEgde();
-                                enableAllCoin();
-                                
-                            }
-                                break;
-                                //TODO add other item
-                            default:
-                                break;
-                        }
+                        createItemWhenTouchedItemBox(itemCategory);
                     }
                     return false;
                 }
@@ -523,6 +543,7 @@ void GameScene::setupTouchHandling()
                     _ballsOnState.pushBack(_ballWaitShooting);
                     _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
                     _gameState = GameState::shooting;
+                    
                     if (_isMultiplayer) {
                         //sendData
                     }
@@ -536,7 +557,7 @@ void GameScene::setupTouchHandling()
                     //add Fire animation
                     _dogi->runShootingAnimation();
                     Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
-                    bomb->shoot(1000.0f,_cannon->getAngle());
+                    bomb->shoot(BOMB_SPEED,_cannon->getAngle());
                     _gameState = GameState::shootingBomb;
                 }
             }
@@ -566,20 +587,13 @@ void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEven
 void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        //TODO: make a func that cancel to use item?
         CCLOG("pressed");
     }
     
 }
 
-bool GameScene::allBallIsStoped()
-{
-    for (auto ball : _ballsOnState) {
-        if (! ball->isStoped()) {
-            return false;
-        }
-    }
-    return true;
-}
+
 
 
 #pragma mark -
@@ -595,11 +609,19 @@ void GameScene::resetEgde()
 {
     _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_INIT_CONTACT_MASK);
     _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
-    
 }
 
+bool GameScene::allBallIsStoped()
+{
+    for (auto ball : _ballsOnState) {
+        if (! ball->isStoped()) {
+            return false;
+        }
+    }
+    return true;
+}
 
-bool GameScene::isGoalAchieved(){
+bool GameScene::canUserGetItem(){
     return _passCode->isPassCodeClear();
 }
 
@@ -645,4 +667,3 @@ void GameScene::enableAllCoin()
         coin->enableCollision();
     }
 }
-

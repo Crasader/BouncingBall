@@ -20,6 +20,7 @@ const static int BALL_INFINITY_HP = 99;
 const static float MAX_SHOOTING_SPEED = 2000.0f;
 
 const static float BOMB_RANGE = 100.0f;
+const static float BOMB_SPEED = 1000.0f;
 
 #pragma mark -
 #pragma mark Edge Setting
@@ -73,7 +74,8 @@ enum class GameState
     shooting,
     gameOver,
     usingBomb,
-    shootingBomb
+    shootingBomb,
+    bombFinish,
 };
 enum class MultiplayState
 {

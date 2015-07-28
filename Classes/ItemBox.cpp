@@ -56,3 +56,9 @@ ItemCategory ItemBox::pickUpItemFromPos(cocos2d::Vec2 pos)
     return ItemCategory::none;
     
 }
+
+
+bool ItemBox::isClicked(Vec2 pos)
+{
+    return this->getChildByName<Sprite*>("itemBackGround")->getBoundingBox().containsPoint(pos);
+}

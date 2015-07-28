@@ -19,6 +19,7 @@ public:
     bool init() override;
     void addItem(ItemCategory item);
     ItemCategory pickUpItemFromPos(cocos2d::Vec2 pos);
+    bool isClicked(cocos2d::Vec2 pos);
 protected:
     std::vector<Sprite*> _items;
 };
