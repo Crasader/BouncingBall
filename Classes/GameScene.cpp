@@ -96,7 +96,8 @@ void GameScene::setupMap()
     _dogi = rootNode->getChildByName<Dogi*>("Dogi");
     _scoreLabel = rootNode->getChildByName<ui::TextBMFont*>("ScoreLabel");
     _itemBox = rootNode->getChildByName<ItemBox*>("ItemBox");
-    
+    _nextBallHolder = rootNode->getChildByName<ui::Button*>("NextBallHolder");
+    _nextBallHolder->addTouchEventListener(CC_CALLBACK_2(GameScene::ballHolderButtonPressed,this));
     
     _mainScene = rootNode;
     
@@ -157,7 +158,6 @@ void GameScene::setupMap()
     _edgeSp->setPhysicsBody(edgeBody);
     _edgeSp->setContentSize(Size(edgeWidth, edgeHeight));
     _mainScene->addChild(_edgeSp);
-
     
     this->addChild(rootNode);
     
@@ -175,22 +175,29 @@ void GameScene::setupMap()
     backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
     this->addChild(backButton);
     
+    std::string fileName = _ballsInBag.front()->getBallFileName();
+    _ballPreview = Sprite::create(fileName);
+    _ballPreview->setPosition(_nextBallHolder->getPosition());
+    _mainScene->addChild(_ballPreview);
+    
 }
 
 void GameScene::setupBall()
 {
     _ballWaitShooting = _ballsInBag.front();
     _ballWaitShooting->retain();
-    _ballsInBag.erase(_ballsInBag.begin());
+     _ballsInBag.erase(_ballsInBag.begin());
     
     Vec2 ballPos = _cannon->getPosition();
     _ballWaitShooting->setPosition(ballPos);
-    _ballsOnState.pushBack(_ballWaitShooting);
-    this->addChild(_ballWaitShooting);
+    _mainScene->addChild(_ballWaitShooting);
     resetEgde();
     _gameState = GameState::prepareShooting;
-}
+    
+    std::string fileName = _ballsInBag.front()->getBallFileName();
+    _ballPreview->setTexture(fileName);
 
+}
 
 void GameScene::update(float dt)
 {
@@ -351,7 +358,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         }
         bomb->getPhysicsBody()->setContactTestBitmask(NONE);
         bomb->removeFromParent();
-        _gameState = GameState::prepareShooting;
+        setupBall();
     }
     
     return true;
@@ -453,11 +460,15 @@ void GameScene::setupTouchHandling()
                                 bomb->setName("bomb");
                                 _mainScene->addChild(bomb);
                                 
-                                _ballsOnState.popBack();
-                                _ballsInBag.pushBack(_ballWaitShooting);
-                                _ballWaitShooting->removeFromParent();
-                                _ballWaitShooting = nullptr;
+                                if (_ballWaitShooting) {
+                                    _ballsInBag.insert(0, _ballWaitShooting);
+                                    _ballWaitShooting->removeFromParent();
+                                    _ballWaitShooting = nullptr;
+                                }
                                 
+                                std::string fileName = _ballsInBag.front()->getBallFileName();
+                                _ballPreview->setTexture(fileName);
+                              
                                 resetEgde();
                                 enableAllCoin();
                                 
@@ -509,6 +520,7 @@ void GameScene::setupTouchHandling()
                 if (allowToShoot) {
                     _cannon->runShootingAnimation();
                     _dogi->runShootingAnimation();
+                    _ballsOnState.pushBack(_ballWaitShooting);
                     _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
                     _gameState = GameState::shooting;
                     if (_isMultiplayer) {
@@ -547,6 +559,14 @@ void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEven
 {
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
         SceneManager::getInstance()->backToLobby();
+    }
+    
+}
+
+void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
+{
+    if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        CCLOG("pressed");
     }
     
 }

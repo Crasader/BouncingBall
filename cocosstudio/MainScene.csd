@@ -140,17 +140,6 @@
             <PreSize />
             <FileData Type="Normal" Path="Dogi.csd" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="nextBall_50" ActionTag="-1593149108" Tag="147" IconVisible="False" LeftMargin="517.0632" RightMargin="-3.0632" TopMargin="958.0618" BottomMargin="51.9382" ctype="SpriteObjectData">
-            <Size X="126.0000" Y="126.0000" />
-            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="580.0632" Y="114.9382" />
-            <Scale ScaleX="1.0000" ScaleY="1.0000" />
-            <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.9063" Y="0.1012" />
-            <PreSize />
-            <FileData Type="Normal" Path="asset/nextBall.png" Plist="" />
-            <BlendFunc Src="1" Dst="771" />
-          </AbstractNodeData>
           <AbstractNodeData Name="arrow_51" ActionTag="1147529148" Tag="148" IconVisible="False" LeftMargin="420.2198" RightMargin="112.7802" TopMargin="979.9431" BottomMargin="75.0569" ctype="SpriteObjectData">
             <Size X="107.0000" Y="81.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
@@ -234,6 +223,21 @@
             <PrePosition />
             <PreSize />
             <FileData Type="Normal" Path="ItemBox.csd" Plist="" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="NextBallHolder" ActionTag="-1791820291" Tag="74" IconVisible="False" LeftMargin="516.6951" RightMargin="-2.6951" TopMargin="955.3859" BottomMargin="54.6141" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="96" Scale9Height="104" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
+            <Size X="126.0000" Y="126.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="579.6951" Y="117.6141" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.9058" Y="0.1035" />
+            <PreSize X="0.1969" Y="0.1109" />
+            <TextColor A="255" R="65" G="65" B="70" />
+            <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
+            <PressedFileData Type="Normal" Path="asset/nextBall.png" Plist="" />
+            <NormalFileData Type="Normal" Path="asset/nextBall.png" Plist="" />
+            <OutlineColor A="255" R="255" G="0" B="0" />
+            <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
         </Children>
       </ObjectData>

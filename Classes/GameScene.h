@@ -36,6 +36,7 @@ protected:
     //Ball
     cocos2d::Vector<Ball*> _ballsOnState;
     Ball* _ballWaitShooting;
+    cocos2d::Sprite* _ballPreview;
     cocos2d::Vector<Ball*> _ballsInBag;
 
     
@@ -45,7 +46,7 @@ protected:
     cocos2d::Sprite* _edgeSp;
     PassCode* _passCode;
     ItemBox* _itemBox;
-    cocos2d::Sprite* _currentItem;
+    cocos2d::ui::Button* _nextBallHolder;
     
     
     //coin && rock
@@ -85,6 +86,7 @@ protected:
     GameState _gameState;
     
     void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
+    void ballHolderButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
 };
 
 

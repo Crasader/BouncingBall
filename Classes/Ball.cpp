@@ -144,3 +144,16 @@ int Ball::getHp()
 {
     return _hp;
 }
+
+std::string Ball::getBallFileName()
+{
+    switch (_color) {
+        case BallColor::red:
+            return "red.png";
+            break;
+        case BallColor::green:
+            return "green.png";
+        case BallColor::blue:
+            return "blue.png";
+    }
+}

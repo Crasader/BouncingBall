@@ -26,6 +26,7 @@ public:
     void gotHit();
     void setHp(int hp);
     int getHp();
+    std::string getBallFileName();
 
 private:
     int _hp;
