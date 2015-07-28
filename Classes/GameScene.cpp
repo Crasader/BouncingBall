@@ -261,19 +261,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
         return false;
     }
-    
-    if (a->getCategoryBitmask() == BOMB_CATEGORY) {
-        CCLOG("A bombbbbbbb");
-        //get range of bomb
-        //for all items on stage;
-        _gameState = GameState::prepareShooting;
-        return false;
-    }
-    if (b->getCategoryBitmask() == BOMB_CATEGORY) {
-        CCLOG("B bombbbbbbb");
-         _gameState = GameState::prepareShooting;
-        return false;
-    }
+
 
     //TODO:make a emun type detection,fix this ugly code
     
@@ -313,6 +301,58 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         updateScoreLabel(_currentScore);
     }
 
+    if (a->getCategoryBitmask() == BOMB_CATEGORY || b->getCategoryBitmask() == BOMB_CATEGORY) {
+        Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
+        
+        // destory coin in range
+        for (Vector<Coin*>::iterator it = _coinOnStage.begin(); it !=_coinOnStage.end();) {
+            if (bomb->getBombRange().containsPoint((*it)->getPosition())) {
+                (*it)->removeFromParent();
+                _coinOnStage.erase(it);
+            } else {
+                it++;
+            }
+        }
+        
+        for (Vector<Rock*>::iterator it = _rocksOnStage.begin(); it !=_rocksOnStage.end();) {
+            if (bomb->getBombRange().containsPoint((*it)->getPosition())) {
+                (*it)->removeFromParent();
+                _rocksOnStage.erase(it);
+            } else {
+                it++;
+            }
+        }
+        
+        for (Vector<Ball*>::iterator it = _ballsOnState.begin(); it !=_ballsOnState.end();) {
+            if (bomb->getBombRange().containsPoint((*it)->getPosition())) {
+                Vec2 pos = (*it)->getPosition();
+                (*it)->removeFromParent();
+                
+                _ballsOnState.erase(it);
+                
+                BallExplode* ballExplode = dynamic_cast<BallExplode*>(CSLoader::createNode("BallExplode.csb"));
+                ballExplode->setPosition(pos);
+                _mainScene->addChild(ballExplode);
+                ballExplode->runExplodeAnimation();
+                ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
+                
+                for(int i=0 ;i < 3 ;++i) {
+                    Coin* coin = Coin::create();
+                    coin->setPosition(pos);
+                    _mainScene->addChild(coin);
+                    coin->initCollision();
+                    coin->runAppearAnimation();
+                    _coinOnStage.pushBack(coin);
+                }
+
+            } else {
+                it++;
+            }
+        }
+        bomb->getPhysicsBody()->setContactTestBitmask(NONE);
+        bomb->removeFromParent();
+        _gameState = GameState::prepareShooting;
+    }
     
     return true;
 }
@@ -322,7 +362,6 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
     PhysicsBody *a = contact.getShapeA()->getBody();
     PhysicsBody *b = contact.getShapeB()->getBody();
     
-    //BALL hit BALL
     if (a->getCategoryBitmask() == BALL_CATEGORY) {
         Ball* ballA = dynamic_cast<Ball*>(a->getNode());
         ballA->gotHit();
@@ -485,7 +524,7 @@ void GameScene::setupTouchHandling()
                     //add Fire animation
                     _dogi->runShootingAnimation();
                     Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
-                    bomb->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+                    bomb->shoot(1000.0f,_cannon->getAngle());
                     _gameState = GameState::shootingBomb;
                 }
             }
@@ -586,3 +625,4 @@ void GameScene::enableAllCoin()
         coin->enableCollision();
     }
 }
+

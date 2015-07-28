@@ -16,6 +16,7 @@ class Bomb : public cocos2d::Sprite
 public:
     CREATE_FUNC(Bomb);
     void shoot(float speed, float angle);
+    cocos2d::Rect getBombRange();
 
 private:
     bool init() override;

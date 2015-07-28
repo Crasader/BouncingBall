@@ -49,3 +49,11 @@ void Bomb::shoot(float speed, float angle)
     this->setPhysicsBody(bombBody);
     
 }
+
+Rect Bomb::getBombRange()
+{
+    Vec2 pos = this->getPosition();
+    Size size = this->getContentSize();
+    
+    return Rect(pos.x-BOMB_RANGE, pos.y-BOMB_RANGE, BOMB_RANGE * 2, BOMB_RANGE * 2);
+}

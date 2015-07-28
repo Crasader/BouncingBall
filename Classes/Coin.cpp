@@ -21,7 +21,7 @@ bool Coin::init()
 
 void Coin::initCollision()
 {
-    PhysicsBody* coinBody = PhysicsBody::createCircle(this->getContentSize().width/2 ,DEFAULT_COIN_MATERIAL);
+    PhysicsBody* coinBody = PhysicsBody::createCircle(this->getContentSize().width/3 ,DEFAULT_COIN_MATERIAL);
     coinBody->setContactTestBitmask(COIN_INIT_CONTACT_MARK);
     coinBody->setCategoryBitmask(COIN_CATEGORY);
     coinBody->setCollisionBitmask(COIN_INIT_COLLISION_MASK);

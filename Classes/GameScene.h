@@ -72,8 +72,8 @@ protected:
     
     bool isGameOver();
     bool isGoalAchieved();
-    
     void triggerGameOver();
+    
     
     //Util Method
     int evaluateStars(int currentScore);

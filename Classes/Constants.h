@@ -19,6 +19,8 @@ const static int BALL_DEFAULT_HP = 2;
 const static int BALL_INFINITY_HP = 99;
 const static float MAX_SHOOTING_SPEED = 2000.0f;
 
+const static float BOMB_RANGE = 100.0f;
+
 #pragma mark -
 #pragma mark Edge Setting
 const static cocos2d::PhysicsMaterial EDGE_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
@@ -36,10 +38,10 @@ const static int BALL_CATEGORY = 0x01;
 const static int ROCK_CATEGORY = 0x02;
 const static int EDGE_CATEGORY = 0x04;
 const static int COIN_CATEGORY = 0x08;
-const static int BOMB_CATEGORY = 0x0f;
+const static int BOMB_CATEGORY = 0x10;
 
 const static int BOMB_COLLISION_MASK = EDGE_CATEGORY;
-const static int BOMB_CONTACT_MASK = BALL_CATEGORY | ROCK_CATEGORY | EDGE_CATEGORY | BOMB_CATEGORY;
+const static int BOMB_CONTACT_MASK = BALL_CATEGORY | ROCK_CATEGORY | EDGE_CATEGORY;
 
 const static int BALL_COLLISION_MASK = BALL_CATEGORY | ROCK_CATEGORY | EDGE_CATEGORY | COIN_CATEGORY ;
 const static int BALL_CONTACT_MASK = BALL_CATEGORY | ROCK_CATEGORY | EDGE_CATEGORY | COIN_CATEGORY | BOMB_CATEGORY;
