@@ -149,7 +149,11 @@ void GameScene::triggerGameOver()
     _mainScene->runAction(FadeTo::create(0.5, 128));
     
     UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level).c_str(), starsNum);
-    UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
+    
+    if (UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level+1).c_str(), LOCKED_LEVEL) == LOCKED_LEVEL) {
+        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
+    }
+    
     
     _gameState = GameState::gameOver;
     
