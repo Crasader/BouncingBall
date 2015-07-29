@@ -258,13 +258,13 @@
           <RenderColor A="255" R="250" G="250" B="210" />
         </AnimationInfo>
         <AnimationInfo Name="twoStar" StartIndex="21" EndIndex="50">
-          <RenderColor A="150" R="240" G="255" B="255" />
+          <RenderColor A="255" R="240" G="255" B="255" />
         </AnimationInfo>
         <AnimationInfo Name="threeStar" StartIndex="51" EndIndex="90">
-          <RenderColor A="150" R="72" G="61" B="139" />
+          <RenderColor A="255" R="72" G="61" B="139" />
         </AnimationInfo>
         <AnimationInfo Name="Appear" StartIndex="91" EndIndex="120">
-          <RenderColor A="150" R="238" G="130" B="238" />
+          <RenderColor A="255" R="238" G="130" B="238" />
         </AnimationInfo>
       </AnimationList>
       <ObjectData Name="Node" CustomClassName="LevelClear" Tag="42" ctype="GameNodeObjectData">
@@ -283,7 +283,7 @@
                 <PreSize X="0.3011" Y="0.2686" />
                 <TextColor A="255" R="65" G="65" B="70" />
                 <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
-                <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
+                <PressedFileData Type="Normal" Path="asset/restartButton.png" Plist="" />
                 <NormalFileData Type="Normal" Path="asset/restartButton.png" Plist="" />
                 <OutlineColor A="255" R="255" G="0" B="0" />
                 <ShadowColor A="255" R="110" G="110" B="110" />
@@ -298,7 +298,7 @@
                 <PreSize X="0.3011" Y="0.2686" />
                 <TextColor A="255" R="65" G="65" B="70" />
                 <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
-                <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
+                <PressedFileData Type="Normal" Path="asset/nextButton.png" Plist="" />
                 <NormalFileData Type="Normal" Path="asset/nextButton.png" Plist="" />
                 <OutlineColor A="255" R="255" G="0" B="0" />
                 <ShadowColor A="255" R="110" G="110" B="110" />
@@ -313,7 +313,7 @@
                 <PreSize X="0.3011" Y="0.2686" />
                 <TextColor A="255" R="65" G="65" B="70" />
                 <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
-                <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
+                <PressedFileData Type="Normal" Path="asset/menuButton.png" Plist="" />
                 <NormalFileData Type="Normal" Path="asset/menuButton.png" Plist="" />
                 <OutlineColor A="255" R="255" G="0" B="0" />
                 <ShadowColor A="255" R="110" G="110" B="110" />
@@ -328,10 +328,10 @@
             <FileData Type="Normal" Path="asset/levelClear.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="starPiece1" ActionTag="732578899" Tag="44" IconVisible="False" LeftMargin="-150.2160" RightMargin="71.2160" TopMargin="-113.4341" BottomMargin="33.4341" ctype="SpriteObjectData">
+          <AbstractNodeData Name="starPiece1" ActionTag="732578899" Tag="44" IconVisible="False" LeftMargin="-400.8500" RightMargin="321.8500" TopMargin="682.4800" BottomMargin="-762.4800" ctype="SpriteObjectData">
             <Size X="79.0000" Y="80.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="-110.7160" Y="73.4341" />
+            <Position X="-361.3500" Y="-722.4800" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -339,10 +339,10 @@
             <FileData Type="Normal" Path="asset/starPiece.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="starPiece2" ActionTag="1652749831" Tag="45" IconVisible="False" LeftMargin="-40.9289" RightMargin="-38.0711" TopMargin="-123.4447" BottomMargin="43.4447" ctype="SpriteObjectData">
+          <AbstractNodeData Name="starPiece2" ActionTag="1652749831" Tag="45" IconVisible="False" LeftMargin="-165.3900" RightMargin="86.3900" TopMargin="680.8100" BottomMargin="-760.8100" ctype="SpriteObjectData">
             <Size X="79.0000" Y="80.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="-1.4289" Y="83.4447" />
+            <Position X="-125.8900" Y="-720.8100" />
             <Scale ScaleX="1.1969" ScaleY="1.1969" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -350,10 +350,10 @@
             <FileData Type="Normal" Path="asset/starPiece.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="starPiece3" ActionTag="1760834229" Tag="46" IconVisible="False" LeftMargin="67.3889" RightMargin="-146.3889" TopMargin="-114.9625" BottomMargin="34.9625" ctype="SpriteObjectData">
+          <AbstractNodeData Name="starPiece3" ActionTag="1760834229" Tag="46" IconVisible="False" LeftMargin="108.0728" RightMargin="-187.0728" TopMargin="680.5822" BottomMargin="-760.5822" ctype="SpriteObjectData">
             <Size X="79.0000" Y="80.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="106.8889" Y="74.9625" />
+            <Position X="147.5728" Y="-720.5822" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />

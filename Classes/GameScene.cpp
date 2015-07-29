@@ -149,8 +149,28 @@ void GameScene::triggerGameOver()
     LevelClear* levelClear = dynamic_cast<LevelClear*>(CSLoader::createNode("LevelClear.csb"));
     levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
     levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
-    levelClear->runLevelClearAnimation(starsNum);
+    
+    ui::Button* restartButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("restartButton");
+    ui::Button* nextButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("nextButton");
+    
+    restartButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            SceneManager::getInstance()->backToLobby();
+            SceneManager::getInstance()->enterGameScene(_level, false);
+        }
+    });
+    
+    nextButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            SceneManager::getInstance()->backToLobby();
+            SceneManager::getInstance()->enterGameScene(_level+1, false);
+        }
+    });
+    
+    
     this->addChild(levelClear);
+    levelClear->runLevelClearAnimation(starsNum);
+   
     
     _mainScene->runAction(FadeTo::create(0.5, 128));
     
