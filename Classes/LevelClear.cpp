@@ -28,14 +28,6 @@ void LevelClear::onExit()
     Node::onExit();
 }
 
-void LevelClear::onEnter()
-{
-    Node::onEnter();;
-    ui::Button* menuButton = this->getChildByName("clearWindow")->getChildByName<ui::Button*>("menuButton");
-    menuButton->addTouchEventListener(CC_CALLBACK_2(LevelClear::menuButtonPressed, this));
-
-}
-
 void LevelClear::runLevelClearAnimation(int starNums)
 {
     this->stopAllActions();
@@ -53,12 +45,5 @@ void LevelClear::runLevelClearAnimation(int starNums)
             break;
         default:
             break;
-    }
-}
-
-void LevelClear::menuButtonPressed(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType eEventType)
-{
-    if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        SceneManager::getInstance()->backToLobby();
     }
 }

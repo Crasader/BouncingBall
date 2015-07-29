@@ -150,6 +150,7 @@ void GameScene::triggerGameOver()
     levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
     levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
     
+    ui::Button* menuButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("menuButton");
     ui::Button* restartButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("restartButton");
     ui::Button* nextButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("nextButton");
     
@@ -167,10 +168,22 @@ void GameScene::triggerGameOver()
         }
     });
     
-    
-    this->addChild(levelClear);
-    levelClear->runLevelClearAnimation(starsNum);
    
+    menuButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            SceneManager::getInstance()->backToLobby();
+        }
+    });
+    
+    _dogi->removeFromParent();
+    Dogi* dogi = dynamic_cast<Dogi*>(CSLoader::createNode("Dogi.csb"));
+    dogi->setPosition(Vec2(0.0f,-200.0f));
+    levelClear->addChild(dogi);
+    this->addChild(levelClear);
+    
+    
+    dogi->runWinAnimation();
+    levelClear->runLevelClearAnimation(starsNum);
     
     _mainScene->runAction(FadeTo::create(0.5, 128));
     
@@ -179,7 +192,6 @@ void GameScene::triggerGameOver()
     if (UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level+1).c_str(), LOCKED_LEVEL) == LOCKED_LEVEL) {
         UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
     }
-    
     
     _gameState = GameState::gameOver;
     

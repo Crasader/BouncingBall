@@ -2,7 +2,7 @@
   <PropertyGroup Type="Node" Name="LevelClear" ID="1f919f00-24c2-4b54-a9a1-52928eb5b203" Version="2.2.8.0" />
   <Content ctype="GameProjectContent">
     <Content>
-      <Animation Duration="120" Speed="1.0000" ActivedAnimationName="threeStar">
+      <Animation Duration="120" Speed="1.0000">
         <Timeline ActionTag="1647823156" Property="Position">
           <PointFrame FrameIndex="0" X="0.0001" Y="0.0000">
             <EasingData Type="0" />
@@ -328,10 +328,10 @@
             <FileData Type="Normal" Path="asset/levelClear.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="starPiece1" ActionTag="732578899" Tag="44" IconVisible="False" LeftMargin="-400.8500" RightMargin="321.8500" TopMargin="682.4800" BottomMargin="-762.4800" ctype="SpriteObjectData">
+          <AbstractNodeData Name="starPiece1" ActionTag="732578899" Tag="44" IconVisible="False" LeftMargin="-400.8488" RightMargin="321.8488" TopMargin="682.4829" BottomMargin="-762.4829" ctype="SpriteObjectData">
             <Size X="79.0000" Y="80.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="-361.3500" Y="-722.4800" />
+            <Position X="-361.3488" Y="-722.4829" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -339,10 +339,10 @@
             <FileData Type="Normal" Path="asset/starPiece.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="starPiece2" ActionTag="1652749831" Tag="45" IconVisible="False" LeftMargin="-165.3900" RightMargin="86.3900" TopMargin="680.8100" BottomMargin="-760.8100" ctype="SpriteObjectData">
+          <AbstractNodeData Name="starPiece2" ActionTag="1652749831" Tag="45" IconVisible="False" LeftMargin="-165.3918" RightMargin="86.3918" TopMargin="680.8080" BottomMargin="-760.8080" ctype="SpriteObjectData">
             <Size X="79.0000" Y="80.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="-125.8900" Y="-720.8100" />
+            <Position X="-125.8918" Y="-720.8080" />
             <Scale ScaleX="1.1969" ScaleY="1.1969" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />

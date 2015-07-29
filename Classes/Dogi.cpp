@@ -35,3 +35,13 @@ void Dogi::runShootingAnimation()
     _timeline->play("Shoot",false);
     
 }
+
+void Dogi::runWinAnimation()
+{
+    this->stopAllActions();
+    this->runAction(_timeline);
+    _timeline->play("Win",false);
+    
+}
+
+

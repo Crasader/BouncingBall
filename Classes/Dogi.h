@@ -19,6 +19,7 @@ public:
     bool init() override;
     void onExit() override;
     void runShootingAnimation();
+    void runWinAnimation();
     
 protected:
     cocostudio::timeline::ActionTimeline* _timeline;

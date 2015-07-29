@@ -21,12 +21,6 @@ public:
 
 protected:
     void onExit() override;
-    void onEnter() override;
-    
-    //TODO: finishi this
-    void restartButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
-    void nextButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
-    void menuButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
     cocostudio::timeline::ActionTimeline* _timeline;
 
 };

@@ -56,6 +56,9 @@
           <Image Name="bombExplode1.png" />
           <Image Name="bombExplode2.png" />
           <Image Name="bombExplode3.png" />
+          <Image Name="winDogi1.png" />
+          <Image Name="winDogi2.png" />
+          <Image Name="winDogi3.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
