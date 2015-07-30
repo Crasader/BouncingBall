@@ -92,10 +92,6 @@ namespace JSONPacker {
                 document.AddMember("deviceName", multiInputData.deviceName.c_str(), document.GetAllocator());
             }
                 break;
-            case GameState::prepareShooting:
-            {
-            }
-                break;
             case GameState::shooting:
             {
                 document.AddMember("angle", multiInputData.angle, document.GetAllocator());
@@ -139,8 +135,6 @@ namespace JSONPacker {
             {
                 data.deviceName = document["deviceName"].GetString();
             }
-                break;
-            case GameState::prepareShooting:
                 break;
             case GameState::waiting:
             {

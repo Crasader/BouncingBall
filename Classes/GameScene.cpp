@@ -60,6 +60,7 @@ bool GameScene::initWithLevel(int level)
     _level = level;
     _edgeSp = nullptr;
     _currentScore = 0;
+    _opponetScore = 0;
     
     return true;
 }
@@ -100,7 +101,8 @@ void GameScene::update(float dt)
     switch (_gameState) {
         case GameState::shooting:
         {
-            if (this->allBallIsStoped()) {
+            if (this->allBallIsSpeedAreLowEnough()) {
+                stopAllBall();
                 if (canUserGetItem()) {
                     _passCode->resetPassCode();
                     //TODO: make item random
@@ -109,11 +111,16 @@ void GameScene::update(float dt)
                 
                 //FIXME: too many if
                 if (isGameOver()) {
-                    triggerGameOver();
+                    if (_isMultiplay) {
+                        triggerGameOverMulti();
+                    } else {
+                        triggerGameOver();
+                    }
+                   
+                    
                 } else {
                     _ballWaitShooting = nullptr;
-                    resetAllBallHp();
-                    enableAllCoin();
+                    enableCoin();
                     setupBall();
                     if (_isMultiplay) {
                         setGameState(GameState::waiting);
@@ -130,19 +137,25 @@ void GameScene::update(float dt)
         case GameState::bombFinish:
         {
             setupBall();
-            enableAllCoin();
-            resetAllBallHp();
             _gameState = GameState::prepareShooting;
         }
             break;
         case GameState::waitForSimulate:
         {
-            if (allBallIsStoped() && _simulating == false) {
+            if (allBallIsSpeedAreLowEnough() && _simulating == false) {
                 stopAllBall();
                 setBallPosOnState(_nextBallPos);
                 _nextBallPos.clear();
                 setupBall();
+                enableCoin();
                 setGameState(GameState::prepareShooting);
+            }
+        }
+            break;
+        case GameState::waitForFinish:
+        {
+            if (allBallIsSpeedAreLowEnough() && _simulating == false) {
+                triggerGameOverMulti();
             }
         }
             break;
@@ -217,6 +230,21 @@ void GameScene::triggerGameOver()
         UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
     }
     
+}
+
+void GameScene::triggerGameOverMulti()
+{
+    setGameState(GameState::gameOver);
+    std::string messageContent;
+    if (_currentScore > _opponetScore) {
+        messageContent = "Your Win !";
+    } else if (_currentScore < _opponetScore) {
+        messageContent = "Your Lose !";
+    } else {
+        messageContent = "Draw !";
+    }
+        MessageBox(messageContent.c_str(), "Game Over!!");
+        SceneManager::getInstance()->backToLobby();
 }
 
 void GameScene::updateBallPreview()
@@ -386,6 +414,11 @@ void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 pos)
         
         coin->initCollision();
         coin->runAppearAnimation(Vec2(pos.x + indicator.x * movePos[i].x, pos.y + indicator.y * movePos[i].y));
+        
+        if (_isMultiplay) {
+            coin->setTag(1);
+        }
+    
     }
 }
 
@@ -409,7 +442,6 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
             updateBallPreview();
             
             resetEgde();
-            enableAllCoin();
             
             _gameState = GameState::usingBomb;
             
@@ -452,28 +484,41 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
             coin->setPosition(a->getPosition());
             _mainScene->addChild(coin);
             coin->runGetCoinAnimation();
-            _currentScore += 1;
-            updateScoreLabel(_currentScore);
+            if (!isMyTurn()) {
+                _opponetScore++;
+            } else {
+                _currentScore += 1;
+                updateScoreLabel(_currentScore);
+            }
         }
     }
     
     //Ball hit Coin
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == COIN_CATEGORY) {
-        Coin* coin = dynamic_cast<Coin*>(b->getNode());
+        Coin* coin = static_cast<Coin*>(b->getNode());
         coin->removeFromParent();
         auto it = _coinOnStage.find(coin);
         _coinOnStage.erase(it);
         
-        _currentScore += 1;
-        updateScoreLabel(_currentScore);
+        if (!isMyTurn()) {
+            _opponetScore++;
+        } else {
+            _currentScore += 1;
+            updateScoreLabel(_currentScore);
+        }
+ 
     }
     if (a->getCategoryBitmask() == COIN_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
-        Coin* coin = dynamic_cast<Coin*>(a->getNode());
+        Coin* coin = static_cast<Coin*>(a->getNode());
         coin->removeFromParent();
         auto it = _coinOnStage.find(coin);
         _coinOnStage.erase(it);
-        _currentScore += 1;
-        updateScoreLabel(_currentScore);
+        if (!isMyTurn()) {
+            _opponetScore++;
+        } else {
+            _currentScore += 1;
+            updateScoreLabel(_currentScore);
+        }
     }
 
     //Bomb hitted
@@ -732,6 +777,12 @@ void GameScene::setGameState(GameState gameState)
                 sendData(multiInputData);
             }
                 break;
+            case GameState::gameOver:
+            {
+                multiInputData.gameState = GameState::gameOver;
+                sendData(multiInputData);
+            }
+                break;
             default:
                 break;
         }
@@ -754,7 +805,7 @@ void GameScene::resetEgde()
     _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
 }
 
-bool GameScene::allBallIsStoped()
+bool GameScene::allBallIsSpeedAreLowEnough()
 {
     for (auto ball : _ballsOnState) {
         if (! ball->isStoped()) {
@@ -797,7 +848,6 @@ int GameScene::evaluateStars(int currentScore)
     } else {
         return 0;
     }
-
 }
 
 std::string GameScene::getConfigFileName()
@@ -812,10 +862,14 @@ void GameScene::resetAllBallHp()
     }
 }
 
-void GameScene::enableAllCoin()
+void GameScene::enableCoin()
 {
     for (auto coin : _coinOnStage) {
-        coin->enableCollision();
+        if (_isMultiplay && coin->getTag() != Node::INVALID_TAG) {
+            coin->setTag(Node::INVALID_TAG);
+        } else {
+            coin->enableCollision();
+        }
     }
 }
 
@@ -932,6 +986,11 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
            
         }
             break;
+        case GameState::gameOver:
+        {
+            _gameState = GameState::waitForFinish;
+        }
+            break;
         default:
             break;
     }
@@ -980,9 +1039,12 @@ void GameScene::displayTurnInfo(std::string info)
     infoLabel->setOpacity(0);
     _mainScene->addChild(infoLabel);
     infoLabel->runAction(Sequence::create(FadeIn::create(1.0f),DelayTime::create(1), RemoveSelf::create(),nullptr));
-    
 }
 
+bool GameScene::isMyTurn()
+{
+    return ! (_gameState == GameState::waiting || _gameState == GameState::waitForSimulate || _gameState == GameState::waitForFinish);
+}
 
 
 //sync game status

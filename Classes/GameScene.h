@@ -25,6 +25,7 @@ public:
     void setMultiplay(bool isMultiplay);
     
 protected:
+    //for multi
     bool _isMultiplay;
     bool _simulating;
     
@@ -65,6 +66,8 @@ protected:
     std::vector<cocos2d::Vec2> _nextBallPos;
     
     int _currentScore;
+    int _opponetScore;  //only for multi
+    
     int _oneStarScore;
     int _twoStarScore;
     int _threeStarScore;
@@ -84,14 +87,15 @@ protected:
     void setupBall();
     void setupMap();
     void triggerGameOver();
+    void triggerGameOverMulti();
     
     
     //Util Method
     int evaluateStars(int currentScore);
     std::string getConfigFileName();
     void resetAllBallHp();
-    void enableAllCoin();
-    bool allBallIsStoped();
+    void enableCoin();
+    bool allBallIsSpeedAreLowEnough();
     void resetEgde();
     void updateScoreLabel(int score);
     
@@ -107,6 +111,8 @@ protected:
     bool canPlayfirst();
     void sendData(JSONPacker::MultiInputData multiInputData);
     void displayTurnInfo(std::string info);
+    
+    bool isMyTurn();
     
 };
 

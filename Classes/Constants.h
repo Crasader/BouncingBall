@@ -12,10 +12,10 @@
 #include "cocos2d.h"
 
 #pragma mark Ball Setting
-const static float MIN_SPEED = 5.0f;
+const static float MIN_SPEED = 2.0f;
 const static float BALL_DEFAULT_LINEAR_DAMPING = 1.2f;
 const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
-const static int BALL_DEFAULT_HP = 1;
+const static int BALL_DEFAULT_HP = 3;
 const static int BALL_INFINITY_HP = 99;
 const static float MAX_SHOOTING_SPEED = 2000.0f;
 
@@ -65,8 +65,6 @@ const static int EDGE_RUNNING_CONTACT_MASK = NONE;
 const static int LOCKED_LEVEL = -1;
 const static int UNLOCKED_LEVEL = 0;
 
-//TODO maybe color should be a tag
-
 
 enum class GameState
 {
@@ -78,7 +76,8 @@ enum class GameState
     shootingBomb,
     bombFinish,
     waiting,         //only multi
-    waitForSimulate   //only multi
+    waitForSimulate,   //only multi
+    waitForFinish
     
     //only for multiPlay
 };
