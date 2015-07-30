@@ -77,7 +77,7 @@ namespace JSONPacker {
         return mapState;
     }
     
-    std::string packMultiInputDataJSON(MultiInputData multiInputData)
+    std::string packMultiInputDataJSON(const MultiInputData& multiInputData)
     {
         rapidjson::Document document;
         document.SetObject();
@@ -101,6 +101,17 @@ namespace JSONPacker {
                 document.AddMember("angle", multiInputData.angle, document.GetAllocator());
             }
                 break;
+            case GameState::waiting:
+            {
+                rapidjson::Value ballPos(rapidjson::kArrayType);
+                for (auto pos : multiInputData.ballPos) {
+                    rapidjson::Value posValue(rapidjson::kObjectType);
+                    posValue.AddMember("x", pos.x, document.GetAllocator());
+                    posValue.AddMember("y", pos.y, document.GetAllocator());
+                    ballPos.PushBack(posValue,document.GetAllocator());
+                }
+                document.AddMember("ballPos",ballPos,document.GetAllocator());
+            }
             default:
                 break;
         }
@@ -132,6 +143,16 @@ namespace JSONPacker {
             case GameState::prepareShooting:
                 break;
             case GameState::waiting:
+            {
+                std::vector<Vec2> ballPos;
+                for (int i =0; i < document["ballPos"].Capacity(); ++i) {
+                    Vec2 pos;
+                    pos.x = document["ballPos"][i]["x"].GetDouble();
+                    pos.y = document["ballPos"][i]["y"].GetDouble();
+                    ballPos.push_back(pos);
+                }
+                data.ballPos = ballPos;
+            }
                 break;
             case GameState::shooting:
             {

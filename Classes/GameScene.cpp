@@ -74,6 +74,7 @@ void GameScene::onEnter()
     
     if  (_isMultiplay) {
         setGameState(GameState::sendDeviceName);
+        _simulating = false;
     } else {
         setGameState(GameState::prepareShooting);
     }
@@ -132,6 +133,17 @@ void GameScene::update(float dt)
             enableAllCoin();
             resetAllBallHp();
             _gameState = GameState::prepareShooting;
+        }
+            break;
+        case GameState::waitForSimulate:
+        {
+            if (allBallIsStoped() && _simulating == false) {
+                stopAllBall();
+                setBallPosOnState(_nextBallPos);
+                _nextBallPos.clear();
+                setupBall();
+                setGameState(GameState::prepareShooting);
+            }
         }
             break;
         default:
@@ -530,6 +542,8 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
         if (b->getCategoryBitmask() == BALL_CATEGORY) {
               ball->gotHit();
         }
+        
+        //FIXME: two ball hit at some tme
         //TODO: refactoring
         if (ball->getHp() <= 0) {
             Vec2 pos = ball->getPosition();
@@ -706,6 +720,8 @@ void GameScene::setGameState(GameState gameState)
             case GameState::waiting:
             {
                 multiInputData.gameState = GameState::waiting;
+                multiInputData.ballPos = getBallPosOnState();
+                _simulating = true;
                 sendData(multiInputData);
             }
                 break;
@@ -747,6 +763,14 @@ bool GameScene::allBallIsStoped()
     }
     return true;
 }
+
+void GameScene::stopAllBall()
+{
+    for (auto ball : _ballsOnState) {
+        ball->getPhysicsBody()->setVelocity(Vec2(0,0));
+    }
+}
+
 
 bool GameScene::canUserGetItem(){
     return _passCode->isPassCodeClear();
@@ -795,6 +819,22 @@ void GameScene::enableAllCoin()
     }
 }
 
+std::vector<Vec2> GameScene::getBallPosOnState() const
+{
+    std::vector<Vec2> ballPos;
+    for (auto ball : _ballsOnState ) {
+        ballPos.push_back(ball->getPosition());
+    }
+    return ballPos;
+}
+
+void GameScene::setBallPosOnState(std::vector<Vec2> ballPos)
+{
+    for (int i =0; i < ballPos.size(); ++i) {
+        _ballsOnState.at(i)->setPosition(ballPos[i]);
+    }
+}
+
 #pragma mark -
 #pragma makr MultiPlay
 
@@ -834,8 +874,10 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
         {
             switch (_gameState) {
                 case GameState::sendDeviceName:
+                {
                     displayTurnInfo("YOU GO SECOND!");
                     _gameState = GameState::waiting;
+                }
                     break;
                 case GameState::waiting:
                     CCLOG("everything sames good");
@@ -846,21 +888,26 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             
         }
             break;
+            //TODO: fix a bugs of one device is too fast than others
         case GameState::waiting:
         {
             switch (_gameState) {
                 case GameState::sendDeviceName:
+                {
                     displayTurnInfo("YOU GO FIRST!");
                     setGameState(GameState::prepareShooting);
+                }
                     break;
                 case GameState::prepareShooting:
                     CCLOG("everything sames good");
                 case GameState::waiting:
+                {
                     CCLOG("it's my turn");
-                    setGameState(GameState::prepareShooting);
-                    setupBall();
+                    _gameState = GameState::waitForSimulate;
+                    _nextBallPos = multiInputData.ballPos;
+                }
+        
                     break;
-                    
                 default:
                     break;
             }
@@ -870,6 +917,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
         case GameState::shooting:
         {
             _ballsOnState.pushBack(_ballWaitShooting);
+            _simulating = true;
             CallFunc* func01 = CallFunc::create([this]()
             {
                 _dogi->runShootingAnimation();
@@ -878,9 +926,9 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             CallFunc* func02 = CallFunc::create([this]()
             {
                  _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+                _simulating = false;
             });
             _cannon->simulateShoot(multiInputData.angle,func01,func02);
-            _ballsOnState.pushBack(_ballWaitShooting);
            
         }
             break;

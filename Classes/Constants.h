@@ -77,7 +77,8 @@ enum class GameState
     usingBomb,
     shootingBomb,
     bombFinish,
-    waiting         //only multi
+    waiting,         //only multi
+    waitForSimulate   //only multi
     
     //only for multiPlay
 };

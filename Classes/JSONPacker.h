@@ -45,12 +45,13 @@ namespace JSONPacker
         float angle;
         cocos2d::Vec2 pos;
         std::string deviceName;
+        std::vector<cocos2d::Vec2> ballPos;
     };
 
     //TODO: improve this speed
     const MapState unpackMapStateJSON(std::string json);
     
-    std::string packMultiInputDataJSON(MultiInputData multiInputData);
+    std::string packMultiInputDataJSON(const MultiInputData& multiInputData);
     MultiInputData unpackMultiInputDataJSON(std::string json);
 }
 

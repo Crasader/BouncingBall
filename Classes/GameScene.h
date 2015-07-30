@@ -26,8 +26,14 @@ public:
     
 protected:
     bool _isMultiplay;
+    bool _simulating;
+    
     bool initWithLevel(int level);
     void onEnter() override;
+    
+    std::vector<cocos2d::Vec2> getBallPosOnState() const;
+    void setBallPosOnState(std::vector<cocos2d::Vec2> ballPos);
+    void stopAllBall();
     
     cocos2d::Scene* _physicsScene;
     
@@ -56,6 +62,7 @@ protected:
     //coin && rock
     cocos2d::Vector<Coin*> _coinOnStage;
     cocos2d::Vector<Rock*> _rocksOnStage;
+    std::vector<cocos2d::Vec2> _nextBallPos;
     
     int _currentScore;
     int _oneStarScore;
