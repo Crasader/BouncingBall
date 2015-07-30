@@ -33,6 +33,9 @@ USING_NS_CC;
 //TODO make item box bigger
 
 //TODO: make Debug func for game over and map test
+//TODO: fix bugs that bomb donot hit any thing
+//TODO: change random generate coin
+//TODO: fix bomb
 
 #pragma mark -
 #pragma mark LifeCircle
@@ -92,6 +95,7 @@ void GameScene::onEnter()
 void GameScene::update(float dt)
 {
     Node::update(dt);
+    _physicsWorld->step(1.0f / 60.0f);
     switch (_gameState) {
         case GameState::shooting:
         {
@@ -101,6 +105,8 @@ void GameScene::update(float dt)
                     //TODO: make item random
                     _itemBox->addItem(ItemCategory::bomb);
                 }
+                
+                //FIXME: too many if
                 if (isGameOver()) {
                     triggerGameOver();
                 } else {
@@ -108,7 +114,12 @@ void GameScene::update(float dt)
                     resetAllBallHp();
                     enableAllCoin();
                     setupBall();
-                    _gameState = GameState::prepareShooting;
+                    if (_isMultiplay) {
+                        setGameState(GameState::waiting);
+                    } else {
+                        setGameState(GameState::prepareShooting);
+                    }
+          
                 }
                 
             }
@@ -130,6 +141,7 @@ void GameScene::update(float dt)
 
 void GameScene::triggerGameOver()
 {
+    setGameState(GameState::gameOver);
     int starsNum = evaluateStars(_currentScore);
     
     //TODO: improve this
@@ -192,8 +204,6 @@ void GameScene::triggerGameOver()
     if (UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level+1).c_str(), LOCKED_LEVEL) == LOCKED_LEVEL) {
         UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
     }
-    
-    _gameState = GameState::gameOver;
     
 }
 
@@ -336,11 +346,25 @@ void GameScene::setupBall()
 
 void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 pos)
 {
+    Size visibleSize = Director::getInstance()->getVisibleSize();
     Explode* ballExplode = dynamic_cast<Explode*>(CSLoader::createNode("Explode.csb"));
     ballExplode->setPosition(pos);
     _mainScene->addChild(ballExplode);
     ballExplode->runBallExplodeAnimation();
     ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
+    
+    std::vector<Vec2> movePos {Vec2(100,100),Vec2(60,60),Vec2(20,20)};
+    Vec2 indicator;
+    
+    if (pos.x >= visibleSize.width/2 && pos.y >= visibleSize.height/2) {
+        indicator = Vec2(-1,-1);
+    } else if (pos.x >= visibleSize.width/2 && pos.y <= visibleSize.height/2) {
+        indicator = Vec2(-1,1);
+    } else if (pos.x <= visibleSize.width && pos.y <= visibleSize.height) {
+        indicator = Vec2(1,1);
+    } else {
+        indicator = Vec2(1,-1);
+    }
     
     for(int i=0 ;i < 3 ;++i) {
         Coin* coin = Coin::create();
@@ -349,8 +373,7 @@ void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 pos)
         _coinOnStage.pushBack(coin);
         
         coin->initCollision();
-        coin->runAppearAnimation();
-        
+        coin->runAppearAnimation(Vec2(pos.x + indicator.x * movePos[i].x, pos.y + indicator.y * movePos[i].y));
     }
 }
 
@@ -485,7 +508,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         }
         
         //temp code to prevent too fast contact
-        bomb->getPhysicsBody()->setContactTestBitmask(NONE);
+    //    bomb->getPhysicsBody()->setContactTestBitmask(NONE);
         bomb->removeFromParent();
         _gameState = GameState::bombFinish;
         return false;
@@ -576,6 +599,7 @@ void GameScene::setupTouchHandling()
                 allowToShoot = false;
                 return true;
             }
+                break;
             case GameState::usingBomb:
             {
                 allowToShoot = true;
@@ -607,11 +631,8 @@ void GameScene::setupTouchHandling()
                     _dogi->runShootingAnimation();
                     _ballsOnState.pushBack(_ballWaitShooting);
                     _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
-                    _gameState = GameState::shooting;
+                    setGameState(GameState::shooting);
                     
-                    if (_isMultiplay) {
-                        //sendData
-                    }
                 }
             }
                 break;
@@ -658,6 +679,7 @@ void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType
     
 }
 
+//TODO: make it smooth when cannon move
 #pragma mark - 
 #pragma mark Setter/Getter
 
@@ -665,10 +687,12 @@ void GameScene::setGameState(GameState gameState)
 {
     _gameState = gameState;
     if (_isMultiplay) {
+        
         JSONPacker::MultiInputData multiInputData;
         switch (gameState) {
             case GameState::sendDeviceName:
             {
+                multiInputData.gameState = GameState::sendDeviceName;
                 multiInputData.deviceName = SceneManager::getInstance()->getDeviceName();
                 sendData(multiInputData);
             }
@@ -684,6 +708,14 @@ void GameScene::setGameState(GameState gameState)
                 multiInputData.gameState = GameState::waiting;
                 sendData(multiInputData);
             }
+                break;
+            case GameState::shooting:
+            {
+                multiInputData.gameState = GameState::shooting;
+                multiInputData.angle = _cannon->getAngle();
+                sendData(multiInputData);
+            }
+                break;
             default:
                 break;
         }
@@ -783,7 +815,6 @@ void GameScene::receivedData(const void *data, unsigned long length)
 
 void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
 {
-    JSONPacker::MultiInputData dataToSend;
     switch (multiInputData.gameState) {
         case GameState::sendDeviceName:
         {
@@ -795,6 +826,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
                     displayTurnInfo("YOU GO SECOND!");
                     setGameState(GameState::waiting);
                 }
+                
             }
         }
             break;
@@ -803,7 +835,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             switch (_gameState) {
                 case GameState::sendDeviceName:
                     displayTurnInfo("YOU GO SECOND!");
-                    setGameState(GameState::waiting);
+                    _gameState = GameState::waiting;
                     break;
                 case GameState::waiting:
                     CCLOG("everything sames good");
@@ -826,12 +858,32 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
                 case GameState::waiting:
                     CCLOG("it's my turn");
                     setGameState(GameState::prepareShooting);
+                    setupBall();
+                    break;
                     
                 default:
                     break;
             }
             
         }
+            break;
+        case GameState::shooting:
+        {
+            _ballsOnState.pushBack(_ballWaitShooting);
+            CallFunc* func01 = CallFunc::create([this]()
+            {
+                _dogi->runShootingAnimation();
+                
+            });
+            CallFunc* func02 = CallFunc::create([this]()
+            {
+                 _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+            });
+            _cannon->simulateShoot(multiInputData.angle,func01,func02);
+            _ballsOnState.pushBack(_ballWaitShooting);
+           
+        }
+            break;
         default:
             break;
     }

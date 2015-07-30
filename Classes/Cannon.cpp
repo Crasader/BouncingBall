@@ -55,3 +55,14 @@ void Cannon::setAngle(float angle)
     }
     this->getChildByName<Sprite*>("cannon")->setRotation(newAngle);
 }
+
+void Cannon::simulateShoot(float angle, CallFunc* dogiJump, CallFunc* ballShoot)
+{
+    auto action = Sequence::create(RotateTo::create(0.5f, angle),
+                                   CallFunc::create(CC_CALLBACK_0(Cannon::runShootingAnimation,this)),
+                                   dogiJump,
+                                   ballShoot,
+                                   nullptr);
+    
+    this->getChildByName<Sprite*>("cannon")->runAction(action);
+}

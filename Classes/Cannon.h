@@ -18,6 +18,7 @@ class Ball;
 class Cannon : public cocos2d::Node
 {
 public:
+    
     CREATE_FUNC(Cannon);
     bool init() override;
     void onExit() override;
@@ -25,6 +26,7 @@ public:
     void rotate(float cocosAngle);
     float getAngle();
     void setAngle(float angle);
+    void simulateShoot(float angle, CallFunc* dogiJump, CallFunc* ballShoot);   //only for multi play
 protected:
     cocostudio::timeline::ActionTimeline* _timeline;
     

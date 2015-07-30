@@ -19,7 +19,7 @@ class GameScene : public cocos2d::Node
 {
 public:
     static GameScene* createWithLevel(int level);
-    void setPhyWorld(cocos2d::PhysicsWorld* world){ m_world = world; };
+    void setPhyWorld(cocos2d::PhysicsWorld* world){ _physicsWorld = world; };
     void receivedData(const void* data, unsigned long length);
     void setGameState(GameState gameState);
     void setMultiplay(bool isMultiplay);
@@ -34,7 +34,7 @@ protected:
     cocos2d::ui::TextBMFont* _scoreLabel;
     GameState _gameState;
     
-    cocos2d::PhysicsWorld* m_world;
+    cocos2d::PhysicsWorld* _physicsWorld;
     cocos2d::Node* _mainScene;
 
     //Ball

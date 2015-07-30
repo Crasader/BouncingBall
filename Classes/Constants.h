@@ -15,7 +15,7 @@
 const static float MIN_SPEED = 5.0f;
 const static float BALL_DEFAULT_LINEAR_DAMPING = 1.2f;
 const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
-const static int BALL_DEFAULT_HP = 2;
+const static int BALL_DEFAULT_HP = 1;
 const static int BALL_INFINITY_HP = 99;
 const static float MAX_SHOOTING_SPEED = 2000.0f;
 
@@ -50,16 +50,16 @@ const static int BALL_CONTACT_MASK = BALL_CATEGORY | ROCK_CATEGORY | EDGE_CATEGO
 const static int ROCK_COLLISION_MASK = BALL_CATEGORY | COIN_CATEGORY;
 const static int ROCK_CONTACT_MASK = BALL_CATEGORY  | BOMB_CATEGORY;
 
-const static int COIN_INIT_COLLISION_MASK = COIN_CATEGORY | EDGE_CATEGORY | ROCK_CATEGORY;
+const static int COIN_INIT_COLLISION_MASK = ROCK_CATEGORY;
 const static int COIN_INIT_CONTACT_MARK = NONE;
 
 const static int COIN_RUNNING_COLLISION_MASK = NONE ;
 const static int COIN_RUNNING_CONTACT_MASK = BALL_CATEGORY | BOMB_CATEGORY;
 
-const static int EDGE_INIT_CULLISION_MASK = COIN_CATEGORY;
+const static int EDGE_INIT_CULLISION_MASK = NONE;
 const static int EDGE_INIT_CONTACT_MASK = BALL_CATEGORY | BOMB_CATEGORY;
 
-const static int EDGE_RUNNING_CULLISION_MASK = BALL_CATEGORY | COIN_CATEGORY | BOMB_CATEGORY;
+const static int EDGE_RUNNING_CULLISION_MASK = BALL_CATEGORY | BOMB_CATEGORY;
 const static int EDGE_RUNNING_CONTACT_MASK = NONE;
 
 const static int LOCKED_LEVEL = -1;

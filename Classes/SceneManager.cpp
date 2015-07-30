@@ -54,7 +54,8 @@ void SceneManager::enterGameScene(int level, bool networked)
     this->_gameScene = GameScene::createWithLevel(level);
     this->_gameScene->setMultiplay(networked);
     _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
-    physicsScene->getPhysicsWorld()->setSubsteps(3);
+    physicsScene->getPhysicsWorld()->setAutoStep(false);
+    
     physicsScene->addChild(_gameScene);
 
     Director::getInstance()->pushScene(physicsScene);
@@ -112,6 +113,7 @@ void SceneManager::stateChanged(ConnectionState state)
             break;
         case ConnectionState::NOT_CONNECTED:
             CCLOG("Not Connected");
+            this->backToLobby();
             break;
         case ConnectionState::CONNECTED:
             CCLOG("Connected");

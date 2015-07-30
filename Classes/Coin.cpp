@@ -39,13 +39,9 @@ void Coin::runGetCoinAnimation()
     this->runAction(Sequence::create(_action, RemoveSelf::create(),nullptr));
 }
 
-void Coin::runAppearAnimation()
+
+void Coin::runAppearAnimation(Vec2 newPos)
 {
-    std::random_device seed_gen;
-    std::default_random_engine engine(seed_gen());
-    std::uniform_int_distribution<> dist(-100,100);
-    Vec2 newPos = Vec2(dist(engine),dist(engine)) + this->getPosition();
-    
     _action = Spawn::create(
                             JumpTo::create(0.5, newPos, 30, 1),
                             FadeTo::create(0.5f,128),
