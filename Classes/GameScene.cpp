@@ -30,12 +30,10 @@
 
 USING_NS_CC;
 
-//TODO make item box bigger
-
 //TODO: make Debug func for game over and map test
 //TODO: fix bugs that bomb donot hit any thing
-//TODO: change random generate coin
 //TODO: fix bomb
+//TODO: fix passcode
 
 #pragma mark -
 #pragma mark LifeCircle
@@ -80,7 +78,6 @@ void GameScene::onEnter()
         setGameState(GameState::prepareShooting);
     }
     
-    
     //contact call back
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
@@ -117,7 +114,6 @@ void GameScene::update(float dt)
                         triggerGameOver();
                     }
                    
-                    
                 } else {
                     _ballWaitShooting = nullptr;
                     enableCoin();
@@ -400,7 +396,7 @@ void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 pos)
         indicator = Vec2(-1,-1);
     } else if (pos.x >= visibleSize.width/2 && pos.y <= visibleSize.height/2) {
         indicator = Vec2(-1,1);
-    } else if (pos.x <= visibleSize.width && pos.y <= visibleSize.height) {
+    } else if (pos.x <= visibleSize.width/2 && pos.y <= visibleSize.height/2) {
         indicator = Vec2(1,1);
     } else {
         indicator = Vec2(1,-1);
@@ -438,13 +434,8 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
                 _ballWaitShooting->removeFromParent();
                 _ballWaitShooting = nullptr;
             }
-            
             updateBallPreview();
-            
             resetEgde();
-            
-            _gameState = GameState::usingBomb;
-            
         }
             break;
             //TODO add other item
@@ -474,11 +465,13 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
         BallColor aColor = static_cast<BallColor>(a->getTag());
         BallColor bColor = static_cast<BallColor>(b->getTag());
-        _passCode->EnterOneColor(aColor);
-        if (_passCode->EnterOneColor(bColor)) {
+        if (isMyTurn()) {
             _passCode->EnterOneColor(aColor);
+            if (_passCode->EnterOneColor(bColor)) {
+                _passCode->EnterOneColor(aColor);
+            }
         }
-        
+       
         if (aColor == bColor) {
             Coin* coin = Coin::create();
             coin->setPosition(a->getPosition());
@@ -645,6 +638,8 @@ void GameScene::setupTouchHandling()
                     ItemCategory itemCategory = _itemBox->pickUpItemFromPos(touchPos);
                     if (ItemCategory::none != itemCategory) {
                         createItemWhenTouchedItemBox(itemCategory);
+                        GameState nextState = getStateByItem(itemCategory);
+                        setGameState(nextState);
                     }
                     return false;
                 }
@@ -663,8 +658,16 @@ void GameScene::setupTouchHandling()
             {
                 allowToShoot = true;
                 return true;
-            }
+            };
+                break;
+            case GameState::shootingBomb:
+            {
+                allowToShoot = false;
+                return true;
+            };
+                break;
         }
+        return false;
 
     };
     
@@ -703,7 +706,7 @@ void GameScene::setupTouchHandling()
                     _dogi->runShootingAnimation();
                     Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
                     bomb->shoot(BOMB_SPEED,_cannon->getAngle());
-                    _gameState = GameState::shootingBomb;
+                    setGameState(GameState::shootingBomb);
                 }
             }
                 
@@ -742,50 +745,46 @@ void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType
 #pragma mark - 
 #pragma mark Setter/Getter
 
+
+GameState GameScene::getStateByItem(ItemCategory itemCategory) const
+{
+    switch (itemCategory) {
+        case ItemCategory::bomb:
+            return GameState::usingBomb;
+    }
+}
 void GameScene::setGameState(GameState gameState)
 {
     _gameState = gameState;
     if (_isMultiplay) {
         
         JSONPacker::MultiInputData multiInputData;
+        multiInputData.gameState = gameState;
         switch (gameState) {
             case GameState::sendDeviceName:
             {
-                multiInputData.gameState = GameState::sendDeviceName;
                 multiInputData.deviceName = SceneManager::getInstance()->getDeviceName();
-                sendData(multiInputData);
-            }
-                break;
-            case GameState::prepareShooting:
-            {
-                multiInputData.gameState = GameState::prepareShooting;
-                sendData(multiInputData);
             }
                 break;
             case GameState::waiting:
             {
-                multiInputData.gameState = GameState::waiting;
                 multiInputData.ballPos = getBallPosOnState();
                 _simulating = true;
-                sendData(multiInputData);
             }
                 break;
             case GameState::shooting:
             {
-                multiInputData.gameState = GameState::shooting;
                 multiInputData.angle = _cannon->getAngle();
-                sendData(multiInputData);
             }
                 break;
-            case GameState::gameOver:
+            case GameState::shootingBomb:
             {
-                multiInputData.gameState = GameState::gameOver;
-                sendData(multiInputData);
+                multiInputData.angle = _cannon->getAngle();
             }
-                break;
             default:
                 break;
         }
+        sendData(multiInputData);
     }
 }
 
@@ -889,6 +888,11 @@ void GameScene::setBallPosOnState(std::vector<Vec2> ballPos)
     }
 }
 
+void GameScene::disableTouchEvent()
+{
+
+}
+
 #pragma mark -
 #pragma makr MultiPlay
 
@@ -960,7 +964,6 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
                     _gameState = GameState::waitForSimulate;
                     _nextBallPos = multiInputData.ballPos;
                 }
-        
                     break;
                 default:
                     break;
@@ -984,6 +987,29 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             });
             _cannon->simulateShoot(multiInputData.angle,func01,func02);
            
+        }
+            break;
+            
+        case GameState::usingBomb:
+        {
+            createItemWhenTouchedItemBox(ItemCategory::bomb);
+        }
+            break;
+        case GameState::shootingBomb:
+        {
+            _simulating = true;
+            CallFunc* func01 = CallFunc::create([this]()
+                                                {
+                                                    _dogi->runShootingAnimation();
+                                                    
+                                                });
+            CallFunc* func02 = CallFunc::create([this]()
+                                                {
+                                                    _mainScene->getChildByName<Bomb*>("bomb")->shoot(BOMB_SPEED,_cannon->getAngle());
+                                                    _simulating = false;
+                                                });
+             _cannon->simulateShoot(multiInputData.angle,func01,func02);
+            
         }
             break;
         case GameState::gameOver:
@@ -1021,7 +1047,6 @@ bool GameScene::canPlayfirst()
     }
     
 }
-
 
 void GameScene::sendData(JSONPacker::MultiInputData multiInputData)
 {

@@ -108,6 +108,11 @@ namespace JSONPacker {
                 }
                 document.AddMember("ballPos",ballPos,document.GetAllocator());
             }
+            case GameState::shootingBomb:
+            {
+                document.AddMember("angle", multiInputData.angle, document.GetAllocator());
+            }
+                break;
             default:
                 break;
         }
@@ -149,6 +154,11 @@ namespace JSONPacker {
             }
                 break;
             case GameState::shooting:
+            {
+                data.angle = document["angle"].GetDouble();
+            }
+                break;
+            case GameState::shootingBomb:
             {
                 data.angle = document["angle"].GetDouble();
             }

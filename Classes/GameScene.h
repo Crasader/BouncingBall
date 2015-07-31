@@ -23,6 +23,7 @@ public:
     void receivedData(const void* data, unsigned long length);
     void setGameState(GameState gameState);
     void setMultiplay(bool isMultiplay);
+    GameState getStateByItem(ItemCategory itemCategory) const;
     
 protected:
     //for multi
@@ -35,6 +36,7 @@ protected:
     std::vector<cocos2d::Vec2> getBallPosOnState() const;
     void setBallPosOnState(std::vector<cocos2d::Vec2> ballPos);
     void stopAllBall();
+    void disableTouchEvent();
     
     cocos2d::Scene* _physicsScene;
     

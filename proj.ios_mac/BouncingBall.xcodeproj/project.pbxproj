@@ -50,8 +50,6 @@
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		9E0CBC4A1B556C7C0000EA9C /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E21BA071B54A0EF00CAA983 /* libcocos2d Mac.a */; };
 		9E0CBC4E1B556DC60000EA9C /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC4C1B556DC60000EA9C /* Ball.cpp */; };
-		9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC4F1B5571D70000EA9C /* PhysicsBodyFactory.cpp */; };
-		9E0CBC521B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC4F1B5571D70000EA9C /* PhysicsBodyFactory.cpp */; };
 		9E0CBC561B55B77D0000EA9C /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC541B55B77D0000EA9C /* Lobby.cpp */; };
 		9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC541B55B77D0000EA9C /* Lobby.cpp */; };
 		9E0CBC831B56C7660000EA9C /* ContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC811B56C7660000EA9C /* ContactManager.cpp */; };
@@ -172,8 +170,6 @@
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9E0CBC4C1B556DC60000EA9C /* Ball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ball.cpp; sourceTree = "<group>"; };
 		9E0CBC4D1B556DC60000EA9C /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ball.h; sourceTree = "<group>"; };
-		9E0CBC4F1B5571D70000EA9C /* PhysicsBodyFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsBodyFactory.cpp; sourceTree = "<group>"; };
-		9E0CBC501B5571D70000EA9C /* PhysicsBodyFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsBodyFactory.h; sourceTree = "<group>"; };
 		9E0CBC541B55B77D0000EA9C /* Lobby.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lobby.cpp; sourceTree = "<group>"; };
 		9E0CBC551B55B77D0000EA9C /* Lobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lobby.h; sourceTree = "<group>"; };
 		9E0CBC721B55BAF10000EA9C /* UIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIConstants.h; sourceTree = "<group>"; };
@@ -470,8 +466,6 @@
 				9E0CBC921B56F9360000EA9C /* JSONPacker.h */,
 				9E0CBC861B56CBC90000EA9C /* LevelLoader.h */,
 				9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */,
-				9E0CBC4F1B5571D70000EA9C /* PhysicsBodyFactory.cpp */,
-				9E0CBC501B5571D70000EA9C /* PhysicsBodyFactory.h */,
 				9E0CBC811B56C7660000EA9C /* ContactManager.cpp */,
 				9E0CBC821B56C7660000EA9C /* ContactManager.h */,
 			);
@@ -667,7 +661,6 @@
 				9E0E6C9B1B654F66003B2D87 /* ExplodeReader.cpp in Sources */,
 				9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* GameScene.cpp in Sources */,
-				9E0CBC511B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
 				9E0E6BD71B6209BA003B2D87 /* LevelClearReader.cpp in Sources */,
 				9E0CBC561B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
@@ -698,7 +691,6 @@
 				9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				9E0E6BE31B62D906003B2D87 /* NetworkManager.mm in Sources */,
 				9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */,
-				9E0CBC521B5571D70000EA9C /* PhysicsBodyFactory.cpp in Sources */,
 				9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */,
 				9E2C6B811B6047EC0096EA85 /* PassCode.cpp in Sources */,
