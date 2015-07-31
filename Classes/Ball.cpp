@@ -130,6 +130,12 @@ PhysicsBody* Ball::createBallPhysicsBody(BallColor color)
 void Ball::gotHit()
 {
     _hp--;
+    if (_hp == 1) {
+        auto crack = Sprite::create("crack.png");
+        crack->setAnchorPoint(Vec2(0.5,0.5));
+        crack->setPosition(this->getContentSize()/2);
+        this->addChild(crack);
+    }
 
 }
 
