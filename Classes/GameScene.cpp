@@ -556,6 +556,9 @@ void GameScene::setupMap()
         _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
         _passCode->setPosition(Vec2(visibleSize.width * 0.3f, visibleSize.height * 0.95f));
         _mainScene->addChild(_passCode);
+    } else {
+        rootNode->getChildByName("ItemLabel")->setVisible(false);
+        rootNode->getChildByName("EqualLabel")->setVisible(false);
     }
     
     

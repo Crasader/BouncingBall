@@ -1,5 +1,5 @@
 <GameProjectFile>
-  <PropertyGroup Type="Scene" Name="testScene" ID="4f40d98d-a09e-419f-9c4c-eee22334fcd0" Version="2.2.8.0" />
+  <PropertyGroup Type="Scene" Name="testScene_0" ID="c81f2122-8948-473b-b084-014ca915980b" Version="2.2.8.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
@@ -140,15 +140,26 @@
             <PreSize />
             <FileData Type="Normal" Path="Dogi.csd" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="red_16" ActionTag="1724891620" Tag="134" IconVisible="False" LeftMargin="514.6735" RightMargin="80.3265" TopMargin="495.7401" BottomMargin="595.2599" ctype="SpriteObjectData">
+          <AbstractNodeData Name="red_16" ActionTag="1724891620" Tag="134" IconVisible="False" LeftMargin="189.5304" RightMargin="405.4696" TopMargin="533.3431" BottomMargin="557.6569" ctype="SpriteObjectData">
             <Size X="45.0000" Y="45.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="537.1735" Y="617.7599" />
+            <Position X="212.0304" Y="580.1569" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.8393" Y="0.5438" />
+            <PrePosition X="0.3313" Y="0.5107" />
             <PreSize />
             <FileData Type="Normal" Path="asset/red.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="green_17" ActionTag="194774668" Tag="135" IconVisible="False" LeftMargin="451.3429" RightMargin="143.6571" TopMargin="555.4193" BottomMargin="535.5807" ctype="SpriteObjectData">
+            <Size X="45.0000" Y="45.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="473.8429" Y="558.0807" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.7404" Y="0.4913" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/green.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="Rock_19_0" ActionTag="1164835606" Tag="166" IconVisible="False" LeftMargin="414.7675" RightMargin="173.2325" TopMargin="344.2111" BottomMargin="736.7889" ctype="SpriteObjectData">
@@ -184,13 +195,13 @@
             <FileData Type="Normal" Path="asset/Rock.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Rock_18_0" ActionTag="-1535817333" Tag="170" IconVisible="False" LeftMargin="161.9616" RightMargin="426.0384" TopMargin="469.1260" BottomMargin="611.8740" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Rock_18_0" ActionTag="-1535817333" Tag="170" IconVisible="False" LeftMargin="221.6812" RightMargin="366.3188" TopMargin="362.9577" BottomMargin="718.0423" ctype="SpriteObjectData">
             <Size X="52.0000" Y="55.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="187.9616" Y="639.3740" />
+            <Position X="247.6812" Y="745.5423" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.2937" Y="0.5628" />
+            <PrePosition X="0.3870" Y="0.6563" />
             <PreSize />
             <FileData Type="Normal" Path="asset/Rock.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
