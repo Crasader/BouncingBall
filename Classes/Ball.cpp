@@ -124,7 +124,6 @@ PhysicsBody* Ball::createBallPhysicsBody(BallColor color)
     ballBody->setContactTestBitmask(BALL_CONTACT_MASK);
     ballBody->setCategoryBitmask(BALL_CATEGORY);
     ballBody->setCollisionBitmask(BALL_COLLISION_MASK);
-    ballBody->setTag(static_cast<int>(color));
     return ballBody;
 }
 
@@ -134,7 +133,10 @@ void Ball::gotHit()
 
 }
 
-
+BallColor Ball::getBallColor() const
+{
+    return _color;
+}
 void Ball::setHp(int hp)
 {
     _hp = hp;

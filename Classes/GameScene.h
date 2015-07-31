@@ -24,6 +24,7 @@ public:
     void setGameState(GameState gameState);
     void setMultiplay(bool isMultiplay);
     GameState getStateByItem(ItemCategory itemCategory) const;
+    void setTutorialStep(TutorialStep step);
     
 protected:
     //for multi
@@ -32,6 +33,13 @@ protected:
     
     bool initWithLevel(int level);
     void onEnter() override;
+    
+    //tutorial
+    bool _tutorial;
+    TutorialStep _tutorialStep;
+    bool onContactBeginTutorial(cocos2d::PhysicsContact &contact);
+    void onContactEndTutorial(cocos2d::PhysicsContact &contact);
+    
     
     std::vector<cocos2d::Vec2> getBallPosOnState() const;
     void setBallPosOnState(std::vector<cocos2d::Vec2> ballPos);
@@ -83,6 +91,11 @@ protected:
     void onContactEnd(cocos2d::PhysicsContact &contact);
 
     void setupTouchHandling();
+    void setupContanctHandling();
+    
+    void setupTutorialTouchHandling();
+    void setupTutorialContanctHandling();
+    
     void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
     void ballHolderButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
     
@@ -91,6 +104,7 @@ protected:
     void triggerGameOver();
     void triggerGameOverMulti();
     
+    void shootCurrentBall();
     
     //Util Method
     int evaluateStars(int currentScore);
@@ -112,7 +126,7 @@ protected:
     bool isMyselfHost(std::string deviceName);
     bool canPlayfirst();
     void sendData(JSONPacker::MultiInputData multiInputData);
-    void displayTurnInfo(std::string info);
+    void displayInfo(std::string info, float second = 1.0f,float scale = 1.0f);
     
     bool isMyTurn();
     

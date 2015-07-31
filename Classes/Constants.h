@@ -77,9 +77,23 @@ enum class GameState
     bombFinish,
     waiting,         //only multi
     waitForSimulate,   //only multi
-    waitForFinish
+    waitForFinish,
+    tutorial
     
     //only for multiPlay
+};
+
+enum class TutorialStep
+{
+    swipingCannon,
+    aimingBall,
+    shootball,
+    shooting,
+    sameColor,
+    ballCrack,
+    createCoin,
+    collectCoin,
+    collectCoinShooting,
 };
 
 enum class BallColor

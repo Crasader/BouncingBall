@@ -27,6 +27,7 @@ public:
     void setHp(int hp);
     int getHp();
     std::string getBallFileName();
+    BallColor getBallColor() const;
 
 private:
     int _hp;

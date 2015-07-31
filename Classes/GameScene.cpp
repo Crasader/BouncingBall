@@ -32,8 +32,8 @@ USING_NS_CC;
 
 //TODO: make Debug func for game over and map test
 //TODO: fix bugs that bomb donot hit any thing
-//TODO: fix bomb
-//TODO: fix passcode
+//TODO: fix bomb collusion
+//TODO: fix diffrence of ball nums
 
 #pragma mark -
 #pragma mark LifeCircle
@@ -60,6 +60,10 @@ bool GameScene::initWithLevel(int level)
     _currentScore = 0;
     _opponetScore = 0;
     
+    if (_level == 1) {
+        _tutorial = true;
+    }
+    
     return true;
 }
 
@@ -78,18 +82,167 @@ void GameScene::onEnter()
         setGameState(GameState::prepareShooting);
     }
     
+    if (_tutorial) {
+        setGameState(GameState::tutorial);
+        setupTutorialTouchHandling();
+        setupTutorialContanctHandling();
+        setTutorialStep(TutorialStep::swipingCannon);
+    } else {
+        setupContanctHandling();
+        setupTouchHandling();
+    }
+ 
+    //if tutorial call tutorial touch event
+    this->scheduleUpdate();
+}
+
+#pragma mark-
+#pragma mark Life Cycle
+
+void GameScene::setupTutorialTouchHandling()
+{
+    auto touchListener = EventListenerTouchOneByOne::create();
+    
+    static Vec2 lastTouchPos;
+    static Vec2 firstTouchPos;
+    static Vec2 initPos;
+    static bool allowToShoot;
+    static bool allowToMove;
+    
+    touchListener->onTouchBegan = [&](Touch* touch, Event* event)
+    {
+        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+        lastTouchPos = touchPos;
+        firstTouchPos = touchPos;
+        allowToShoot = false;
+        allowToMove = false;
+        
+        switch (_tutorialStep) {
+            case TutorialStep::swipingCannon:
+            {
+                allowToMove = true;
+                return true;
+            }
+                break;
+            case TutorialStep::aimingBall:
+            {
+                allowToMove = true;
+                return true;
+            }
+                break;
+            case TutorialStep::shootball:
+            {
+                allowToShoot = true;
+                return true;
+            }
+                break;
+            case TutorialStep::ballCrack:
+            case TutorialStep::collectCoin:
+            {
+                allowToMove = true;
+                allowToShoot = true;
+                return true;
+            }
+                break;
+
+        }
+        return false;
+        
+    };
+    
+    touchListener->onTouchMoved = [&](Touch* touch, Event* event)
+    {
+        if (_tutorialStep == TutorialStep::shootball) {
+            allowToShoot = false;
+        }
+        if (allowToMove) {
+            Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+            //change 180 degree when move from left of screen to right
+            auto visibleSize = Director::getInstance()->getVisibleSize();
+            float angle = (touchPos.x - lastTouchPos.x)/visibleSize.width * 180;
+            _cannon->setAngle(angle);
+            lastTouchPos = touchPos;
+            allowToShoot = false;
+        }
+   
+    };
+    
+    
+    touchListener->onTouchEnded = [&](Touch* touch, Event* event)
+    {
+        switch (_tutorialStep) {
+            case TutorialStep::swipingCannon:
+            {
+                if (_cannon->getAngle() > 23 && _cannon->getAngle() < 27) {
+                    setTutorialStep(TutorialStep::shootball);
+                } else if (_cannon->getAngle() > 10 || _cannon->getAngle() < -10) {
+                    setTutorialStep(TutorialStep::aimingBall);
+                } else {
+                    
+                }
+            }
+                break;
+            case TutorialStep::aimingBall:
+            {
+                if (_cannon->getAngle() > 23 && _cannon->getAngle() < 27) {
+                    setTutorialStep(TutorialStep::shootball);
+                }
+            }
+                break;
+            case TutorialStep::shootball:
+            {
+                if (allowToShoot) {
+                    shootCurrentBall();
+                    setTutorialStep(TutorialStep::shooting);
+                }
+            }
+                break;
+            case TutorialStep::ballCrack:
+            {
+                if (allowToShoot) {
+                    shootCurrentBall();
+                    setTutorialStep(TutorialStep::createCoin);
+                }
+                
+            }
+                break;
+            case TutorialStep::collectCoin:
+            {
+                if (allowToShoot) {
+                    shootCurrentBall();
+                    setTutorialStep(TutorialStep::collectCoinShooting);
+                }
+                
+            }
+                break;
+        }
+
+        
+    };
+    
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
+   
+}
+void GameScene::setupTutorialContanctHandling()
+{
+    //contact call back
+    auto contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBeginTutorial, this);
+    contactListener->onContactPostSolve = CC_CALLBACK_1(GameScene::onContactEndTutorial, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+}
+
+
+
+void GameScene::setupContanctHandling()
+{
     //contact call back
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
     contactListener->onContactPostSolve = CC_CALLBACK_1(GameScene::onContactEnd, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
     
-    setupTouchHandling();
-    this->scheduleUpdate();
 }
-
-#pragma mark-
-#pragma mark Life Cycle
 
 void GameScene::update(float dt)
 {
@@ -152,6 +305,59 @@ void GameScene::update(float dt)
         {
             if (allBallIsSpeedAreLowEnough() && _simulating == false) {
                 triggerGameOverMulti();
+            }
+        }
+            break;
+            
+        case GameState::tutorial:
+        {
+            switch (_tutorialStep) {
+                case TutorialStep::shooting:
+                {
+                    if (this->allBallIsSpeedAreLowEnough()) {
+                        stopAllBall();
+                        _ballWaitShooting = nullptr;
+                        setupBall();
+                        //make ball crack
+                        for (auto ball : _ballsOnState) {
+                            auto crack = Sprite::create("crack.png");
+                            crack->setAnchorPoint(Vec2(0.5,0.5));
+                            crack->setPosition(ball->getContentSize()/2);
+                            ball->addChild(crack);
+                            ball->setTag(1);
+                        }
+                        
+                        setTutorialStep(TutorialStep::ballCrack);
+                    }
+                }
+                    break;
+                case TutorialStep::createCoin:
+                {
+                    if (allBallIsSpeedAreLowEnough()) {
+                        stopAllBall();
+                        _ballWaitShooting = nullptr;
+                    
+                        if (_coinOnStage.size() <= 2) {
+                             setTutorialStep(TutorialStep::ballCrack);
+                             Ball* ball = Ball::createWithColor("red");
+                            _ballsInBag.pushBack(ball);
+                        } else {
+                             setTutorialStep(TutorialStep::collectCoin);
+                             enableCoin();
+                        }
+                        setupBall();
+                    }
+                }
+                    break;
+                case TutorialStep::collectCoinShooting:
+                {
+                    if (allBallIsSpeedAreLowEnough()) {
+                        triggerGameOver();
+                    }
+                }
+                    break;
+                default:
+                    break;
             }
         }
             break;
@@ -344,10 +550,14 @@ void GameScene::setupMap()
     
     //Setup UI
 
-    _passCode = PassCode::createWithStr(mapState.passCode);
-    _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
-    _passCode->setPosition(Vec2(visibleSize.width * 0.3f, visibleSize.height * 0.95f));
-    _mainScene->addChild(_passCode);
+    //FIXME: try to refactoring this
+    if (!_tutorial) {
+        _passCode = PassCode::createWithStr(mapState.passCode);
+        _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
+        _passCode->setPosition(Vec2(visibleSize.width * 0.3f, visibleSize.height * 0.95f));
+        _mainScene->addChild(_passCode);
+    }
+    
     
     ui::Button* backButton = ui::Button::create();
     backButton->setAnchorPoint(Vec2(0.0f,0.5f));
@@ -448,6 +658,96 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
 #pragma mark -
 #pragma mark Contact Event
 
+bool GameScene::onContactBeginTutorial(cocos2d::PhysicsContact &contact)
+{
+    PhysicsBody *a = contact.getShapeA()->getBody();
+    PhysicsBody *b = contact.getShapeB()->getBody();
+    
+    //Pass the first collusion of edge
+    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
+        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
+        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
+        return false;
+    }
+    
+    
+    // Ball hit Ball
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        Ball* ballA = static_cast<Ball*>(a->getNode());
+        Ball* ballB = static_cast<Ball*>(b->getNode());
+        
+        if (ballA->getBallColor() == ballB->getBallColor()) {
+            Coin* coin = Coin::create();
+            coin->setPosition(a->getPosition());
+            _mainScene->addChild(coin);
+            coin->runGetCoinAnimation();
+            _currentScore += 1;
+            updateScoreLabel(_currentScore);
+            displayInfo("Same color get one coin",1.0f,0.5f);
+        }
+      
+    }
+    
+    
+    //Ball hit Coin
+    
+    if (b->getCategoryBitmask() == COIN_CATEGORY || a->getCategoryBitmask() == COIN_CATEGORY) {
+        Coin* coin;
+        coin = dynamic_cast<Coin*>(b->getNode());
+        if (coin == nullptr) {
+            coin = dynamic_cast<Coin*>(a->getNode());
+        }
+        coin->removeFromParent();
+        auto it = _coinOnStage.find(coin);
+        _coinOnStage.erase(it);
+        _currentScore += 1;
+        updateScoreLabel(_currentScore);
+        
+    }
+    
+    return true;
+}
+void GameScene::onContactEndTutorial(cocos2d::PhysicsContact &contact)
+{
+    PhysicsBody *a = contact.getShapeA()->getBody();
+    PhysicsBody *b = contact.getShapeB()->getBody();
+    
+    if (_tutorialStep == TutorialStep::createCoin) {
+        if (a->getCategoryBitmask() == BALL_CATEGORY) {
+            Ball* ball = dynamic_cast<Ball*>(a->getNode());
+            if (ball->getTag() == 1) {
+                Vec2 pos = ball->getPosition();
+                ball->removeFromParent();
+                
+                auto it = _ballsOnState.find(ball);
+                _ballsOnState.erase(it);
+                
+                createCoinByPosWhenBallHpIsZero(pos);
+                displayInfo("hit crack ball will create three coin",1.0, 0.5);
+
+            }
+            
+        }
+        
+        if (b->getCategoryBitmask() == BALL_CATEGORY) {
+            Ball* ball = dynamic_cast<Ball*>(b->getNode());
+            if (ball->getTag() == 1) {
+                Vec2 pos = ball->getPosition();
+                ball->removeFromParent();
+                
+                auto it = _ballsOnState.find(ball);
+                _ballsOnState.erase(it);
+                
+                createCoinByPosWhenBallHpIsZero(pos);
+                displayInfo("hit crack ball will create three coin",1.0, 0.5);
+            }
+
+        }
+    }
+
+}
+
+
 bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 {
     PhysicsBody *a = contact.getShapeA()->getBody();
@@ -463,8 +763,8 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     
     // Ball hit Ball
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
-        BallColor aColor = static_cast<BallColor>(a->getTag());
-        BallColor bColor = static_cast<BallColor>(b->getTag());
+        BallColor aColor = static_cast<Ball*>(a->getNode())->getBallColor();
+        BallColor bColor = static_cast<Ball*>(b->getNode())->getBallColor();
         if (isMyTurn()) {
             _passCode->EnterOneColor(aColor);
             if (_passCode->EnterOneColor(bColor)) {
@@ -745,6 +1045,27 @@ void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType
 #pragma mark - 
 #pragma mark Setter/Getter
 
+void GameScene::setTutorialStep(TutorialStep step)
+{
+    _tutorialStep = step;
+    switch (_tutorialStep) {
+        case TutorialStep::swipingCannon:
+            displayInfo("Swipe to move");
+            break;
+        case TutorialStep::aimingBall:
+            displayInfo("Aim the Ball");
+            break;
+        case TutorialStep::shootball:
+            displayInfo("Tap to shoot");
+            break;
+        case TutorialStep::ballCrack:
+            displayInfo("Shoot the cracked ball",1.0,0.5);
+            break;
+        case TutorialStep::collectCoin:
+            displayInfo("Collect the coin",1.0, 0.7);
+
+    }
+}
 
 GameState GameScene::getStateByItem(ItemCategory itemCategory) const
 {
@@ -892,6 +1213,13 @@ void GameScene::disableTouchEvent()
 {
 
 }
+void GameScene::shootCurrentBall()
+{
+    _cannon->runShootingAnimation();
+    _dogi->runShootingAnimation();
+    _ballsOnState.pushBack(_ballWaitShooting);
+    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+}
 
 #pragma mark -
 #pragma makr MultiPlay
@@ -918,10 +1246,10 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
         {
             if (multiInputData.gameState == GameState::sendDeviceName && isMyselfHost(multiInputData.deviceName)) {
                 if (canPlayfirst()) {
-                    displayTurnInfo("YOU GO FIRST!");
+                    displayInfo("YOU GO FIRST!");
                     setGameState(GameState::prepareShooting);
                 } else {
-                    displayTurnInfo("YOU GO SECOND!");
+                    displayInfo("YOU GO SECOND!");
                     setGameState(GameState::waiting);
                 }
                 
@@ -933,7 +1261,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             switch (_gameState) {
                 case GameState::sendDeviceName:
                 {
-                    displayTurnInfo("YOU GO SECOND!");
+                    displayInfo("YOU GO SECOND!");
                     _gameState = GameState::waiting;
                 }
                     break;
@@ -952,7 +1280,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             switch (_gameState) {
                 case GameState::sendDeviceName:
                 {
-                    displayTurnInfo("YOU GO FIRST!");
+                    displayInfo("YOU GO FIRST!");
                     setGameState(GameState::prepareShooting);
                 }
                     break;
@@ -1054,7 +1382,8 @@ void GameScene::sendData(JSONPacker::MultiInputData multiInputData)
     SceneManager::getInstance()->sendData(json.c_str(), json.length());
 }
 
-void GameScene::displayTurnInfo(std::string info)
+//default second = 1.0f,scale = 1.0f;
+void GameScene::displayInfo(std::string info, float second, float scale)
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     
@@ -1062,8 +1391,9 @@ void GameScene::displayTurnInfo(std::string info)
     infoLabel->setAnchorPoint(Vec2(0.5,0.5));
     infoLabel->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
     infoLabel->setOpacity(0);
+    infoLabel->setScale(scale);
     _mainScene->addChild(infoLabel);
-    infoLabel->runAction(Sequence::create(FadeIn::create(1.0f),DelayTime::create(1), RemoveSelf::create(),nullptr));
+    infoLabel->runAction(Sequence::create(FadeIn::create(second),DelayTime::create(1), RemoveSelf::create(),nullptr));
 }
 
 bool GameScene::isMyTurn()
@@ -1090,3 +1420,8 @@ bool GameScene::isMyTurn()
  rule: try to get the Target coin( e.g 40)
        coin will keep invisible until you own turn
   */
+
+
+//Tutorial
+
+
