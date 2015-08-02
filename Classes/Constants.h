@@ -72,7 +72,6 @@ const static int TUTORIAL_CRACKED_BALL = 1;
 
 const static int BALL_HIT_COIN = BALL_CATEGORY | COIN_CATEGORY;
 
-
 enum class GameState
 {
     sendDeviceName, //only multi

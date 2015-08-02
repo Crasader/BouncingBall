@@ -679,6 +679,16 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
             break;
     }
 }
+void GameScene::dealWithHpBall(Ball *ball)
+{
+    Vec2 pos = ball->getPosition();
+    ball->removeFromParent();
+    
+    auto it = _ballsOnState.find(ball);
+    _ballsOnState.erase(it);
+    
+    createCoinByPosWhenBallHpIsZero(pos);
+}
 
 
 #pragma mark -
@@ -779,15 +789,14 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
                 Vec2 pos = (*it)->getPosition();
                 (*it)->removeFromParent();
                 _ballsOnState.erase(it);
-                
                 createCoinByPosWhenBallHpIsZero(pos);
             } else {
                 it++;
             }
         }
         
-        //temp code to prevent too fast contact
-    //    bomb->getPhysicsBody()->setContactTestBitmask(NONE);
+        //temp code to prevent too fast contact maybe not neccesary ,need to test more
+        // bomb->getPhysicsBody()->setContactTestBitmask(NONE);
         bomb->removeFromParent();
         _gameState = GameState::bombFinish;
         return false;
@@ -797,50 +806,24 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 }
 
 
-
-
 void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
 {
     PhysicsBody *a = contact.getShapeA()->getBody();
     PhysicsBody *b = contact.getShapeB()->getBody();
     
-    if (a->getCategoryBitmask() == BALL_CATEGORY) {
-        Ball* ball = dynamic_cast<Ball*>(a->getNode());
-
-        if (b->getCategoryBitmask() == BALL_CATEGORY) {
-              ball->gotHit();
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        Ball* ballA = static_cast<Ball*>(a->getNode());
+        Ball* ballB = static_cast<Ball*>(b->getNode());
+        ballA->gotHit();
+        ballB->gotHit();
+        if (ballA->getHp() <= 0) {
+            dealWithHpBall(ballA);
         }
-        
-        //FIXME: two ball hit at some tme
-        //TODO: refactoring
-        if (ball->getHp() <= 0) {
-            Vec2 pos = ball->getPosition();
-            ball->removeFromParent();
-            
-            auto it = _ballsOnState.find(ball);
-            _ballsOnState.erase(it);
-            
-            createCoinByPosWhenBallHpIsZero(pos);
+        if (ballB->getHp() <= 0) {
+            dealWithHpBall(ballB);
         }
         
     }
-    
-    if (b->getCategoryBitmask() == BALL_CATEGORY) {
-        Ball* ball = dynamic_cast<Ball*>(b->getNode());
-        if (a->getCategoryBitmask() == BALL_CATEGORY) {
-            ball->gotHit();
-        }
-        if (ball->getHp() <= 0) {
-            Vec2 pos = ball->getPosition();
-            ball->removeFromParent();
-            
-            auto it = _ballsOnState.find(ball);
-            _ballsOnState.erase(it);
-      
-            createCoinByPosWhenBallHpIsZero(pos);
-        }
-    }
-
 }
 
 #pragma mark -

@@ -107,8 +107,8 @@ protected:
     void triggerGameOver();
     
     LevelClear* createLevelClearPanel();
-    
     void shootCurrentBall();
+    void dealWithHpBall(Ball* ball);
     
     //Util Method
     
