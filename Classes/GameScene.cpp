@@ -50,6 +50,7 @@ GameScene* GameScene::createWithLevel(int level)
     }
 }
 
+
 bool GameScene::initWithLevel(int level)
 {
     if (! Node::init()) {
@@ -60,6 +61,7 @@ bool GameScene::initWithLevel(int level)
     _currentScore = 0;
     _opponetScore = 0;
     
+    //FIXME:
     if (_level == 1) {
         _tutorial = true;
     }
@@ -73,7 +75,7 @@ void GameScene::onEnter()
     
     setupMap();
    
-    setupBall();
+    createNextBall();
     
     if  (_isMultiplay) {
         setGameState(GameState::sendDeviceName);
@@ -96,8 +98,8 @@ void GameScene::onEnter()
     this->scheduleUpdate();
 }
 
-#pragma mark-
-#pragma mark Life Cycle
+#pragma mark -
+#pragma mark Tutorial
 
 void GameScene::setupTutorialTouchHandling()
 {
@@ -119,11 +121,6 @@ void GameScene::setupTutorialTouchHandling()
         
         switch (_tutorialStep) {
             case TutorialStep::swipingCannon:
-            {
-                allowToMove = true;
-                return true;
-            }
-                break;
             case TutorialStep::aimingBall:
             {
                 allowToMove = true;
@@ -144,7 +141,6 @@ void GameScene::setupTutorialTouchHandling()
                 return true;
             }
                 break;
-
         }
         return false;
         
@@ -152,9 +148,6 @@ void GameScene::setupTutorialTouchHandling()
     
     touchListener->onTouchMoved = [&](Touch* touch, Event* event)
     {
-        if (_tutorialStep == TutorialStep::shootball) {
-            allowToShoot = false;
-        }
         if (allowToMove) {
             Vec2 touchPos = this->convertTouchToNodeSpace(touch);
             //change 180 degree when move from left of screen to right
@@ -164,15 +157,17 @@ void GameScene::setupTutorialTouchHandling()
             lastTouchPos = touchPos;
             allowToShoot = false;
         }
-   
+        
     };
     
     
     touchListener->onTouchEnded = [&](Touch* touch, Event* event)
     {
+
         switch (_tutorialStep) {
             case TutorialStep::swipingCannon:
             {
+                //angle between 23~27 can hit the red ball
                 if (_cannon->getAngle() > 23 && _cannon->getAngle() < 27) {
                     setTutorialStep(TutorialStep::shootball);
                 } else if (_cannon->getAngle() > 10 || _cannon->getAngle() < -10) {
@@ -190,39 +185,32 @@ void GameScene::setupTutorialTouchHandling()
             }
                 break;
             case TutorialStep::shootball:
-            {
                 if (allowToShoot) {
                     shootCurrentBall();
                     setTutorialStep(TutorialStep::shooting);
                 }
-            }
+
                 break;
             case TutorialStep::ballCrack:
-            {
                 if (allowToShoot) {
                     shootCurrentBall();
                     setTutorialStep(TutorialStep::createCoin);
                 }
-                
-            }
                 break;
             case TutorialStep::collectCoin:
-            {
                 if (allowToShoot) {
                     shootCurrentBall();
                     setTutorialStep(TutorialStep::collectCoinShooting);
                 }
-                
-            }
                 break;
         }
-
-        
+    
     };
     
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
-   
+    
 }
+
 void GameScene::setupTutorialContanctHandling()
 {
     //contact call back
@@ -232,7 +220,130 @@ void GameScene::setupTutorialContanctHandling()
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
+bool GameScene::onContactBeginTutorial(cocos2d::PhysicsContact &contact)
+{
+    PhysicsBody *a = contact.getShapeA()->getBody();
+    PhysicsBody *b = contact.getShapeB()->getBody();
+    
+    //Pass the first collusion of edge
+    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
+        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
+        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
+        return false;
+    }
+    
+    // Ball hit Ball
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        Ball* ballA = static_cast<Ball*>(a->getNode());
+        Ball* ballB = static_cast<Ball*>(b->getNode());
+        
+        if (ballA->getBallColor() == ballB->getBallColor()) {
+            Coin* coin = Coin::create();
+            coin->setPosition(a->getPosition());
+            _mainScene->addChild(coin);
+            coin->runGetCoinAnimation();
+            _currentScore += 1;
+            updateScoreLabel(_currentScore);
+            //TODO: make it only appear once
+            displayInfo("Same color get one coin",1.0f,0.5f);
+        }
+        
+    }
+    
+    //Ball hit Coin
+    if (b->getCategoryBitmask() == COIN_CATEGORY || a->getCategoryBitmask() == COIN_CATEGORY) {
+        Coin* coin;
+        coin = dynamic_cast<Coin*>(b->getNode());
+        if (coin == nullptr) {
+            coin = dynamic_cast<Coin*>(a->getNode());
+        }
+        coin->removeFromParent();
+        auto it = _coinOnStage.find(coin);
+        _coinOnStage.erase(it);
+        _currentScore += 1;
+        updateScoreLabel(_currentScore);
+        
+    }
+    
+    return true;
+}
 
+void GameScene::onContactEndTutorial(cocos2d::PhysicsContact &contact)
+{
+    PhysicsBody* a = contact.getShapeA()->getBody();
+    PhysicsBody* b = contact.getShapeB()->getBody();
+    
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        Ball* ball = dynamic_cast<Ball*>(a->getNode());
+        if (ball->getTag() != TUTORIAL_CRACKED_BALL) {
+            ball = dynamic_cast<Ball*>(b->getNode());
+            //two ball are both normal ball
+            if (ball->getTag() != TUTORIAL_CRACKED_BALL) {
+                return;
+            }
+        }
+       
+        Vec2 pos = ball->getPosition();
+        ball->removeFromParent();
+        auto it = _ballsOnState.find(ball);
+        _ballsOnState.erase(it);
+        
+        createCoinByPosWhenBallHpIsZero(pos);
+        displayInfo("hit crack ball will create three coin",1.0, 0.5);
+    }
+    
+}
+
+void GameScene::updateTutorial()
+{
+    switch (_tutorialStep) {
+        case TutorialStep::shooting:
+        {
+            if (this->allBallIsSpeedAreLowEnough()) {
+                stopAllBall();
+                _ballWaitShooting = nullptr;
+                createNextBall();
+                for (auto ball : _ballsOnState) {
+                    ball->addCrack();
+                    ball->setTag(1);
+                }
+                setTutorialStep(TutorialStep::ballCrack);
+            }
+        }
+            break;
+        case TutorialStep::createCoin:
+        {
+            if (allBallIsSpeedAreLowEnough()) {
+                stopAllBall();
+                _ballWaitShooting = nullptr;
+                
+                if (_coinOnStage.size() <= 2) {
+                    setTutorialStep(TutorialStep::ballCrack);
+                    Ball* ball = Ball::create();
+                    _ballsInBag.pushBack(ball);
+                } else {
+                    setTutorialStep(TutorialStep::collectCoin);
+                    enableCoin();
+                }
+                createNextBall();
+            }
+        }
+            break;
+        case TutorialStep::collectCoinShooting:
+        {
+            if (allBallIsSpeedAreLowEnough()) {
+                triggerGameOver();
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+
+#pragma mark - 
+#pragma mark - Setup Method
 
 void GameScene::setupContanctHandling()
 {
@@ -244,237 +355,16 @@ void GameScene::setupContanctHandling()
     
 }
 
-void GameScene::update(float dt)
-{
-    Node::update(dt);
-    _physicsWorld->step(1.0f / 60.0f);
-    switch (_gameState) {
-        case GameState::shooting:
-        {
-            if (this->allBallIsSpeedAreLowEnough()) {
-                stopAllBall();
-                if (canUserGetItem()) {
-                    _passCode->resetPassCode();
-                    //TODO: make item random
-                    _itemBox->addItem(ItemCategory::bomb);
-                }
-                
-                //FIXME: too many if
-                if (isGameOver()) {
-                    if (_isMultiplay) {
-                        triggerGameOverMulti();
-                    } else {
-                        triggerGameOver();
-                    }
-                   
-                } else {
-                    _ballWaitShooting = nullptr;
-                    enableCoin();
-                    setupBall();
-                    if (_isMultiplay) {
-                        setGameState(GameState::waiting);
-                    } else {
-                        setGameState(GameState::prepareShooting);
-                    }
-          
-                }
-                
-            }
-            
-        }
-            break;
-        case GameState::bombFinish:
-        {
-            setupBall();
-            _gameState = GameState::prepareShooting;
-        }
-            break;
-        case GameState::waitForSimulate:
-        {
-            if (allBallIsSpeedAreLowEnough() && _simulating == false) {
-                stopAllBall();
-                setBallPosOnState(_nextBallPos);
-                _nextBallPos.clear();
-                setupBall();
-                enableCoin();
-                setGameState(GameState::prepareShooting);
-            }
-        }
-            break;
-        case GameState::waitForFinish:
-        {
-            if (allBallIsSpeedAreLowEnough() && _simulating == false) {
-                triggerGameOverMulti();
-            }
-        }
-            break;
-            
-        case GameState::tutorial:
-        {
-            switch (_tutorialStep) {
-                case TutorialStep::shooting:
-                {
-                    if (this->allBallIsSpeedAreLowEnough()) {
-                        stopAllBall();
-                        _ballWaitShooting = nullptr;
-                        setupBall();
-                        //make ball crack
-                        for (auto ball : _ballsOnState) {
-                            auto crack = Sprite::create("crack.png");
-                            crack->setAnchorPoint(Vec2(0.5,0.5));
-                            crack->setPosition(ball->getContentSize()/2);
-                            ball->addChild(crack);
-                            ball->setTag(1);
-                        }
-                        
-                        setTutorialStep(TutorialStep::ballCrack);
-                    }
-                }
-                    break;
-                case TutorialStep::createCoin:
-                {
-                    if (allBallIsSpeedAreLowEnough()) {
-                        stopAllBall();
-                        _ballWaitShooting = nullptr;
-                    
-                        if (_coinOnStage.size() <= 2) {
-                             setTutorialStep(TutorialStep::ballCrack);
-                             Ball* ball = Ball::createWithColor("red");
-                            _ballsInBag.pushBack(ball);
-                        } else {
-                             setTutorialStep(TutorialStep::collectCoin);
-                             enableCoin();
-                        }
-                        setupBall();
-                    }
-                }
-                    break;
-                case TutorialStep::collectCoinShooting:
-                {
-                    if (allBallIsSpeedAreLowEnough()) {
-                        triggerGameOver();
-                    }
-                }
-                    break;
-                default:
-                    break;
-            }
-        }
-            break;
-        default:
-            break;
-    }
-}
-
-void GameScene::triggerGameOver()
-{
-    setGameState(GameState::gameOver);
-    int starsNum = evaluateStars(_currentScore);
-    
-    //TODO: improve this
-    if (starsNum == 0) {
-        std::string messageContent = "Your Failed !";
-        MessageBox(messageContent.c_str(), "Game Over!!");
-        SceneManager::getInstance()->backToLobby();
-        return ;
-    }
-    
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    
-    CSLoader* instance = CSLoader::getInstance();
-    instance->registReaderObject("LevelClearReader" , (ObjectFactory::Instance) LevelClearReader::getInstance);
-    
-    
-    LevelClear* levelClear = dynamic_cast<LevelClear*>(CSLoader::createNode("LevelClear.csb"));
-    levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
-    levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
-    
-    ui::Button* menuButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("menuButton");
-    ui::Button* restartButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("restartButton");
-    ui::Button* nextButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("nextButton");
-    
-    restartButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
-        if (type == ui::Widget::TouchEventType::ENDED) {
-            SceneManager::getInstance()->backToLobby();
-            SceneManager::getInstance()->enterGameScene(_level, false);
-        }
-    });
-    
-    nextButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
-        if (type == ui::Widget::TouchEventType::ENDED) {
-            SceneManager::getInstance()->backToLobby();
-            SceneManager::getInstance()->enterGameScene(_level+1, false);
-        }
-    });
-    
-   
-    menuButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
-        if (type == ui::Widget::TouchEventType::ENDED) {
-            SceneManager::getInstance()->backToLobby();
-        }
-    });
-    
-    _dogi->removeFromParent();
-    Dogi* dogi = dynamic_cast<Dogi*>(CSLoader::createNode("Dogi.csb"));
-    dogi->setPosition(Vec2(0.0f,-200.0f));
-    levelClear->addChild(dogi);
-    this->addChild(levelClear);
-    
-    
-    dogi->runWinAnimation();
-    levelClear->runLevelClearAnimation(starsNum);
-    
-    _mainScene->runAction(FadeTo::create(0.5, 128));
-    
-    UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level).c_str(), starsNum);
-    
-    if (UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level+1).c_str(), LOCKED_LEVEL) == LOCKED_LEVEL) {
-        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
-    }
-    
-}
-
-void GameScene::triggerGameOverMulti()
-{
-    setGameState(GameState::gameOver);
-    std::string messageContent;
-    if (_currentScore > _opponetScore) {
-        messageContent = "Your Win !";
-    } else if (_currentScore < _opponetScore) {
-        messageContent = "Your Lose !";
-    } else {
-        messageContent = "Draw !";
-    }
-        MessageBox(messageContent.c_str(), "Game Over!!");
-        SceneManager::getInstance()->backToLobby();
-}
-
-void GameScene::updateBallPreview()
-{
-    //update preview
-    if (_ballsInBag.begin() == _ballsInBag.end()) {
-        _ballPreview->setVisible(false);
-    } else {
-        _ballPreview->setVisible(true);
-        std::string fileName = _ballsInBag.front()->getBallFileName();
-        _ballPreview->setTexture(fileName);
-    }
-   
-}
-
-#pragma mark - 
-#pragma mark - Setup Method
-
 void GameScene::setupMap()
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
-
+    
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("CannonReader" , (ObjectFactory::Instance) CannonReader::getInstance);
     instance->registReaderObject("DogiReader" , (ObjectFactory::Instance) DogiReader::getInstance);
     instance->registReaderObject("ExplodeReader" , (ObjectFactory::Instance) ExplodeReader::getInstance);
     instance->registReaderObject("ItemBoxReader" , (ObjectFactory::Instance) ItemBoxReader::getInstance);
-
+    
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
     _cannon = rootNode->getChildByName<Cannon*>("Cannon");
@@ -549,7 +439,7 @@ void GameScene::setupMap()
     this->addChild(rootNode);
     
     //Setup UI
-
+    
     //FIXME: try to refactoring this
     if (!_tutorial) {
         _passCode = PassCode::createWithStr(mapState.passCode);
@@ -574,17 +464,141 @@ void GameScene::setupMap()
     _ballPreview->setPosition(_nextBallHolder->getPosition());
     _mainScene->addChild(_ballPreview);
     
-
+    
 }
 
-void GameScene::setupBall()
+
+#pragma mark -
+#pragma mark Life Cycle
+
+void GameScene::update(float dt)
 {
-    _ballWaitShooting = _ballsInBag.front();
+    Node::update(dt);
+    _physicsWorld->step(1.0f / 60.0f);
+    switch (_gameState) {
+        case GameState::shooting:
+        {
+            // Do nothing if some ball is moving
+            if (!allBallIsSpeedAreLowEnough()) {
+                break;
+            }
+            stopAllBall();
+            if (canUserGetItem()) {
+                _passCode->resetPassCode();
+                //TODO: make item random
+                _itemBox->addItem(ItemCategory::bomb);
+            }
+            if (isGameOver()) {
+                triggerGameOver();
+            } else {
+                _ballWaitShooting = nullptr;
+                enableCoin();
+                createNextBall();
+                if (_isMultiplay) {
+                    setGameState(GameState::waiting);
+                } else {
+                    setGameState(GameState::prepareShooting);
+                }
+            }
+        }
+            break;
+        case GameState::bombFinish:
+        {
+            createNextBall();
+            _gameState = GameState::prepareShooting;
+        }
+            break;
+            //Only MultiPlay Mode
+        case GameState::waitForSimulate:
+        {
+            if (allBallIsSpeedAreLowEnough() && _simulating == false) {
+                stopAllBall();
+                setBallPosOnState(_nextBallPos);
+                _nextBallPos.clear();
+                createNextBall();
+                enableCoin();
+                setGameState(GameState::prepareShooting);
+            }
+        }
+            break;
+        case GameState::waitForFinish:
+        {
+            if (allBallIsSpeedAreLowEnough() && _simulating == false) {
+                triggerGameOver();
+            }
+        }
+            break;
+        //Only Tutorial
+        case GameState::tutorial:
+        {
+            updateTutorial();
+        }
+        default:
+            break;
+    }
+}
+
+
+void GameScene::triggerGameOver()
+{
+    setGameState(GameState::gameOver);
     
+    if (_isMultiplay) {
+        std::string messageContent;
+        if (_currentScore > _opponetScore) {
+            messageContent = "Your Win !";
+        } else if (_currentScore < _opponetScore) {
+            messageContent = "Your Lose !";
+        } else {
+            messageContent = "Draw !";
+        }
+        MessageBox(messageContent.c_str(), "Game Over!!");
+        SceneManager::getInstance()->backToLobby();
+        return;
+    }
+
+    int starsNum = evaluateStars(_currentScore);
+    if (starsNum == 0) {
+        std::string messageContent = "Your Failed !";
+        MessageBox(messageContent.c_str(), "Game Over!!");
+        SceneManager::getInstance()->backToLobby();
+        return ;
+    }
+
+    LevelClear* levelClear = createLevelClearPanel();
+    
+    _dogi->removeFromParent();
+    Dogi* dogi = dynamic_cast<Dogi*>(CSLoader::createNode("Dogi.csb"));
+    dogi->setPosition(Vec2(0.0f,-200.0f));
+    levelClear->addChild(dogi);
+    this->addChild(levelClear);
+    
+    dogi->runWinAnimation();
+    levelClear->runLevelClearAnimation(starsNum);
+    
+    _mainScene->runAction(FadeTo::create(0.5, 128));
+    
+    int currentStars = UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level).c_str(),UNLOCKED_LEVEL);
+    if (starsNum > currentStars){
+        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level).c_str(), starsNum);
+    }
+    if (UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level+1).c_str(), LOCKED_LEVEL) == LOCKED_LEVEL) {
+        UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
+    }
+    
+}
+
+
+#pragma mark - 
+#pragma mark Game Logic
+
+void GameScene::createNextBall()
+{
+    //pop one ball from bags and add to screen
+    _ballWaitShooting = _ballsInBag.front();
     Vec2 ballPos = _cannon->getPosition();
     _ballWaitShooting->setPosition(ballPos);
     _mainScene->addChild(_ballWaitShooting);
-    
     _ballsInBag.erase(_ballsInBag.begin());
     
     resetEgde();
@@ -592,42 +606,51 @@ void GameScene::setupBall()
     
 }
 
+void GameScene::updateBallPreview()
+{
+    if (_ballsInBag.begin() == _ballsInBag.end()) {
+        _ballPreview->setVisible(false);
+    } else {
+        _ballPreview->setVisible(true);
+        std::string fileName = _ballsInBag.front()->getBallFileName();
+        _ballPreview->setTexture(fileName);
+    }
+}
 
-void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 pos)
+void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 ballPos)
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Explode* ballExplode = dynamic_cast<Explode*>(CSLoader::createNode("Explode.csb"));
-    ballExplode->setPosition(pos);
+    ballExplode->setPosition(ballPos);
     _mainScene->addChild(ballExplode);
     ballExplode->runBallExplodeAnimation();
     ballExplode->runAction(Sequence::create(FadeOut::create(1.0f),RemoveSelf::create(),nullptr));
     
+    
     std::vector<Vec2> movePos {Vec2(100,100),Vec2(60,60),Vec2(20,20)};
     Vec2 indicator;
     
-    if (pos.x >= visibleSize.width/2 && pos.y >= visibleSize.height/2) {
+    if (ballPos.x >= visibleSize.width/2 && ballPos.y >= visibleSize.height/2) {
         indicator = Vec2(-1,-1);
-    } else if (pos.x >= visibleSize.width/2 && pos.y <= visibleSize.height/2) {
+    } else if (ballPos.x >= visibleSize.width/2 && ballPos.y <= visibleSize.height/2) {
         indicator = Vec2(-1,1);
-    } else if (pos.x <= visibleSize.width/2 && pos.y <= visibleSize.height/2) {
+    } else if (ballPos.x <= visibleSize.width/2 && ballPos.y <= visibleSize.height/2) {
         indicator = Vec2(1,1);
     } else {
         indicator = Vec2(1,-1);
     }
     
-    for(int i=0 ;i < 3 ;++i) {
+    for(int i=0 ;i < CREADTED_COIN_NUMS_WHEN_BALL_HP_IS_ZERO ;++i) {
         Coin* coin = Coin::create();
-        coin->setPosition(pos);
+        coin->setPosition(ballPos);
         _mainScene->addChild(coin);
         _coinOnStage.pushBack(coin);
-        
         coin->initCollision();
-        coin->runAppearAnimation(Vec2(pos.x + indicator.x * movePos[i].x, pos.y + indicator.y * movePos[i].y));
+        coin->runAppearAnimation(Vec2(ballPos.x + indicator.x * movePos[i].x, ballPos.y + indicator.y * movePos[i].y));
         
         if (_isMultiplay) {
-            coin->setTag(1);
+            coin->setTag(COIN_WILL_NOT_BE_CREATED_IN_NEXT_TURN);
         }
-    
     }
 }
 
@@ -660,96 +683,6 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
 
 #pragma mark -
 #pragma mark Contact Event
-
-bool GameScene::onContactBeginTutorial(cocos2d::PhysicsContact &contact)
-{
-    PhysicsBody *a = contact.getShapeA()->getBody();
-    PhysicsBody *b = contact.getShapeB()->getBody();
-    
-    //Pass the first collusion of edge
-    if (a->getCategoryBitmask() == EDGE_CATEGORY || b->getCategoryBitmask() == EDGE_CATEGORY) {
-        _edgeSp->getPhysicsBody()->setContactTestBitmask(EDGE_RUNNING_CONTACT_MASK);
-        _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_RUNNING_CULLISION_MASK);
-        return false;
-    }
-    
-    
-    // Ball hit Ball
-    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
-        Ball* ballA = static_cast<Ball*>(a->getNode());
-        Ball* ballB = static_cast<Ball*>(b->getNode());
-        
-        if (ballA->getBallColor() == ballB->getBallColor()) {
-            Coin* coin = Coin::create();
-            coin->setPosition(a->getPosition());
-            _mainScene->addChild(coin);
-            coin->runGetCoinAnimation();
-            _currentScore += 1;
-            updateScoreLabel(_currentScore);
-            displayInfo("Same color get one coin",1.0f,0.5f);
-        }
-      
-    }
-    
-    
-    //Ball hit Coin
-    
-    if (b->getCategoryBitmask() == COIN_CATEGORY || a->getCategoryBitmask() == COIN_CATEGORY) {
-        Coin* coin;
-        coin = dynamic_cast<Coin*>(b->getNode());
-        if (coin == nullptr) {
-            coin = dynamic_cast<Coin*>(a->getNode());
-        }
-        coin->removeFromParent();
-        auto it = _coinOnStage.find(coin);
-        _coinOnStage.erase(it);
-        _currentScore += 1;
-        updateScoreLabel(_currentScore);
-        
-    }
-    
-    return true;
-}
-void GameScene::onContactEndTutorial(cocos2d::PhysicsContact &contact)
-{
-    PhysicsBody *a = contact.getShapeA()->getBody();
-    PhysicsBody *b = contact.getShapeB()->getBody();
-    
-    if (_tutorialStep == TutorialStep::createCoin) {
-        if (a->getCategoryBitmask() == BALL_CATEGORY) {
-            Ball* ball = dynamic_cast<Ball*>(a->getNode());
-            if (ball->getTag() == 1) {
-                Vec2 pos = ball->getPosition();
-                ball->removeFromParent();
-                
-                auto it = _ballsOnState.find(ball);
-                _ballsOnState.erase(it);
-                
-                createCoinByPosWhenBallHpIsZero(pos);
-                displayInfo("hit crack ball will create three coin",1.0, 0.5);
-
-            }
-            
-        }
-        
-        if (b->getCategoryBitmask() == BALL_CATEGORY) {
-            Ball* ball = dynamic_cast<Ball*>(b->getNode());
-            if (ball->getTag() == 1) {
-                Vec2 pos = ball->getPosition();
-                ball->removeFromParent();
-                
-                auto it = _ballsOnState.find(ball);
-                _ballsOnState.erase(it);
-                
-                createCoinByPosWhenBallHpIsZero(pos);
-                displayInfo("hit crack ball will create three coin",1.0, 0.5);
-            }
-
-        }
-    }
-
-}
-
 
 bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 {
@@ -790,8 +723,13 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     }
     
     //Ball hit Coin
-    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == COIN_CATEGORY) {
-        Coin* coin = static_cast<Coin*>(b->getNode());
+    if ((a->getCategoryBitmask() | b->getCategoryBitmask()) == BALL_HIT_COIN) {
+        Coin* coin;
+        coin = dynamic_cast<Coin*>(a->getNode());
+        if (! coin) {
+            coin = static_cast<Coin*>(b->getNode());
+        }
+        
         coin->removeFromParent();
         auto it = _coinOnStage.find(coin);
         _coinOnStage.erase(it);
@@ -803,18 +741,6 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
             updateScoreLabel(_currentScore);
         }
  
-    }
-    if (a->getCategoryBitmask() == COIN_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
-        Coin* coin = static_cast<Coin*>(a->getNode());
-        coin->removeFromParent();
-        auto it = _coinOnStage.find(coin);
-        _coinOnStage.erase(it);
-        if (!isMyTurn()) {
-            _opponetScore++;
-        } else {
-            _currentScore += 1;
-            updateScoreLabel(_currentScore);
-        }
     }
 
     //Bomb hitted
@@ -869,6 +795,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     
     return true;
 }
+
 
 
 
@@ -1025,7 +952,42 @@ void GameScene::setupTouchHandling()
 #pragma mark -
 #pragma mark UI Method
 
-
+LevelClear* GameScene::createLevelClearPanel()
+{
+    CSLoader* instance = CSLoader::getInstance();
+    instance->registReaderObject("LevelClearReader" , (ObjectFactory::Instance) LevelClearReader::getInstance);
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    LevelClear* levelClear = dynamic_cast<LevelClear*>(CSLoader::createNode("LevelClear.csb"));
+    
+    levelClear->setAnchorPoint(Vec2(0.5f, 0.5f));
+    levelClear->setPosition(Vec2(visibleSize.width/2, visibleSize.height * 0.55));
+    
+    ui::Button* menuButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("menuButton");
+    ui::Button* restartButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("restartButton");
+    ui::Button* nextButton = levelClear->getChildByName("clearWindow")->getChildByName<ui::Button*>("nextButton");
+    
+    restartButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            SceneManager::getInstance()->backToLobby();
+            SceneManager::getInstance()->enterGameScene(_level, false);
+        }
+    });
+    
+    nextButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            SceneManager::getInstance()->backToLobby();
+            SceneManager::getInstance()->enterGameScene(_level+1, false);
+        }
+    });
+    
+    
+    menuButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            SceneManager::getInstance()->backToLobby();
+        }
+    });
+    return levelClear;
+}
 
 void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
@@ -1041,7 +1003,6 @@ void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType
         //TODO: make a func that cancel to use item?
         CCLOG("pressed");
     }
-    
 }
 
 //TODO: make it smooth when cannon move
@@ -1141,7 +1102,7 @@ bool GameScene::allBallIsSpeedAreLowEnough()
 void GameScene::stopAllBall()
 {
     for (auto ball : _ballsOnState) {
-        ball->getPhysicsBody()->setVelocity(Vec2(0,0));
+        ball->stop();
     }
 }
 
@@ -1152,7 +1113,6 @@ bool GameScene::canUserGetItem(){
 
 bool GameScene::isGameOver()
 {
-    
     if (_ballsInBag.empty()) {
         return true;
     }

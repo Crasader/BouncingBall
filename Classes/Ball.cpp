@@ -10,30 +10,10 @@
 #include "Constants.h"
 using namespace cocos2d;
 
-bool Ball::isStoped()
-{
-    Vec2 velocity = this->getPhysicsBody()->getVelocity();
-    if(abs(velocity.x) < MIN_SPEED && abs(velocity.y) < MIN_SPEED) {
-        this->getPhysicsBody()->setVelocity(Vec2(0.0f,0.0f));
-        return true;
-    } else {
-        return false;
-    }
-}
-void Ball::shoot(float speed, float angle)
-{
-    auto ballBody = this->getPhysicsBody();
-    float vx = sin(angle * M_PI / 180) * speed;
-    float vy = cos(angle * M_PI / 180) * speed;
-    ballBody->setVelocity(Vec2(vx,vy));
-    this->setPhysicsBody(ballBody);
-    
-}
-
-
 #pragma mark -
 #pragma mark initialze
 
+//random create ball
 bool Ball::init()
 {
     std::random_device seed_gen;
@@ -97,8 +77,81 @@ bool Ball::initWithColor(std::string color)
     return true;
 }
 
-#pragma mark -
-#pragma mark Util Method
+
+PhysicsBody* Ball::createBallPhysicsBody(BallColor color)
+{
+    PhysicsBody* ballBody = PhysicsBody::createCircle(this->getContentSize().width/2 ,DEFAULT_BALL_MATERIAL);
+    ballBody->setGravityEnable(false);
+    ballBody->setLinearDamping(BALL_DEFAULT_LINEAR_DAMPING);
+    ballBody->setContactTestBitmask(BALL_CONTACT_MASK);
+    ballBody->setCategoryBitmask(BALL_CATEGORY);
+    ballBody->setCollisionBitmask(BALL_COLLISION_MASK);
+    return ballBody;
+}
+
+#pragma mark - 
+#pragma mark - Ball Game Logic
+
+bool Ball::isStoped() const
+{
+    Vec2 velocity = this->getPhysicsBody()->getVelocity();
+    if(std::abs(velocity.x) < MIN_SPEED && std::abs(velocity.y) < MIN_SPEED) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void Ball::stop() {
+    this->getPhysicsBody()->setVelocity(Vec2(0.0f,0.0f));
+}
+
+void Ball::gotHit()
+{
+    _hp--;
+    if (_hp == 1) {
+        addCrack();
+    }
+
+}
+
+void Ball::addCrack()
+{
+    auto crack = Sprite::create("crack.png");
+    crack->setAnchorPoint(Vec2(0.5,0.5));
+    crack->setPosition(this->getContentSize()/2);
+    this->addChild(crack);
+}
+
+void Ball::shoot(float speed, float angle)
+{
+    auto ballBody = this->getPhysicsBody();
+    float vx = sin(angle * M_PI / 180) * speed;
+    float vy = cos(angle * M_PI / 180) * speed;
+    ballBody->setVelocity(Vec2(vx,vy));
+    this->setPhysicsBody(ballBody);
+    
+}
+
+#pragma mark - 
+#pragma getter/Setter 
+
+BallColor Ball::getBallColor() const
+{
+    return _color;
+}
+
+void Ball::setHp(int hp)
+{
+    _hp = hp;
+}
+
+int Ball::getHp() const
+{
+    return _hp;
+}
+
+
 BallColor Ball::getBallColorFromStr(std::string color)
 {
     if (color.compare("red") == 0) {
@@ -116,52 +169,20 @@ BallColor Ball::getBallColorFromStr(std::string color)
     }
 }
 
-PhysicsBody* Ball::createBallPhysicsBody(BallColor color)
-{
-    PhysicsBody* ballBody = PhysicsBody::createCircle(this->getContentSize().width/2 ,DEFAULT_BALL_MATERIAL);
-    ballBody->setGravityEnable(false);
-    ballBody->setLinearDamping(BALL_DEFAULT_LINEAR_DAMPING);
-    ballBody->setContactTestBitmask(BALL_CONTACT_MASK);
-    ballBody->setCategoryBitmask(BALL_CATEGORY);
-    ballBody->setCollisionBitmask(BALL_COLLISION_MASK);
-    return ballBody;
-}
-
-void Ball::gotHit()
-{
-    _hp--;
-    if (_hp == 1) {
-        auto crack = Sprite::create("crack.png");
-        crack->setAnchorPoint(Vec2(0.5,0.5));
-        crack->setPosition(this->getContentSize()/2);
-        this->addChild(crack);
-    }
-
-}
-
-BallColor Ball::getBallColor() const
-{
-    return _color;
-}
-void Ball::setHp(int hp)
-{
-    _hp = hp;
-}
-
-int Ball::getHp()
-{
-    return _hp;
-}
-
-std::string Ball::getBallFileName()
+std::string Ball::getBallFileName() const
 {
     switch (_color) {
         case BallColor::red:
             return "red.png";
-            break;
         case BallColor::green:
             return "green.png";
         case BallColor::blue:
             return "blue.png";
     }
 }
+
+
+#pragma mark -
+#pragma mark Util Method
+
+

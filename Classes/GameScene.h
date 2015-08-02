@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Coin.h"
 #include "Rock.h"
+#include "JSONPacker.h"
 
 
 class Cannon;
@@ -14,6 +15,7 @@ class PassCode;
 class Dogi;
 class Explode;
 class ItemBox;
+class LevelClear;
 
 class GameScene : public cocos2d::Node
 {
@@ -85,6 +87,7 @@ protected:
 
     void update(float dt) override;
     void updateBallPreview();
+    void updateTutorial();
     
     void setupContactHandling();
     bool onContactBegin(cocos2d::PhysicsContact &contact);
@@ -99,14 +102,16 @@ protected:
     void backButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
     void ballHolderButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
     
-    void setupBall();
+    void createNextBall();
     void setupMap();
     void triggerGameOver();
-    void triggerGameOverMulti();
+    
+    LevelClear* createLevelClearPanel();
     
     void shootCurrentBall();
     
     //Util Method
+    
     int evaluateStars(int currentScore);
     std::string getConfigFileName();
     void resetAllBallHp();

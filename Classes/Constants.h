@@ -65,6 +65,13 @@ const static int EDGE_RUNNING_CONTACT_MASK = NONE;
 const static int LOCKED_LEVEL = -1;
 const static int UNLOCKED_LEVEL = 0;
 
+const static int COIN_WILL_NOT_BE_CREATED_IN_NEXT_TURN = 1;
+const static int CREADTED_COIN_NUMS_WHEN_BALL_HP_IS_ZERO = 3;
+
+const static int TUTORIAL_CRACKED_BALL = 1;
+
+const static int BALL_HIT_COIN = BALL_CATEGORY | COIN_CATEGORY;
+
 
 enum class GameState
 {
