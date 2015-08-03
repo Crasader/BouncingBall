@@ -96,6 +96,8 @@
 		9E2C6B851B60B5B40096EA85 /* Dogi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B821B60B5B40096EA85 /* Dogi.cpp */; };
 		9E2C6B881B60B5C10096EA85 /* DogiReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */; };
 		9E2C6B891B60B5C10096EA85 /* DogiReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */; };
+		9E9FF2591B70055100CA8D54 /* Transport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FF2551B70055100CA8D54 /* Transport.cpp */; };
+		9E9FF25A1B70055100CA8D54 /* TransportReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FF2571B70055100CA8D54 /* TransportReader.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -224,6 +226,10 @@
 		9E2C6B831B60B5B40096EA85 /* Dogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dogi.h; path = ../Classes/Dogi.h; sourceTree = "<group>"; };
 		9E2C6B861B60B5C10096EA85 /* DogiReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DogiReader.cpp; path = ../Classes/DogiReader.cpp; sourceTree = "<group>"; };
 		9E2C6B871B60B5C10096EA85 /* DogiReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogiReader.h; path = ../Classes/DogiReader.h; sourceTree = "<group>"; };
+		9E9FF2551B70055100CA8D54 /* Transport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transport.cpp; path = ../proj.ios_mac/Transport.cpp; sourceTree = "<group>"; };
+		9E9FF2561B70055100CA8D54 /* Transport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transport.h; path = ../proj.ios_mac/Transport.h; sourceTree = "<group>"; };
+		9E9FF2571B70055100CA8D54 /* TransportReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TransportReader.cpp; path = ../proj.ios_mac/TransportReader.cpp; sourceTree = "<group>"; };
+		9E9FF2581B70055100CA8D54 /* TransportReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransportReader.h; path = ../proj.ios_mac/TransportReader.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -429,6 +435,10 @@
 		9E0CBC591B55B7C20000EA9C /* GameObject */ = {
 			isa = PBXGroup;
 			children = (
+				9E9FF2551B70055100CA8D54 /* Transport.cpp */,
+				9E9FF2561B70055100CA8D54 /* Transport.h */,
+				9E9FF2571B70055100CA8D54 /* TransportReader.cpp */,
+				9E9FF2581B70055100CA8D54 /* TransportReader.h */,
 				9E2C6B781B601C310096EA85 /* Coin.cpp */,
 				9E2C6B791B601C310096EA85 /* Coin.h */,
 				9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */,
@@ -649,6 +659,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0E6C991B654F66003B2D87 /* Explode.cpp in Sources */,
 				9E0E6BCA1B61578E003B2D87 /* LevelGridReader.cpp in Sources */,
+				9E9FF25A1B70055100CA8D54 /* TransportReader.cpp in Sources */,
 				9E0E6BE01B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
 				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E0E6CB11B66DCB0003B2D87 /* ItemBox.cpp in Sources */,
@@ -668,6 +679,7 @@
 				9E2C6B841B60B5B40096EA85 /* Dogi.cpp in Sources */,
 				9E0CBC9F1B58583A0000EA9C /* CannonReader.cpp in Sources */,
 				9E0CBC971B56FA160000EA9C /* SceneManager.cpp in Sources */,
+				9E9FF2591B70055100CA8D54 /* Transport.cpp in Sources */,
 				9E2C6B801B6047EC0096EA85 /* PassCode.cpp in Sources */,
 				9E0E6CA51B66A1BB003B2D87 /* Rock.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,

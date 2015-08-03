@@ -29,8 +29,8 @@ void ItemBox::addItem(ItemCategory itemCategory)
             case ItemCategory::thunder:
                 displayItem = Sprite::create("thunder.png");
                 break;
-            case ItemCategory::aim:
-                displayItem = Sprite::create("aim.png");
+            case ItemCategory::transport:
+                displayItem = Sprite::create("transport.png");
                 break;
             case ItemCategory::bomb:
                 displayItem = Sprite::create("bomb.png");

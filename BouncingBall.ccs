@@ -59,6 +59,8 @@
           <Image Name="winDogi1.png" />
           <Image Name="winDogi2.png" />
           <Image Name="winDogi3.png" />
+          <Image Name="transport.png" />
+          <Image Name="okButton.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
@@ -68,6 +70,8 @@
         <Project Name="Explode.csd" Type="Node" />
         <Project Name="testScene.csd" Type="Scene" />
         <Project Name="ItemBox.csd" Type="Node" />
+        <Project Name="testScene_0.csd" Type="Scene" />
+        <Project Name="Transport.csd" Type="Node" />
       </RootFolder>
     </Group>
   </SolutionFolder>

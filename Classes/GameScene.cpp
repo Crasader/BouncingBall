@@ -26,6 +26,9 @@
 #include "Explode.h"
 #include "ExplodeReader.h"
 
+#include "Transport.h"
+#include "TransportReader.h"
+
 #include "Bomb.h"
 
 USING_NS_CC;
@@ -384,7 +387,7 @@ void GameScene::setupMap()
     instance->registReaderObject("DogiReader" , (ObjectFactory::Instance) DogiReader::getInstance);
     instance->registReaderObject("ExplodeReader" , (ObjectFactory::Instance) ExplodeReader::getInstance);
     instance->registReaderObject("ItemBoxReader" , (ObjectFactory::Instance) ItemBoxReader::getInstance);
-    
+    instance->registReaderObject("TransportReader" , (ObjectFactory::Instance) TransportReader::getInstance);
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
     _cannon = rootNode->getChildByName<Cannon*>("Cannon");
@@ -471,7 +474,6 @@ void GameScene::setupMap()
         rootNode->getChildByName("EqualLabel")->setVisible(false);
     }
     
-    
     ui::Button* backButton = ui::Button::create();
     backButton->setAnchorPoint(Vec2(0.0f,0.5f));
     backButton->setPosition(Vec2(0.0f,visibleSize.height* 0.95f));
@@ -532,6 +534,17 @@ void GameScene::setupTouchHandling()
                 return true;
             };
                 break;
+            case GameState::usingTransport:
+            {
+                Transport* transport = _transportOnStage.back();
+                Vec2 localPos = touchPos - transport->getPosition();
+                _selectedItem = transport->getTouchedCircle(localPos);
+                if (_selectedItem) {
+                    transport->disableOKButton();
+                    return true;
+                }
+            }
+            break;
         }
         return false;
         
@@ -540,6 +553,15 @@ void GameScene::setupTouchHandling()
     touchListener->onTouchMoved = [&](Touch* touch, Event* event)
     {
         Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+
+        if (_gameState == GameState::usingTransport) {
+            if (_selectedItem && _edgeSp->getBoundingBox().containsPoint(touchPos)) {
+                Transport* transport = _transportOnStage.back();
+                Vec2 localPos = touchPos - transport->getPosition();
+                _selectedItem->setPosition(localPos);
+            }
+            return ;
+        }
         //change 180 degree when move from left of screen to right
         auto visibleSize = Director::getInstance()->getVisibleSize();
         float angle = (touchPos.x - lastTouchPos.x)/visibleSize.width * 180;
@@ -587,7 +609,13 @@ void GameScene::setupTouchHandling()
                     setGameState(GameState::shootingBomb);
                 }
             }
-                
+                break;
+            case GameState::usingTransport:
+            {
+                Transport* transport = _transportOnStage.back();
+                transport->enableOKButton();
+            }
+                break;
             default:
                 break;
         }
@@ -618,7 +646,8 @@ void GameScene::update(float dt)
                 _passCode->resetPassCode();
                 //TODO: make item random
               //  _itemBox->addItem(ItemCategory::bomb);
-                _itemBox->addItem(ItemCategory::thunder);
+              //  _itemBox->addItem(ItemCategory::thunder);
+                _itemBox->addItem(ItemCategory::transport);
             }
             if (isGameOver()) {
                 triggerGameOver();
@@ -638,6 +667,15 @@ void GameScene::update(float dt)
         {
             createNextBall();
             _gameState = GameState::prepareShooting;
+        }
+            break;
+        case GameState::usingTransport:
+        {
+            Transport* transport = _transportOnStage.back();
+            if(transport->isReady()) {
+                transport->enableTransport();
+                setGameState(GameState::prepareShooting);
+            }
         }
             break;
             //Only MultiPlay Mode
@@ -829,7 +867,14 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
             _ballWaitShooting->addThunderEffect();
         }
             break;
-            //TODO add other item
+        case ItemCategory::transport:
+        {
+            Transport* transport = dynamic_cast<Transport*>(CSLoader::createNode("Transport.csb"));
+            transport->setPosition(TRANSPORT_INIT_POS);
+            _transportOnStage.pushBack(transport);
+            _mainScene->addChild(transport);
+        }
+            break;
         default:
             break;
     }
@@ -1047,6 +1092,8 @@ GameState GameScene::getStateByItem(ItemCategory itemCategory) const
             return GameState::usingBomb;
         case ItemCategory::thunder:
             return GameState::usingThunder;
+        case ItemCategory::transport:
+            return GameState::usingTransport;
     }
 }
 
@@ -1184,8 +1231,9 @@ void GameScene::disableTouchEvent()
 }
 
 
+
 #pragma mark -
-#pragma makr MultiPlay
+#pragma mark MultiPlay
 
 //sync game status
 /*

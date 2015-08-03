@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Coin.h"
 #include "Rock.h"
+#include "Transport.h"
 #include "JSONPacker.h"
 
 
@@ -51,6 +52,8 @@ protected:
     cocos2d::Vector<Ball*> _ballsOnState;
     cocos2d::Vector<Coin*> _coinOnStage;
     cocos2d::Vector<Rock*> _rocksOnStage;
+    cocos2d::Vector<Transport*> _transportOnStage;
+    cocos2d::Sprite* _selectedItem;
     
     int _currentScore;
     int _oneStarScore;
@@ -105,7 +108,6 @@ protected:
     void displayInfo(std::string info, float second = 1.0f,float scale = 1.0f);
     void stopAllBall();
     void disableTouchEvent();
-    
 
     //for multiPlay
     bool _isMultiplay;
