@@ -90,7 +90,7 @@ void GameScene::onEnter()
         setupTutorialContanctHandling();
         setTutorialStep(TutorialStep::swipingCannon);
     } else {
-        setupContanctHandling();
+        setupContactHandling();
         setupTouchHandling();
     }
  
@@ -106,7 +106,6 @@ void GameScene::setupTutorialTouchHandling()
     auto touchListener = EventListenerTouchOneByOne::create();
     
     static Vec2 lastTouchPos;
-    static Vec2 firstTouchPos;
     static Vec2 initPos;
     static bool allowToShoot;
     static bool allowToMove;
@@ -115,7 +114,6 @@ void GameScene::setupTutorialTouchHandling()
     {
         Vec2 touchPos = this->convertTouchToNodeSpace(touch);
         lastTouchPos = touchPos;
-        firstTouchPos = touchPos;
         allowToShoot = false;
         allowToMove = false;
         
@@ -341,11 +339,33 @@ void GameScene::updateTutorial()
     }
 }
 
+void GameScene::setTutorialStep(TutorialStep step)
+{
+    _tutorialStep = step;
+    switch (_tutorialStep) {
+        case TutorialStep::swipingCannon:
+            displayInfo("Swipe to move");
+            break;
+        case TutorialStep::aimingBall:
+            displayInfo("Aim the Ball");
+            break;
+        case TutorialStep::shootball:
+            displayInfo("Tap to shoot");
+            break;
+        case TutorialStep::ballCrack:
+            displayInfo("Shoot the cracked ball",1.0,0.5);
+            break;
+        case TutorialStep::collectCoin:
+            displayInfo("Collect the coin",1.0, 0.7);
+            
+    }
+}
+
 
 #pragma mark - 
 #pragma mark - Setup Method
 
-void GameScene::setupContanctHandling()
+void GameScene::setupContactHandling()
 {
     //contact call back
     auto contactListener = EventListenerPhysicsContact::create();
@@ -464,7 +484,104 @@ void GameScene::setupMap()
     _ballPreview->setPosition(_nextBallHolder->getPosition());
     _mainScene->addChild(_ballPreview);
     
+}
+
+
+void GameScene::setupTouchHandling()
+{
+    auto touchListener = EventListenerTouchOneByOne::create();
     
+    static Vec2 lastTouchPos;
+    static Vec2 initPos;
+    static bool allowToShoot;
+    
+    touchListener->onTouchBegan = [&](Touch* touch, Event* event)
+    {
+        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+        lastTouchPos = touchPos;
+        
+        switch (_gameState) {
+            case GameState::prepareShooting:
+            {
+                Vec2 localPosInItemBox = touchPos - _itemBox->getPosition();
+                if (_itemBox->isClicked(localPosInItemBox)) {
+                    ItemCategory itemCategory = _itemBox->pickUpItemFromPos(touchPos);
+                    if (ItemCategory::none != itemCategory) {
+                        createItemWhenTouchedItemBox(itemCategory);
+                        GameState nextState = getStateByItem(itemCategory);
+                        setGameState(nextState);
+                    }
+                    return false;
+                }
+                allowToShoot = true;
+                return true;
+                
+            }
+                break;
+            case GameState::usingBomb:
+            {
+                allowToShoot = true;
+                return true;
+            };
+                break;
+            case GameState::shooting:
+            case GameState::shootingBomb:
+            {
+                allowToShoot = false;
+                return true;
+            };
+                break;
+        }
+        return false;
+        
+    };
+    
+    touchListener->onTouchMoved = [&](Touch* touch, Event* event)
+    {
+        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+        //change 180 degree when move from left of screen to right
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        float angle = (touchPos.x - lastTouchPos.x)/visibleSize.width * 180;
+        _cannon->setAngle(angle);
+        lastTouchPos = touchPos;
+        allowToShoot = false;
+    };
+    
+    
+    touchListener->onTouchEnded = [&](Touch* touch, Event* event)
+    {
+        switch (_gameState) {
+            case GameState::prepareShooting:
+            {
+                if (allowToShoot) {
+                    _cannon->runShootingAnimation();
+                    _dogi->runShootingAnimation();
+                    _ballsOnState.pushBack(_ballWaitShooting);
+                    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+                    setGameState(GameState::shooting);
+                    
+                }
+            }
+                break;
+            case GameState::usingBomb:
+            {
+                if (allowToShoot) {
+                    _cannon->runShootingAnimation();
+                    //add Fire animation
+                    _dogi->runShootingAnimation();
+                    Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
+                    bomb->shoot(BOMB_SPEED,_cannon->getAngle());
+                    setGameState(GameState::shootingBomb);
+                }
+            }
+                
+            default:
+                break;
+        }
+        
+    };
+    
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
 
@@ -591,6 +708,25 @@ void GameScene::triggerGameOver()
 
 #pragma mark - 
 #pragma mark Game Logic
+
+void GameScene::enableCoin()
+{
+    for (auto coin : _coinOnStage) {
+        if (_isMultiplay && coin->getTag() == COIN_WILL_NOT_BE_CREATED_IN_NEXT_TURN) {
+            coin->setTag(Node::INVALID_TAG);
+        } else {
+            coin->enableCollision();
+        }
+    }
+}
+
+void GameScene::shootCurrentBall()
+{
+    _cannon->runShootingAnimation();
+    _dogi->runShootingAnimation();
+    _ballsOnState.pushBack(_ballWaitShooting);
+    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
+}
 
 void GameScene::createNextBall()
 {
@@ -827,112 +963,6 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
 }
 
 #pragma mark -
-#pragma touch Event
-void GameScene::setupTouchHandling()
-{
-    auto touchListener = EventListenerTouchOneByOne::create();
-    
-    static Vec2 lastTouchPos;
-    static Vec2 firstTouchPos;
-    static Vec2 initPos;
-    static bool allowToShoot;
-    
-    touchListener->onTouchBegan = [&](Touch* touch, Event* event)
-    {
-        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
-        lastTouchPos = touchPos;
-        firstTouchPos = touchPos;
-        
-        switch (_gameState) {
-            case GameState::prepareShooting:
-            {
-                Vec2 localPosInItemBox = touchPos - _itemBox->getPosition();
-                if (_itemBox->isClicked(localPosInItemBox)) {
-                    ItemCategory itemCategory = _itemBox->pickUpItemFromPos(touchPos);
-                    if (ItemCategory::none != itemCategory) {
-                        createItemWhenTouchedItemBox(itemCategory);
-                        GameState nextState = getStateByItem(itemCategory);
-                        setGameState(nextState);
-                    }
-                    return false;
-                }
-                allowToShoot = true;
-                return true;
-               
-            }
-                break;
-            case GameState::shooting:
-            {
-                allowToShoot = false;
-                return true;
-            }
-                break;
-            case GameState::usingBomb:
-            {
-                allowToShoot = true;
-                return true;
-            };
-                break;
-            case GameState::shootingBomb:
-            {
-                allowToShoot = false;
-                return true;
-            };
-                break;
-        }
-        return false;
-
-    };
-    
-    touchListener->onTouchMoved = [&](Touch* touch, Event* event)
-    {
-        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
-        //change 180 degree when move from left of screen to right
-        auto visibleSize = Director::getInstance()->getVisibleSize();
-        float angle = (touchPos.x - lastTouchPos.x)/visibleSize.width * 180;
-        _cannon->setAngle(angle);
-        lastTouchPos = touchPos;
-        allowToShoot = false;
-    };
-    
-    
-    touchListener->onTouchEnded = [&](Touch* touch, Event* event)
-    {
-        switch (_gameState) {
-            case GameState::prepareShooting:
-            {
-                if (allowToShoot) {
-                    _cannon->runShootingAnimation();
-                    _dogi->runShootingAnimation();
-                    _ballsOnState.pushBack(_ballWaitShooting);
-                    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
-                    setGameState(GameState::shooting);
-                    
-                }
-            }
-                break;
-            case GameState::usingBomb:
-            {
-                if (allowToShoot) {
-                    _cannon->runShootingAnimation();
-                    //add Fire animation
-                    _dogi->runShootingAnimation();
-                    Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
-                    bomb->shoot(BOMB_SPEED,_cannon->getAngle());
-                    setGameState(GameState::shootingBomb);
-                }
-            }
-                
-            default:
-                break;
-        }
-     
-    };
-    
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
-}
-
-#pragma mark -
 #pragma mark UI Method
 
 LevelClear* GameScene::createLevelClearPanel()
@@ -988,31 +1018,8 @@ void GameScene::ballHolderButtonPressed(Ref* pSender, ui::Widget::TouchEventType
     }
 }
 
-//TODO: make it smooth when cannon move
 #pragma mark - 
 #pragma mark Setter/Getter
-
-void GameScene::setTutorialStep(TutorialStep step)
-{
-    _tutorialStep = step;
-    switch (_tutorialStep) {
-        case TutorialStep::swipingCannon:
-            displayInfo("Swipe to move");
-            break;
-        case TutorialStep::aimingBall:
-            displayInfo("Aim the Ball");
-            break;
-        case TutorialStep::shootball:
-            displayInfo("Tap to shoot");
-            break;
-        case TutorialStep::ballCrack:
-            displayInfo("Shoot the cracked ball",1.0,0.5);
-            break;
-        case TutorialStep::collectCoin:
-            displayInfo("Collect the coin",1.0, 0.7);
-
-    }
-}
 
 GameState GameScene::getStateByItem(ItemCategory itemCategory) const
 {
@@ -1041,20 +1048,33 @@ void GameScene::setGameState(GameState gameState)
             }
                 break;
             case GameState::shooting:
-            {
-                multiInputData.angle = _cannon->getAngle();
-            }
-                break;
             case GameState::shootingBomb:
             {
                 multiInputData.angle = _cannon->getAngle();
             }
+                break;
             default:
                 break;
         }
         sendData(multiInputData);
     }
 }
+
+
+std::string GameScene::getConfigFileName() const
+{
+    return "map" + StringUtils::toString(_level) + ".json";
+}
+
+std::vector<Vec2> GameScene::getBallPosOnState() const
+{
+    std::vector<Vec2> ballPos;
+    for (auto ball : _ballsOnState ) {
+        ballPos.push_back(ball->getPosition());
+    }
+    return ballPos;
+}
+
 
 
 #pragma mark -
@@ -1072,7 +1092,7 @@ void GameScene::resetEgde()
     _edgeSp->getPhysicsBody()->setCollisionBitmask(EDGE_INIT_CULLISION_MASK);
 }
 
-bool GameScene::allBallIsSpeedAreLowEnough()
+bool GameScene::allBallIsSpeedAreLowEnough() const
 {
     for (auto ball : _ballsOnState) {
         if (! ball->isStoped()) {
@@ -1089,21 +1109,20 @@ void GameScene::stopAllBall()
     }
 }
 
-
-bool GameScene::canUserGetItem(){
+bool GameScene::canUserGetItem() const
+{
     return _passCode->isPassCodeClear();
 }
 
-bool GameScene::isGameOver()
+bool GameScene::isGameOver() const
 {
     if (_ballsInBag.empty()) {
         return true;
     }
-    
     return false;
 }
 
-int GameScene::evaluateStars(int currentScore)
+int GameScene::evaluateStars(int currentScore) const
 {
     if (currentScore >= _threeStarScore) {
         return 3;
@@ -1116,11 +1135,6 @@ int GameScene::evaluateStars(int currentScore)
     }
 }
 
-std::string GameScene::getConfigFileName()
-{
-    return "map" + StringUtils::toString(_level) + ".json";
-}
-
 void GameScene::resetAllBallHp()
 {
     for (auto ball : _ballsOnState) {
@@ -1128,47 +1142,48 @@ void GameScene::resetAllBallHp()
     }
 }
 
-void GameScene::enableCoin()
+//default second = 1.0f,scale = 1.0f;
+void GameScene::displayInfo(std::string info, float second, float scale)
 {
-    for (auto coin : _coinOnStage) {
-        if (_isMultiplay && coin->getTag() != Node::INVALID_TAG) {
-            coin->setTag(Node::INVALID_TAG);
-        } else {
-            coin->enableCollision();
-        }
-    }
-}
-
-std::vector<Vec2> GameScene::getBallPosOnState() const
-{
-    std::vector<Vec2> ballPos;
-    for (auto ball : _ballsOnState ) {
-        ballPos.push_back(ball->getPosition());
-    }
-    return ballPos;
-}
-
-void GameScene::setBallPosOnState(std::vector<Vec2> ballPos)
-{
-    for (int i =0; i < ballPos.size(); ++i) {
-        _ballsOnState.at(i)->setPosition(ballPos[i]);
-    }
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
+    ui::TextBMFont* infoLabel = ui::TextBMFont::create(info, "font01.fnt");
+    infoLabel->setAnchorPoint(Vec2(0.5,0.5));
+    infoLabel->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+    infoLabel->setOpacity(0);
+    infoLabel->setScale(scale);
+    _mainScene->addChild(infoLabel);
+    infoLabel->runAction(Sequence::create(FadeIn::create(second),DelayTime::create(1), RemoveSelf::create(),nullptr));
 }
 
 void GameScene::disableTouchEvent()
 {
 
 }
-void GameScene::shootCurrentBall()
-{
-    _cannon->runShootingAnimation();
-    _dogi->runShootingAnimation();
-    _ballsOnState.pushBack(_ballWaitShooting);
-    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED,_cannon->getAngle());
-}
+
 
 #pragma mark -
 #pragma makr MultiPlay
+
+//sync game status
+/*
+ 
+ before
+ 1.send each device name to others
+ 2.use to device name to decide who is host
+ 3. host randomly choose who is first to play
+ 4. host send info to guest
+ Game Scene(loop)
+ 1. every state change send a data to other device
+ 2. other device similate the input of device
+ 3. define a finished status ot change (if necessary sync the data on stage so that two device share the same items)
+ After
+ Who get the target send game over to another
+ 
+ rule: try to get the Target coin( e.g 40)
+ coin will keep invisible until you own turn
+ */
+
 
 void GameScene::setMultiplay(bool isMultiplay)
 {
@@ -1213,7 +1228,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
                     break;
                 case GameState::waiting:
                     CCLOG("everything sames good");
-                    
+                    break;
                 default:
                     break;
             }
@@ -1296,7 +1311,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
     }
 }
 
-bool GameScene::isMyselfHost(std::string deviceName)
+bool GameScene::isMyselfHost(std::string deviceName) const
 {
     std::string myDeviceName = SceneManager::getInstance()->getDeviceName();
     
@@ -1308,7 +1323,7 @@ bool GameScene::isMyselfHost(std::string deviceName)
     }
 }
 
-bool GameScene::canPlayfirst()
+bool GameScene::canPlayfirst() const
 {
     std::random_device seed_gen;
     std::default_random_engine engine(seed_gen());
@@ -1328,46 +1343,18 @@ void GameScene::sendData(JSONPacker::MultiInputData multiInputData)
     SceneManager::getInstance()->sendData(json.c_str(), json.length());
 }
 
-//default second = 1.0f,scale = 1.0f;
-void GameScene::displayInfo(std::string info, float second, float scale)
-{
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    
-    ui::TextBMFont* infoLabel = ui::TextBMFont::create(info, "font01.fnt");
-    infoLabel->setAnchorPoint(Vec2(0.5,0.5));
-    infoLabel->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
-    infoLabel->setOpacity(0);
-    infoLabel->setScale(scale);
-    _mainScene->addChild(infoLabel);
-    infoLabel->runAction(Sequence::create(FadeIn::create(second),DelayTime::create(1), RemoveSelf::create(),nullptr));
-}
-
-bool GameScene::isMyTurn()
+bool GameScene::isMyTurn() const
 {
     return ! (_gameState == GameState::waiting || _gameState == GameState::waitForSimulate || _gameState == GameState::waitForFinish);
 }
 
 
-//sync game status
-/*
+void GameScene::setBallPosOnState(std::vector<Vec2> ballPos)
+{
+    for (int i =0; i < ballPos.size(); ++i) {
+        _ballsOnState.at(i)->setPosition(ballPos[i]);
+    }
+}
 
- before
-  1.send each device name to others
-  2.use to device name to decide who is host
-  3. host randomly choose who is first to play
-  4. host send info to guest
- Game Scene(loop)
- 1. every state change send a data to other device
- 2. other device similate the input of device
- 3. define a finished status ot change (if necessary sync the data on stage so that two device share the same items)
- After
- Who get the target send game over to another
- 
- rule: try to get the Target coin( e.g 40)
-       coin will keep invisible until you own turn
-  */
-
-
-//Tutorial
 
 
