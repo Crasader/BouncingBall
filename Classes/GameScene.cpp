@@ -571,8 +571,8 @@ void GameScene::setupTouchHandling()
                     _dogi->runShootingAnimation();
                     _ballsOnState.pushBack(_ballWaitShooting);
                     _ballWaitShooting->shoot(MAX_SHOOTING_SPEED * 2,_cannon->getAngle());
-                    setGameState(GameState::shooting);
-                    
+                    _ballWaitShooting->removeThunderEffect();
+                    setGameState(GameState::shootingByThunder);
                 }
             }
                 break;
@@ -606,6 +606,7 @@ void GameScene::update(float dt)
     Node::update(dt);
     _physicsWorld->step(1.0f / 60.0f);
     switch (_gameState) {
+        case GameState::shootingByThunder:
         case GameState::shooting:
         {
             // Do nothing if some ball is moving
@@ -822,6 +823,10 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
             }
             updateBallPreview();
             resetEgde();
+        }
+        case ItemCategory::thunder:
+        {
+            _ballWaitShooting->addThunderEffect();
         }
             break;
             //TODO add other item
@@ -1044,6 +1049,7 @@ GameState GameScene::getStateByItem(ItemCategory itemCategory) const
             return GameState::usingThunder;
     }
 }
+
 void GameScene::setGameState(GameState gameState)
 {
     _gameState = gameState;
@@ -1310,10 +1316,35 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
                                                 });
             CallFunc* func02 = CallFunc::create([this]()
                                                 {
-                                                    _mainScene->getChildByName<Bomb*>("bomb")->shoot(BOMB_SPEED,_cannon->getAngle());
+                                                    _mainScene->getChildByName<Bomb*>("bomb")->shoot(MAX_SHOOTING_SPEED*2,_cannon->getAngle());
                                                     _simulating = false;
                                                 });
+
              _cannon->simulateShoot(multiInputData.angle,func01,func02);
+            
+        }
+            break;
+        case GameState::usingThunder:
+        {
+            createItemWhenTouchedItemBox(ItemCategory::thunder);
+        }
+            break;
+            
+        case GameState::shootingByThunder:
+        {
+            _simulating = true;
+            CallFunc* func01 = CallFunc::create([this]()
+                                                {
+                                                    _dogi->runShootingAnimation();
+                                                    
+                                                });
+            CallFunc* func02 = CallFunc::create([this]()
+                                                {
+                                                    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED * 2,_cannon->getAngle());
+                                                    _ballWaitShooting->removeThunderEffect();
+                                                    _simulating = false;
+                                                });
+            _cannon->simulateShoot(multiInputData.angle,func01,func02);
             
         }
             break;

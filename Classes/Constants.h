@@ -81,6 +81,7 @@ enum class GameState
     usingBomb,
     shootingBomb,
     usingThunder,
+    shootingByThunder,
     bombFinish,
     waiting,         //only multi
     waitForSimulate,   //only multi

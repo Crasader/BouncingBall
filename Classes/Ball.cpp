@@ -92,6 +92,23 @@ PhysicsBody* Ball::createBallPhysicsBody(BallColor color)
 #pragma mark - 
 #pragma mark - Ball Game Logic
 
+void Ball::addThunderEffect()
+{
+    //TODO improve this
+    Sprite* thunder = Sprite::create("thunder.png");
+    thunder->setAnchorPoint(Vec2(0.5,0.5));
+    thunder->setPosition(this->getContentSize()/2);
+    thunder->setScale(0.5f);
+    thunder->setName("thunder");
+    this->addChild(thunder);
+}
+void Ball::removeThunderEffect()
+{
+    Sprite* thunder = this->getChildByName<Sprite*>("thunder");
+    if (thunder) {
+        thunder->removeFromParent();
+    }
+}
 bool Ball::isStoped() const
 {
     Vec2 velocity = this->getPhysicsBody()->getVelocity();

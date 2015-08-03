@@ -26,6 +26,8 @@ public:
     void addCrack();
     bool isStoped() const;
     void stop();
+    void addThunderEffect();
+    void removeThunderEffect();
     
     //Getter Setter
     void setHp(int hp);
@@ -33,6 +35,7 @@ public:
     BallColor getBallColor() const;
     std::string getBallFileName() const;
     BallColor getBallColorFromStr(std::string color);
+    
 
 private:
     int _hp;
