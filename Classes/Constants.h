@@ -14,10 +14,10 @@
 #pragma mark Ball Setting
 const static float MIN_SPEED = 2.0f;
 const static float BALL_DEFAULT_LINEAR_DAMPING = 1.2f;
-const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
+const static cocos2d::PhysicsMaterial DEFAULT_BALL_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 0.5f, 0.0f);
 const static int BALL_DEFAULT_HP = 3;
 const static int BALL_INFINITY_HP = 99;
-const static float MAX_SHOOTING_SPEED = 2000.0f;
+const static float MAX_SHOOTING_SPEED = 1500.0f;
 
 const static float BOMB_RANGE = 100.0f;
 const static float BOMB_SPEED = 1000.0f;
@@ -80,6 +80,7 @@ enum class GameState
     gameOver,
     usingBomb,
     shootingBomb,
+    usingThunder,
     bombFinish,
     waiting,         //only multi
     waitForSimulate,   //only multi
@@ -114,7 +115,7 @@ enum class BallColor
 
 enum ItemCategory
 {
-    ballBox,
+    thunder,
     bomb,
     aim,
     none

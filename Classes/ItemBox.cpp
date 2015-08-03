@@ -26,12 +26,15 @@ void ItemBox::addItem(ItemCategory itemCategory)
         //TODO: can be refactoring
         Sprite* displayItem;
         switch (itemCategory) {
-            case ItemCategory::ballBox:
-                displayItem = Sprite::create("ballBox.png");
+            case ItemCategory::thunder:
+                displayItem = Sprite::create("thunder.png");
+                break;
             case ItemCategory::aim:
                 displayItem = Sprite::create("aim.png");
+                break;
             case ItemCategory::bomb:
                 displayItem = Sprite::create("bomb.png");
+                break;
             case ItemCategory::none:
                 break;
         }

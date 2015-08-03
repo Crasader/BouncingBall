@@ -518,6 +518,7 @@ void GameScene::setupTouchHandling()
                 
             }
                 break;
+            case GameState::usingThunder:
             case GameState::usingBomb:
             {
                 allowToShoot = true;
@@ -563,6 +564,18 @@ void GameScene::setupTouchHandling()
                 }
             }
                 break;
+            case GameState::usingThunder:
+            {
+                if (allowToShoot) {
+                    _cannon->runShootingAnimation();
+                    _dogi->runShootingAnimation();
+                    _ballsOnState.pushBack(_ballWaitShooting);
+                    _ballWaitShooting->shoot(MAX_SHOOTING_SPEED * 2,_cannon->getAngle());
+                    setGameState(GameState::shooting);
+                    
+                }
+            }
+                break;
             case GameState::usingBomb:
             {
                 if (allowToShoot) {
@@ -603,7 +616,8 @@ void GameScene::update(float dt)
             if (canUserGetItem()) {
                 _passCode->resetPassCode();
                 //TODO: make item random
-                _itemBox->addItem(ItemCategory::bomb);
+              //  _itemBox->addItem(ItemCategory::bomb);
+                _itemBox->addItem(ItemCategory::thunder);
             }
             if (isGameOver()) {
                 triggerGameOver();
@@ -1026,6 +1040,8 @@ GameState GameScene::getStateByItem(ItemCategory itemCategory) const
     switch (itemCategory) {
         case ItemCategory::bomb:
             return GameState::usingBomb;
+        case ItemCategory::thunder:
+            return GameState::usingThunder;
     }
 }
 void GameScene::setGameState(GameState gameState)
