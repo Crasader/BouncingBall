@@ -906,7 +906,6 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         return false;
     }
 
-    
     // Ball hit Ball
     if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
         BallColor aColor = static_cast<Ball*>(a->getNode())->getBallColor();
@@ -1001,6 +1000,31 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         _gameState = GameState::bombFinish;
         return false;
     }
+    //transport hitted
+    if ((a->getCategoryBitmask() | b->getCategoryBitmask()) == BALL_HIT_TRANSPORT) {
+        Ball* ball;
+        Transport* transport;
+        if (a->getCategoryBitmask() == BALL_CATEGORY) {
+            ball = static_cast<Ball*>(a->getNode());
+            transport = static_cast<Transport*>(b->getNode()->getParent());
+        } else {
+            ball = static_cast<Ball*>(b->getNode());
+            transport = static_cast<Transport*>(a->getNode()->getParent());
+        }
+        Vec2 newPos = transport->getPosition() + transport->getTransportPos();
+        Vec2 newVelocity = ball->getPhysicsBody()->getVelocity();
+        BallColor newColor = ball->getBallColor();
+        ball->removeFromParent();
+        auto it = _ballsOnState.find(ball);
+        _ballsOnState.erase(it);
+        
+        Ball* newBall = Ball::createWithColor(newColor);
+        newBall->setPosition(newPos);
+        newBall->getPhysicsBody()->setVelocity(newVelocity);
+        _ballsOnState.pushBack(newBall);
+        _ballWaitShooting = newBall;
+        _mainScene->addChild(newBall);
+    }
     
     return true;
 }
@@ -1024,6 +1048,7 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
         }
         
     }
+
 }
 
 #pragma mark -

@@ -18,6 +18,7 @@ class Ball : public cocos2d::Sprite
 public:
     //init Method
     static Ball* createWithColor(std::string color);
+    static Ball* createWithColor(BallColor color);
     CREATE_FUNC(Ball);
 
     //Ball Game Logic

@@ -20,14 +20,14 @@ public:
     void onExit() override;
     void runTransportAnimation();
     void enableTransport();
-    Sprite* getTouchedCircle(cocos2d::Vec2 pos);
+    Sprite* getTouchedCircle(cocos2d::Vec2 pos) const;
     void enableOKButton();
     void disableOKButton();
-    bool isReady();
+    bool isReady() const;
     void onEnter() override;
+    cocos2d::Vec2 getTransportPos() const;
 
 protected:
-    PhysicsBody* createPhysicsBody();
     cocostudio::timeline::ActionTimeline* _timeline;
     
     cocos2d::Sprite* _circle1;

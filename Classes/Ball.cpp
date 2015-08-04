@@ -63,6 +63,24 @@ Ball* Ball::createWithColor(std::string color)
     }
 }
 
+Ball* Ball::createWithColor(BallColor color)
+{
+    Ball* ball;
+    switch (color) {
+        case BallColor::red:
+            ball = createWithColor("red");
+            break;
+        case BallColor::blue:
+            ball = createWithColor("blue");
+            break;
+        case BallColor::green:
+            ball = createWithColor("green");
+            break;
+        default:
+            break;
+    }
+    return ball;
+}
 
 bool Ball::initWithColor(std::string color)
 {

@@ -23,20 +23,13 @@ bool Transport::init() {
 }
 void Transport::enableTransport()
 {
-    _circle1->setPhysicsBody(createPhysicsBody());
-    _circle2->setPhysicsBody(createPhysicsBody());
- 
-}
-
-PhysicsBody* Transport::createPhysicsBody()
-{
     PhysicsBody* body = PhysicsBody::createCircle(_circle1->getContentSize().width * 1.5/2);
     body->setDynamic(false);
     body->setCategoryBitmask(TRANSPORT_CATEGORY);
     body->setContactTestBitmask(TRANSPORT_CONTACT_MASK);
     body->setCollisionBitmask(TRANSPORT_CULLISION_MASK);
     body->setGravityEnable(false);
-    return body;
+    _circle1->setPhysicsBody(body);
 }
 
 void Transport::onExit()
@@ -52,7 +45,7 @@ void Transport::runTransportAnimation()
     _timeline->play("transport",true);
 }
 
-Sprite* Transport::getTouchedCircle(Vec2 pos)
+Sprite* Transport::getTouchedCircle(Vec2 pos) const
 {
     if (_circle1->getBoundingBox().containsPoint(pos) && !_circle1Setted) {
         return _circle1;
@@ -120,7 +113,12 @@ void Transport::disableOKButton()
     }
 }
 
-bool Transport::isReady()
+bool Transport::isReady() const
 {
     return _circle1Setted && _circle2Setted;
+}
+
+Vec2 Transport::getTransportPos() const
+{
+    return _circle2->getPosition();
 }

@@ -75,6 +75,7 @@ const static int CREADTED_COIN_NUMS_WHEN_BALL_HP_IS_ZERO = 3;
 const static int TUTORIAL_CRACKED_BALL = 1;
 
 const static int BALL_HIT_COIN = BALL_CATEGORY | COIN_CATEGORY;
+const static int BALL_HIT_TRANSPORT = BALL_CATEGORY | TRANSPORT_CATEGORY;
 
 enum class GameState
 {
