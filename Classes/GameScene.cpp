@@ -486,6 +486,9 @@ void GameScene::setupMap()
     _ballPreview->setPosition(_nextBallHolder->getPosition());
     _mainScene->addChild(_ballPreview);
     
+    _itemBox->addItem(ItemCategory::transport);
+
+    
 }
 
 
@@ -504,6 +507,7 @@ void GameScene::setupTouchHandling()
         
         switch (_gameState) {
             case GameState::prepareShooting:
+            case GameState::finishSettingTransport:
             {
                 Vec2 localPosInItemBox = touchPos - _itemBox->getPosition();
                 if (_itemBox->isClicked(localPosInItemBox)) {
@@ -574,6 +578,7 @@ void GameScene::setupTouchHandling()
     touchListener->onTouchEnded = [&](Touch* touch, Event* event)
     {
         switch (_gameState) {
+            case GameState::finishSettingTransport:
             case GameState::prepareShooting:
             {
                 if (allowToShoot) {
@@ -674,7 +679,7 @@ void GameScene::update(float dt)
             Transport* transport = _transportOnStage.back();
             if(transport->isReady()) {
                 transport->enableTransport();
-                setGameState(GameState::prepareShooting);
+                setGameState(GameState::finishSettingTransport);
             }
         }
             break;
@@ -1046,7 +1051,6 @@ void GameScene::onContactEnd(cocos2d::PhysicsContact &contact)
         if (ballB->getHp() <= 0) {
             dealWithHpBall(ballB);
         }
-        
     }
 
 }
@@ -1145,6 +1149,14 @@ void GameScene::setGameState(GameState gameState)
             case GameState::shootingBomb:
             {
                 multiInputData.angle = _cannon->getAngle();
+            }
+                break;
+            case GameState::finishSettingTransport:
+            {
+                Transport* transport = _transportOnStage.back();
+                multiInputData.transportState.pos = transport->getPosition();
+                multiInputData.transportState.circle1Pos = transport->getOriginTransportPos();
+                multiInputData.transportState.circle2Pos = transport->getTransportPos();
             }
                 break;
             default:
@@ -1419,6 +1431,13 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
                                                 });
             _cannon->simulateShoot(multiInputData.angle,func01,func02);
             
+        }
+            break;
+        case GameState::finishSettingTransport:
+        {
+            createItemWhenTouchedItemBox(ItemCategory::transport);
+            Transport* transport = _transportOnStage.back();
+            transport->syncTransportPos(multiInputData.transportState.pos, multiInputData.transportState.circle1Pos, multiInputData.transportState.circle2Pos);
         }
             break;
         case GameState::gameOver:

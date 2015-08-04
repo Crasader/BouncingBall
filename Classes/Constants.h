@@ -89,6 +89,7 @@ enum class GameState
     usingThunder,
     shootingByThunder,
     usingTransport,
+    finishSettingTransport,
     waiting,         //only multi
     waitForSimulate,   //only multi
     waitForFinish,

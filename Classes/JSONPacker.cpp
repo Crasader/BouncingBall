@@ -11,6 +11,8 @@
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "Constants.h"
+#include "Transport.h"
+#include "TransportReader.h"
 
 using namespace cocos2d;
 
@@ -108,9 +110,24 @@ namespace JSONPacker {
                 }
                 document.AddMember("ballPos",ballPos,document.GetAllocator());
             }
+                break;
             case GameState::shootingBomb:
             {
                 document.AddMember("angle", multiInputData.angle, document.GetAllocator());
+            }
+                break;
+            case GameState::finishSettingTransport:
+            {
+                Vec2 pos = multiInputData.transportState.pos;
+                Vec2 circle1Pos = multiInputData.transportState.circle1Pos;
+                Vec2 circle2Pos = multiInputData.transportState.circle2Pos;
+
+                document.AddMember("x", pos.x, document.GetAllocator());
+                document.AddMember("y", pos.y, document.GetAllocator());
+                document.AddMember("circle1x", circle1Pos.x, document.GetAllocator());
+                document.AddMember("circle1y", circle1Pos.y, document.GetAllocator());
+                document.AddMember("circle2x", circle2Pos.x, document.GetAllocator());
+                document.AddMember("circle2y", circle2Pos.y, document.GetAllocator());
             }
                 break;
             default:
@@ -161,6 +178,15 @@ namespace JSONPacker {
             case GameState::shootingBomb:
             {
                 data.angle = document["angle"].GetDouble();
+            }
+                break;
+            //Maybe not do some detail to json packer
+            case GameState::finishSettingTransport:
+            {
+                Vec2 pos = Vec2(document["x"].GetDouble(), document["y"].GetDouble());
+                Vec2 circle1Pos = Vec2(document["circle1x"].GetDouble(), document["circle1y"].GetDouble());
+                Vec2 circle2Pos = Vec2(document["circle2x"].GetDouble(), document["circle2y"].GetDouble());
+                data.transportState = TransportState { pos, circle1Pos, circle2Pos };
             }
                 break;
             default:

@@ -16,6 +16,7 @@
 class Transport : public cocos2d::Node {
 public:
     CREATE_FUNC(Transport);
+    void syncTransportPos(cocos2d::Vec2 pos, cocos2d::Vec2 circle1Pos, cocos2d::Vec2 circle2Pos);
     bool init() override;
     void onExit() override;
     void runTransportAnimation();
@@ -25,6 +26,7 @@ public:
     void disableOKButton();
     bool isReady() const;
     void onEnter() override;
+    cocos2d::Vec2 getOriginTransportPos() const;
     cocos2d::Vec2 getTransportPos() const;
 
 protected:

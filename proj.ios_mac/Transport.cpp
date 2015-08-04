@@ -19,8 +19,28 @@ bool Transport::init() {
     // retain the character animation timeline so it doesn't get deallocated
     this->_timeline->retain();
     
+    _circle1Setted = false;
+    _circle2Setted = false;
+    
     return true;
 }
+
+void Transport::syncTransportPos(cocos2d::Vec2 pos, cocos2d::Vec2 circle1Pos, cocos2d::Vec2 circle2Pos)
+{
+    this->setPosition(pos);
+    _circle1->setPosition(circle1Pos);
+    _circle2->setPosition(circle2Pos);
+    _button1->setEnabled(false);
+    _button1->setVisible(false);
+    _circle1->getChildByName("Label1")->setVisible(false);
+    _button2->setEnabled(false);
+    _button2->setVisible(false);
+    _circle2->getChildByName("Label2")->setVisible(false);
+    _circle1Setted = true;
+    _circle2Setted = true;
+    enableTransport();
+}
+
 void Transport::enableTransport()
 {
     PhysicsBody* body = PhysicsBody::createCircle(_circle1->getContentSize().width * 1.5/2);
@@ -121,4 +141,9 @@ bool Transport::isReady() const
 Vec2 Transport::getTransportPos() const
 {
     return _circle2->getPosition();
+}
+
+Vec2 Transport::getOriginTransportPos() const
+{
+    return _circle1->getPosition();
 }
