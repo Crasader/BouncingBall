@@ -19,6 +19,7 @@ public:
     void runAppearAnimation(cocos2d::Vec2 newPos);
     void enableCollision();
     void initCollision();
+    void runItemCoinAnimation();
 private:
     bool init() override;
     cocos2d::Spawn* _action;

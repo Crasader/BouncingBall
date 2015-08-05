@@ -35,6 +35,8 @@ void ItemBox::addItem(ItemCategory itemCategory)
             case ItemCategory::bomb:
                 displayItem = Sprite::create("bomb.png");
                 break;
+            case ItemCategory::coin:
+                return;
             case ItemCategory::none:
                 break;
         }

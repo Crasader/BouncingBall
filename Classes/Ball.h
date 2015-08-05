@@ -36,6 +36,7 @@ public:
     BallColor getBallColor() const;
     std::string getBallFileName() const;
     BallColor getBallColorFromStr(std::string color);
+    void setPositionInCallBack(const cocos2d::Vec2& pos);
     
 
 private:

@@ -48,6 +48,14 @@ void Coin::runAppearAnimation(Vec2 newPos)
                             nullptr);
     this->runAction(_action);
 }
+void Coin::runItemCoinAnimation()
+{
+    _action = Spawn::create(
+                            RotateBy::create(0.5f, Vec3(0, 1080, 0)),
+                            MoveBy::create(0.5f, Vec2(0,50)),
+                            FadeOut::create(0.5f),
+                            nullptr);
+}
 
 void Coin::enableCollision()
 {

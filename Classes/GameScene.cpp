@@ -486,9 +486,6 @@ void GameScene::setupMap()
     _ballPreview->setPosition(_nextBallHolder->getPosition());
     _mainScene->addChild(_ballPreview);
     
-    _itemBox->addItem(ItemCategory::transport);
-
-    
 }
 
 
@@ -506,6 +503,7 @@ void GameScene::setupTouchHandling()
         lastTouchPos = touchPos;
         
         switch (_gameState) {
+            case GameState::usingCoin:
             case GameState::prepareShooting:
             case GameState::finishSettingTransport:
             {
@@ -647,13 +645,16 @@ void GameScene::update(float dt)
                 break;
             }
             stopAllBall();
+            
             if (canUserGetItem()) {
                 _passCode->resetPassCode();
                 //TODO: make item random
-              //  _itemBox->addItem(ItemCategory::bomb);
-              //  _itemBox->addItem(ItemCategory::thunder);
-                _itemBox->addItem(ItemCategory::transport);
+                //  _itemBox->addItem(ItemCategory::bomb);
+                //  _itemBox->addItem(ItemCategory::thunder);
+                createItemWhenTouchedItemBox(ItemCategory::coin);
+                setGameState(GameState::usingCoin);
             }
+            
             if (isGameOver()) {
                 triggerGameOver();
             } else {
@@ -666,6 +667,7 @@ void GameScene::update(float dt)
                     setGameState(GameState::prepareShooting);
                 }
             }
+
         }
             break;
         case GameState::bombFinish:
@@ -880,6 +882,40 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
             _mainScene->addChild(transport);
         }
             break;
+        case ItemCategory::coin:
+        {
+            CallFunc* callback;
+            if (!isMyTurn()) {
+                callback = CallFunc::create([this](){
+                        _opponetScore++;
+                });
+            } else {
+                callback = CallFunc::create([this](){
+                    _currentScore += 1;
+                    updateScoreLabel(_currentScore);
+                });
+            }
+            
+            cocos2d::Spawn* action =  Spawn::create(
+                                                    RotateBy::create(0.5f, Vec3(0, 1080, 0)),
+                                                    MoveBy::create(0.5f, Vec2(0,50)),
+                                                    FadeOut::create(0.5f),
+                                                    nullptr);
+            for (int i =0 ; i < COIN_NUMS_IF_ITEM_IS_GETTED; ++i) {
+                Coin* coin = Coin::create();
+                Size visibleSize = Director::getInstance()->getVisibleSize();
+                coin->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+                coin->setOpacity(0);
+                _mainScene->addChild(coin);
+                coin->runAction(Sequence::create(DelayTime::create(i * 0.5),
+                                                 FadeIn::create(0.1),
+                                                 callback,
+                                                 action,
+                                                 RemoveSelf::create(),
+                                                 nullptr));
+            }
+        }
+            break;
         default:
             break;
     }
@@ -1017,6 +1053,9 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
             transport = static_cast<Transport*>(a->getNode()->getParent());
         }
         Vec2 newPos = transport->getPosition() + transport->getTransportPos();
+        ball->setPositionInCallBack(newPos);
+
+        /*
         Vec2 newVelocity = ball->getPhysicsBody()->getVelocity();
         BallColor newColor = ball->getBallColor();
         ball->removeFromParent();
@@ -1029,6 +1068,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         _ballsOnState.pushBack(newBall);
         _ballWaitShooting = newBall;
         _mainScene->addChild(newBall);
+         */
     }
     
     return true;
@@ -1123,6 +1163,8 @@ GameState GameScene::getStateByItem(ItemCategory itemCategory) const
             return GameState::usingThunder;
         case ItemCategory::transport:
             return GameState::usingTransport;
+        case ItemCategory::coin:
+            return GameState::usingCoin;
     }
 }
 
@@ -1411,6 +1453,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             break;
         case GameState::usingThunder:
         {
+            _simulating = true;
             createItemWhenTouchedItemBox(ItemCategory::thunder);
         }
             break;
@@ -1438,6 +1481,11 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             createItemWhenTouchedItemBox(ItemCategory::transport);
             Transport* transport = _transportOnStage.back();
             transport->syncTransportPos(multiInputData.transportState.pos, multiInputData.transportState.circle1Pos, multiInputData.transportState.circle2Pos);
+        }
+            break;
+        case GameState::usingCoin:
+        {
+            createItemWhenTouchedItemBox(ItemCategory::coin);
         }
             break;
         case GameState::gameOver:
@@ -1491,7 +1539,7 @@ bool GameScene::isMyTurn() const
 void GameScene::setBallPosOnState(std::vector<Vec2> ballPos)
 {
     for (int i =0; i < ballPos.size(); ++i) {
-        _ballsOnState.at(i)->setPosition(ballPos[i]);
+        _ballsOnState.at(i)->setPositionInCallBack(ballPos[i]);
     }
 }
 

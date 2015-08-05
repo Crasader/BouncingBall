@@ -22,6 +22,8 @@ const static float MAX_SHOOTING_SPEED = 1500.0f;
 const static float BOMB_RANGE = 100.0f;
 const static float BOMB_SPEED = 1000.0f;
 
+const static int COIN_NUMS_IF_ITEM_IS_GETTED = 5;
+
 #pragma mark -
 #pragma mark Edge Setting
 const static cocos2d::PhysicsMaterial EDGE_MATERIAL = cocos2d::PhysicsMaterial(0.0f, 1.0f, 0.0f);
@@ -90,6 +92,7 @@ enum class GameState
     shootingByThunder,
     usingTransport,
     finishSettingTransport,
+    usingCoin,
     waiting,         //only multi
     waitForSimulate,   //only multi
     waitForFinish,
@@ -126,6 +129,7 @@ enum ItemCategory
     thunder,
     bomb,
     transport,
+    coin,
     none
 };
 

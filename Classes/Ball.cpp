@@ -171,6 +171,13 @@ void Ball::shoot(float speed, float angle)
 #pragma mark - 
 #pragma getter/Setter 
 
+void Ball::setPositionInCallBack(const Vec2& pos)
+{
+    this->runAction(Sequence::create(DelayTime::create(0.0f), CallFunc::create([this,pos]{
+        this->setPosition(pos);
+    }), NULL));
+}
+
 BallColor Ball::getBallColor() const
 {
     return _color;
