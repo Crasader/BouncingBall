@@ -85,6 +85,8 @@ enum class GameState
     prepareShooting,
     shooting,
     gameOver,
+    createItem,
+    creatingItem,
     usingBomb,
     shootingBomb,
     bombFinish,
@@ -124,13 +126,14 @@ enum class BallColor
     black =5
 };
 
+// the sequnce of item is related to animation,take careful to change it
 enum ItemCategory
 {
-    thunder,
-    bomb,
-    transport,
-    coin,
-    none
+    bomb = 0,
+    coin = 1,
+    thunder = 2,
+    transport= 3,
+    none = 4,
 };
 
 

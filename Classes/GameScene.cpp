@@ -29,6 +29,9 @@
 #include "Transport.h"
 #include "TransportReader.h"
 
+#include "Casino.h"
+#include "CasinoReader.h"
+
 #include "Bomb.h"
 
 USING_NS_CC;
@@ -388,6 +391,7 @@ void GameScene::setupMap()
     instance->registReaderObject("ExplodeReader" , (ObjectFactory::Instance) ExplodeReader::getInstance);
     instance->registReaderObject("ItemBoxReader" , (ObjectFactory::Instance) ItemBoxReader::getInstance);
     instance->registReaderObject("TransportReader" , (ObjectFactory::Instance) TransportReader::getInstance);
+      instance->registReaderObject("CasinoReader" , (ObjectFactory::Instance) CasinoReader::getInstance);
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
     _cannon = rootNode->getChildByName<Cannon*>("Cannon");
@@ -467,7 +471,7 @@ void GameScene::setupMap()
     if (!_tutorial) {
         _passCode = PassCode::createWithStr(mapState.passCode);
         _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
-        _passCode->setPosition(Vec2(visibleSize.width * 0.3f, visibleSize.height * 0.95f));
+        _passCode->setPosition(Vec2(visibleSize.width * 0.37f, visibleSize.height * 0.955f));
         _mainScene->addChild(_passCode);
     } else {
         rootNode->getChildByName("ItemLabel")->setVisible(false);
@@ -646,17 +650,11 @@ void GameScene::update(float dt)
             }
             stopAllBall();
             
-            if (canUserGetItem()) {
-                _passCode->resetPassCode();
-                //TODO: make item random
-                //  _itemBox->addItem(ItemCategory::bomb);
-                //  _itemBox->addItem(ItemCategory::thunder);
-                createItemWhenTouchedItemBox(ItemCategory::coin);
-                setGameState(GameState::usingCoin);
-            }
-            
             if (isGameOver()) {
                 triggerGameOver();
+            } else if (canUserGetItem()) {
+                _passCode->resetPassCode();
+                setGameState(GameState::createItem);
             } else {
                 _ballWaitShooting = nullptr;
                 enableCoin();
@@ -668,6 +666,32 @@ void GameScene::update(float dt)
                 }
             }
 
+        }
+            break;
+        case GameState::createItem:
+        {
+            ItemCategory item = randomGenerateItem();
+            CallFunc* addItem = CallFunc::create([item,this](){
+                if (item == ItemCategory::coin) {
+                    createItemWhenTouchedItemBox(item);
+                    setGameState(GameState::usingCoin);
+                } else {
+                    _itemBox->addItem(item);
+                }
+                _ballWaitShooting = nullptr;
+                enableCoin();
+                createNextBall();
+                if (_isMultiplay) {
+                    setGameState(GameState::waiting);
+                } else {
+                    setGameState(GameState::prepareShooting);
+                }
+            });
+            Casino* cusino = dynamic_cast<Casino*>(CSLoader::createNode("Casino.csb"));
+            _mainScene->addChild(cusino);
+            cusino->setPosition(Vec2(320,600));
+            cusino->runCreateItemAnimation(item, addItem);
+            setGameState(GameState::creatingItem);
         }
             break;
         case GameState::bombFinish:
@@ -769,6 +793,15 @@ void GameScene::triggerGameOver()
 #pragma mark - 
 #pragma mark Game Logic
 
+ItemCategory GameScene::randomGenerateItem()
+{
+    std::random_device seed_gen;
+    std::default_random_engine engine(seed_gen());
+    std::uniform_int_distribution<> dist(0, 3);
+    ItemCategory item = static_cast<ItemCategory>(dist(engine));
+    return item;
+}
+
 void GameScene::enableCoin()
 {
     for (auto coin : _coinOnStage) {
@@ -869,6 +902,7 @@ void GameScene::createItemWhenTouchedItemBox(ItemCategory itemCategory)
             updateBallPreview();
             resetEgde();
         }
+            break;
         case ItemCategory::thunder:
         {
             _ballWaitShooting->addThunderEffect();

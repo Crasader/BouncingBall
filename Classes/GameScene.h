@@ -90,6 +90,7 @@ protected:
     void createNextBall();
     void triggerGameOver();
     void updateBallPreview();
+    ItemCategory randomGenerateItem();
     
     //Getter Setter
     std::string getConfigFileName() const;
