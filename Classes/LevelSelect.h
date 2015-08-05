@@ -16,10 +16,13 @@ class LevelSelect : public cocos2d::Node
 {
 public:
     CREATE_FUNC(LevelSelect);
-    
+    bool init() override;
 private:
+    int _levelPageNum;
+    Node* _levelPage;
     void loadUserData();
     void onEnter() override;
+    Node* createLeveSelectPage(int pageNum);
     void levelButtonPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
 };
 

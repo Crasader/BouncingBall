@@ -29,6 +29,7 @@ SceneManager* SceneManager::getInstance()
 SceneManager::SceneManager()
 {
     this->_gameScene = nullptr;
+    this->_levelSelect = nullptr;
     this->networkingWrapper = std::unique_ptr<NetworkingWrapper>(new NetworkingWrapper());
     this->networkingWrapper->setDelegate(this);
 }
@@ -75,6 +76,12 @@ void SceneManager::backToLobby()
         Director::getInstance()->popScene();
         _gameScene = nullptr;
         networkingWrapper->disconnect();
+        return;
+    }
+    if (_levelSelect) {
+        Director::getInstance()->popScene();
+        _levelSelect = nullptr;
+        return;
     }
     
 }

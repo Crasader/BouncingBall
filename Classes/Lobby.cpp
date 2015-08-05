@@ -8,6 +8,8 @@
 
 #include "Lobby.h"
 #include "SceneManager.h"
+#include "cocostudio/CocoStudio.h"
+#include "ui/CocosGUI.h"
 
 using namespace cocos2d;
 
@@ -17,8 +19,7 @@ bool Lobby::init()
         return false;
     }
     
-    LayerColor* background = LayerColor::create(Color4B(255,255,255,255));
-    this->addChild(background);
+
     
     return true;
 }
@@ -35,22 +36,15 @@ void Lobby::onEnter()
 void Lobby::setupUI()
 {
     Size visiableSize = Director::getInstance()->getVisibleSize();
-    Sprite* logo = Sprite::create("logo.png");
-    logo->setPosition(Vec2(visiableSize.width/2.0f,visiableSize.height*0.7f));
-    this->addChild(logo);
-    
-    ui::Button* singlePlayerButton = ui::Button::create();
-    singlePlayerButton->setPosition(Vec2(visiableSize.width/2.0f,visiableSize.height * 0.4f));
-    singlePlayerButton->loadTextures("singlePlayerButton.png", "singlePlayerButtonPressed.png");
-    this->addChild(singlePlayerButton);
-    
-    ui::Button* multiPlayerButton = ui::Button::create();
-    multiPlayerButton->setPosition(Vec2(visiableSize.width/2.0f,visiableSize.height * 0.25f));
-    multiPlayerButton->loadTextures("multiplayerButton.png", "multiplayerButtonPressed.png");
-    this->addChild(multiPlayerButton);
+
+    auto rootNode = CSLoader::createNode("Title.csb");
+    ui::Button* singlePlayerButton = rootNode->getChildByName<ui::Button*>("singlePlayButton");
+    ui::Button* multiplayerButton = rootNode->getChildByName<ui::Button*>("multiplayButton");
+    ui::Button* optionButton = rootNode->getChildByName<ui::Button*>("optionButton");
     
     singlePlayerButton->addTouchEventListener(CC_CALLBACK_2(Lobby::SinglePlayerPressed,this));
-    multiPlayerButton->addTouchEventListener(CC_CALLBACK_2(Lobby::multiplayerPressed, this));
+    multiplayerButton->addTouchEventListener(CC_CALLBACK_2(Lobby::multiplayerPressed, this));
+    this->addChild(rootNode);
 }
 
 void Lobby::SinglePlayerPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)

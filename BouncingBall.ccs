@@ -17,12 +17,8 @@
           <Image Name="Cannon_Base.png" />
           <Image Name="green.png" />
           <Image Name="logo.png" />
-          <Image Name="multiplayerButton.png" />
-          <Image Name="multiplayerButtonPressed.png" />
           <Image Name="red.png" />
           <Image Name="sideNet.png" />
-          <Image Name="singlePlayerButton.png" />
-          <Image Name="singlePlayerButtonPressed.png" />
           <Image Name="Steering.png" />
           <Image Name="BackGround.png" />
           <Image Name="sideBar.png" />
@@ -68,6 +64,14 @@
           <Image Name="casinoCoin.png" />
           <Image Name="casinoThunder.png" />
           <Image Name="casinoTransport.png" />
+          <Image Name="singlePlayerButton.png" />
+          <Image Name="multiplayerButton.png" />
+          <Image Name="anchor.png" />
+          <Image Name="optionButton.png" />
+          <Image Name="levelBackGround.png" />
+          <Image Name="nextPageButton.png" />
+          <Image Name="prevPageButton.png" />
+          <Image Name="titleButton.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
@@ -81,6 +85,8 @@
         <Project Name="Transport.csd" Type="Node" />
         <Project Name="MultiplayGameover.csd" Type="Node" />
         <Project Name="Casino.csd" Type="Node" />
+        <Project Name="LevelSelect.csd" Type="Scene" />
+        <Project Name="Title.csd" Type="Scene" />
       </RootFolder>
     </Group>
   </SolutionFolder>
