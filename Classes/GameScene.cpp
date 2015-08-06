@@ -33,6 +33,7 @@
 #include "CasinoReader.h"
 
 #include "Bomb.h"
+#include "TapInfo.h"
 
 USING_NS_CC;
 
@@ -94,7 +95,7 @@ void GameScene::onEnter()
         setGameState(GameState::tutorial);
         setupTutorialTouchHandling();
         setupTutorialContanctHandling();
-        setTutorialStep(TutorialStep::swipingCannon);
+        setTutorialStep(TutorialStep::initInfo);
     } else {
         setupContactHandling();
         setupTouchHandling();
@@ -124,8 +125,11 @@ void GameScene::setupTutorialTouchHandling()
         allowToMove = false;
         
         switch (_tutorialStep) {
+            case TutorialStep::initInfo:
+            {
+                setTutorialStep(TutorialStep::swipingCannon);
+            }
             case TutorialStep::swipingCannon:
-            case TutorialStep::aimingBall:
             {
                 allowToMove = true;
                 return true;
@@ -170,18 +174,6 @@ void GameScene::setupTutorialTouchHandling()
 
         switch (_tutorialStep) {
             case TutorialStep::swipingCannon:
-            {
-                //angle between 23~27 can hit the red ball
-                if (_cannon->getAngle() > 23 && _cannon->getAngle() < 27) {
-                    setTutorialStep(TutorialStep::shootball);
-                } else if (_cannon->getAngle() > 10 || _cannon->getAngle() < -10) {
-                    setTutorialStep(TutorialStep::aimingBall);
-                } else {
-                    
-                }
-            }
-                break;
-            case TutorialStep::aimingBall:
             {
                 if (_cannon->getAngle() > 23 && _cannon->getAngle() < 27) {
                     setTutorialStep(TutorialStep::shootball);
@@ -249,7 +241,8 @@ bool GameScene::onContactBeginTutorial(cocos2d::PhysicsContact &contact)
             _currentScore += 1;
             updateScoreLabel(_currentScore);
             //TODO: make it only appear once
-            displayInfo("Same color get one coin",1.0f,0.5f);
+            displayInfo("You can also get one coin",2.0f, 0.6f);
+            displayInfo("by hit the same color ball",2.0f, 0.6f,50);
         }
         
     }
@@ -293,7 +286,8 @@ void GameScene::onContactEndTutorial(cocos2d::PhysicsContact &contact)
         _ballsOnState.erase(it);
         
         createCoinByPosWhenBallHpIsZero(pos);
-        displayInfo("hit crack ball will create three coin",1.0, 0.5);
+        displayInfo("hit crack ball",1.5f, 0.7f);
+        displayInfo("will create three coin",1.5f, 0.7f,50);
     }
     
 }
@@ -348,27 +342,46 @@ void GameScene::updateTutorial()
 void GameScene::setTutorialStep(TutorialStep step)
 {
     _tutorialStep = step;
+    std::vector<std::string> infoList;
+    TapInfo* tapInfo = TapInfo::create();
     switch (_tutorialStep) {
-        case TutorialStep::swipingCannon:
-            displayInfo("Swipe to move");
+        case TutorialStep::initInfo:
+        {
+            infoList.push_back("Try to get coin");
+            infoList.push_back("as many as possible");
+        }
             break;
-        case TutorialStep::aimingBall:
-            displayInfo("Aim the Ball");
+        case TutorialStep::swipingCannon:
+        {
+            infoList.push_back("Swipe to move");
+        }
             break;
         case TutorialStep::shootball:
-            displayInfo("Tap to shoot");
+        {
+            infoList.push_back("Tap to shoot");
+        }
             break;
         case TutorialStep::ballCrack:
-            displayInfo("Shoot the cracked ball",1.0,0.5);
+        {
+            infoList.push_back("Shoot cracked ball");
+            infoList.push_back("to create coin");
+        }
             break;
         case TutorialStep::collectCoin:
-            displayInfo("Collect the coin",1.0, 0.7);
+        {
+            infoList.push_back("Collect the coin");
+        }
+            break;
+        default:
+            return;
             
     }
+    tapInfo->displayInfo(infoList);
+    this->addChild(tapInfo);
 }
 
 
-#pragma mark - 
+#pragma mark -
 #pragma mark - Setup Method
 
 void GameScene::setupContactHandling()
@@ -477,6 +490,7 @@ void GameScene::setupMap()
         _mainScene->addChild(_passCode);
     } else {
         rootNode->getChildByName("EqualLabel")->setVisible(false);
+        
     }
     
     ui::Button* backButton = rootNode->getChildByName<ui::Button*>("buttonPause");
@@ -1356,14 +1370,12 @@ void GameScene::resetAllBallHp()
     }
 }
 
-//default second = 1.0f,scale = 1.0f;
-void GameScene::displayInfo(std::string info, float second, float scale)
+//default second = 1.0f,scale = 1.0f, offsetY = 0;
+void GameScene::displayInfo(std::string info, float second, float scale, float offsetY)
 {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    
     ui::TextBMFont* infoLabel = ui::TextBMFont::create(info, "font01.fnt");
     infoLabel->setAnchorPoint(Vec2(0.5,0.5));
-    infoLabel->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+    infoLabel->setPosition(Vec2(320, 600 - offsetY));
     infoLabel->setOpacity(0);
     infoLabel->setScale(scale);
     _mainScene->addChild(infoLabel);

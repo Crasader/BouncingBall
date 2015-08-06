@@ -106,8 +106,8 @@ enum class GameState
 
 enum class TutorialStep
 {
+    initInfo,
     swipingCannon,
-    aimingBall,
     shootball,
     shooting,
     sameColor,
@@ -128,7 +128,7 @@ enum class BallColor
 };
 
 // the sequnce of item is related to animation,take careful to change it
-enum ItemCategory
+enum class ItemCategory
 {
     bomb = 0,
     coin = 1,

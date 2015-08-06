@@ -100,6 +100,7 @@
 		9E9FF25A1B70055100CA8D54 /* TransportReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FF2571B70055100CA8D54 /* TransportReader.cpp */; };
 		9E9FF2611B7271E300CA8D54 /* Casino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FF25D1B7271E300CA8D54 /* Casino.cpp */; };
 		9E9FF2621B7271E300CA8D54 /* CasinoReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FF25F1B7271E300CA8D54 /* CasinoReader.cpp */; };
+		9E9FF2661B732B0000CA8D54 /* TapInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E9FF2641B732B0000CA8D54 /* TapInfo.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -236,6 +237,8 @@
 		9E9FF25E1B7271E300CA8D54 /* Casino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Casino.h; sourceTree = "<group>"; };
 		9E9FF25F1B7271E300CA8D54 /* CasinoReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CasinoReader.cpp; sourceTree = "<group>"; };
 		9E9FF2601B7271E300CA8D54 /* CasinoReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CasinoReader.h; sourceTree = "<group>"; };
+		9E9FF2641B732B0000CA8D54 /* TapInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TapInfo.cpp; sourceTree = "<group>"; };
+		9E9FF2651B732B0000CA8D54 /* TapInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapInfo.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -426,6 +429,8 @@
 		9E0CBC581B55B78A0000EA9C /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				9E9FF2641B732B0000CA8D54 /* TapInfo.cpp */,
+				9E9FF2651B732B0000CA8D54 /* TapInfo.h */,
 				9E0E6BCB1B6160CC003B2D87 /* LevelSelect.cpp */,
 				9E0E6BCC1B6160CC003B2D87 /* LevelSelect.h */,
 				9E0CBC951B56FA160000EA9C /* SceneManager.cpp */,
@@ -665,6 +670,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E9FF2661B732B0000CA8D54 /* TapInfo.cpp in Sources */,
 				9E0E6BCD1B6160CC003B2D87 /* LevelSelect.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				9E0E6C991B654F66003B2D87 /* Explode.cpp in Sources */,

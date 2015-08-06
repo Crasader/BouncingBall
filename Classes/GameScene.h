@@ -107,7 +107,7 @@ protected:
     void resetAllBallHp();
     void resetEgde();
     void updateScoreLabel(int score);
-    void displayInfo(std::string info, float second = 1.0f,float scale = 1.0f);
+    void displayInfo(std::string info,float second = 1.0f,float scale = 1.0f, float offsetY = 0.0f);
     void stopAllBall();
     void disableTouchEvent();
 
