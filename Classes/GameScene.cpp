@@ -286,8 +286,6 @@ void GameScene::onContactEndTutorial(cocos2d::PhysicsContact &contact)
         _ballsOnState.erase(it);
         
         createCoinByPosWhenBallHpIsZero(pos);
-        displayInfo("hit crack ball",1.5f, 0.7f);
-        displayInfo("will create three coin",1.5f, 0.7f,50);
     }
     
 }
@@ -363,8 +361,8 @@ void GameScene::setTutorialStep(TutorialStep step)
             break;
         case TutorialStep::ballCrack:
         {
-            infoList.push_back("Shoot cracked ball");
-            infoList.push_back("to create coin");
+            infoList.push_back("hit crack ball");
+            infoList.push_back("will create three coin");
         }
             break;
         case TutorialStep::collectCoin:
