@@ -125,10 +125,6 @@ void GameScene::setupTutorialTouchHandling()
         allowToMove = false;
         
         switch (_tutorialStep) {
-            case TutorialStep::initInfo:
-            {
-                setTutorialStep(TutorialStep::swipingCannon);
-            }
             case TutorialStep::swipingCannon:
             {
                 allowToMove = true;
@@ -274,6 +270,14 @@ void GameScene::onContactEndTutorial(cocos2d::PhysicsContact &contact)
 void GameScene::updateTutorial()
 {
     switch (_tutorialStep) {
+        case TutorialStep::initInfo:
+        {
+            Node* infoLayer = this->getChildByName("info");
+            if (! infoLayer) {
+                setTutorialStep(TutorialStep::swipingCannon);
+            }
+        }
+            break;
         case TutorialStep::shooting:
         {
             if (this->allBallIsSpeedAreLowEnough()) {
@@ -326,37 +330,47 @@ void GameScene::setTutorialStep(TutorialStep step)
     switch (_tutorialStep) {
         case TutorialStep::initInfo:
         {
+            infoList.push_back("Goal:");
             infoList.push_back("Try to get coin");
             infoList.push_back("as many as possible");
+            tapInfo->displayInfo(infoList);
+            tapInfo->setName("info");
+            this->addChild(tapInfo);
         }
             break;
         case TutorialStep::swipingCannon:
         {
             infoList.push_back("Swipe to move");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
         }
             break;
         case TutorialStep::shootball:
         {
             infoList.push_back("Tap to shoot");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
         }
             break;
         case TutorialStep::ballCrack:
         {
             infoList.push_back("hit crack ball");
             infoList.push_back("will create three coin");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
         }
             break;
         case TutorialStep::collectCoin:
         {
             infoList.push_back("Collect the coin");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
         }
             break;
         default:
             return;
             
     }
-    tapInfo->displayInfo(infoList);
-    this->addChild(tapInfo);
 }
 
 
