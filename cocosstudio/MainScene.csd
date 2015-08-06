@@ -109,7 +109,7 @@
             <FileData Type="Normal" Path="asset/Cannon_Base.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Cannon" ActionTag="2068163570" Tag="209" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="320.0000" RightMargin="320.0000" TopMargin="1005.3600" BottomMargin="130.6400" InnerActionSpeed="0.0833" ctype="ProjectNodeObjectData">
+          <AbstractNodeData Name="Cannon" ActionTag="2068163570" Tag="209" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="320.0000" RightMargin="320.0000" TopMargin="1005.3600" BottomMargin="130.6400" InnerActionSpeed="0.1667" ctype="ProjectNodeObjectData">
             <Size />
             <AnchorPoint />
             <Position X="320.0000" Y="130.6400" />
@@ -130,7 +130,7 @@
             <FileData Type="Normal" Path="asset/dogiShadow.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Dogi" ActionTag="-783934955" Tag="246" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="153.6000" RightMargin="486.4000" TopMargin="1048.5280" BottomMargin="87.4720" InnerActionSpeed="0.0833" ctype="ProjectNodeObjectData">
+          <AbstractNodeData Name="Dogi" ActionTag="-783934955" Tag="246" IconVisible="True" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="153.6000" RightMargin="486.4000" TopMargin="1048.5280" BottomMargin="87.4720" InnerActionSpeed="0.1667" ctype="ProjectNodeObjectData">
             <Size />
             <AnchorPoint />
             <Position X="153.6000" Y="87.4720" />
@@ -151,60 +151,60 @@
             <FileData Type="Normal" Path="asset/arrow.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="EqualLabel" ActionTag="927297568" Tag="169" IconVisible="False" LeftMargin="157.2681" RightMargin="440.7319" TopMargin="12.2916" BottomMargin="1040.7084" LabelText="=" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="EqualLabel" ActionTag="927297568" Tag="169" IconVisible="False" LeftMargin="199.7686" RightMargin="398.2314" TopMargin="12.2916" BottomMargin="1040.7084" LabelText="=" ctype="TextBMFontObjectData">
             <Size X="42.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="178.2681" Y="1082.2084" />
+            <Position X="220.7686" Y="1082.2084" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.2785" Y="0.9526" />
+            <PrePosition X="0.3450" Y="0.9526" />
             <PreSize X="0.0656" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="line_65" ActionTag="-122098889" Tag="170" IconVisible="False" LeftMargin="48.5325" RightMargin="546.4675" TopMargin="1.5825" BottomMargin="1039.4175" ctype="SpriteObjectData">
+          <AbstractNodeData Name="line_65" ActionTag="-122098889" Tag="170" IconVisible="False" LeftMargin="72.5000" RightMargin="522.5000" TopMargin="1.5823" BottomMargin="1039.4177" ctype="SpriteObjectData">
             <Size X="45.0000" Y="95.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="71.0325" Y="1086.9175" />
+            <Position X="95.0000" Y="1086.9177" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.1110" Y="0.9568" />
+            <PrePosition X="0.1484" Y="0.9568" />
             <PreSize />
             <FileData Type="Normal" Path="asset/line.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ScoreLabel" ActionTag="110137252" Tag="171" IconVisible="False" LeftMargin="521.3777" RightMargin="68.6223" TopMargin="9.5529" BottomMargin="1043.4471" LabelText="0" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="ScoreLabel" ActionTag="110137252" Tag="171" IconVisible="False" LeftMargin="523.3778" RightMargin="66.6222" TopMargin="9.5527" BottomMargin="1043.4473" LabelText="0" ctype="TextBMFontObjectData">
             <Size X="50.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="546.3777" Y="1084.9471" />
+            <Position X="548.3778" Y="1084.9473" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.8537" Y="0.9551" />
+            <PrePosition X="0.8568" Y="0.9551" />
             <PreSize X="0.7719" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Coin_66" ActionTag="-999709467" Tag="172" IconVisible="False" LeftMargin="569.3281" RightMargin="-4.3281" TopMargin="12.6790" BottomMargin="1048.3210" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Coin_66" ActionTag="-999709467" Tag="172" IconVisible="False" LeftMargin="570.3280" RightMargin="-5.3280" TopMargin="12.6790" BottomMargin="1048.3210" ctype="SpriteObjectData">
             <Size X="75.0000" Y="75.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="606.8281" Y="1085.8210" />
+            <Position X="607.8280" Y="1085.8210" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.9482" Y="0.9558" />
+            <PrePosition X="0.9497" Y="0.9558" />
             <PreSize />
             <FileData Type="Normal" Path="asset/coin.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="423.8563" RightMargin="171.1437" TopMargin="-0.0802" BottomMargin="1041.0802" ctype="SpriteObjectData">
+          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="449.8563" RightMargin="145.1437" TopMargin="-0.0804" BottomMargin="1041.0804" ctype="SpriteObjectData">
             <Size X="45.0000" Y="95.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="446.3563" Y="1088.5802" />
+            <Position X="472.3563" Y="1088.5804" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.6974" Y="0.9583" />
+            <PrePosition X="0.7381" Y="0.9583" />
             <PreSize />
             <FileData Type="Normal" Path="asset/line.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ItemBox" ActionTag="317194233" Tag="227" IconVisible="True" RightMargin="640.0000" TopMargin="1136.0000" InnerActionSpeed="0.0833" ctype="ProjectNodeObjectData">
+          <AbstractNodeData Name="ItemBox" ActionTag="317194233" Tag="227" IconVisible="True" RightMargin="640.0000" TopMargin="1136.0000" InnerActionSpeed="0.1667" ctype="ProjectNodeObjectData">
             <Size />
             <AnchorPoint />
             <Position />
@@ -229,16 +229,41 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="box_84" ActionTag="1092483359" Tag="302" IconVisible="False" LeftMargin="75.4993" RightMargin="485.5007" TopMargin="8.1895" BottomMargin="1053.8105" ctype="SpriteObjectData">
+          <AbstractNodeData Name="CasinoBox" ActionTag="1092483359" Tag="302" IconVisible="False" LeftMargin="113.4992" RightMargin="447.5008" TopMargin="8.1892" BottomMargin="1053.8108" ctype="SpriteObjectData">
             <Size X="79.0000" Y="74.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="114.9993" Y="1090.8105" />
+            <Position X="152.9992" Y="1090.8108" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.1797" Y="0.9602" />
+            <PrePosition X="0.2391" Y="0.9602" />
             <PreSize />
             <FileData Type="Normal" Path="asset/box.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="buttonPause" ActionTag="-1603504544" Tag="507" IconVisible="False" LeftMargin="-24.8386" RightMargin="524.8386" TopMargin="-21.1484" BottomMargin="1020.1484" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="110" Scale9Height="115" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
+            <Size X="140.0000" Y="137.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="45.1614" Y="1088.6484" />
+            <Scale ScaleX="0.7000" ScaleY="0.7000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.0706" Y="0.9583" />
+            <PreSize X="0.2188" Y="0.1206" />
+            <TextColor A="255" R="65" G="65" B="70" />
+            <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
+            <PressedFileData Type="Normal" Path="asset/pauseButton.png" Plist="" />
+            <NormalFileData Type="Normal" Path="asset/pauseButton.png" Plist="" />
+            <OutlineColor A="255" R="255" G="0" B="0" />
+            <ShadowColor A="255" R="110" G="110" B="110" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="pausePanel" ActionTag="359841385" Tag="525" Alpha="0" IconVisible="True" LeftMargin="319.0837" RightMargin="320.9163" TopMargin="464.1968" BottomMargin="671.8032" InnerActionSpeed="1.0000" ctype="ProjectNodeObjectData">
+            <Size />
+            <AnchorPoint />
+            <Position X="319.0837" Y="671.8032" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.4986" Y="0.5914" />
+            <PreSize />
+            <FileData Type="Normal" Path="LevelPause.csd" Plist="" />
           </AbstractNodeData>
         </Children>
       </ObjectData>

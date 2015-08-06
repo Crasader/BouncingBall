@@ -46,6 +46,7 @@ protected:
     PassCode* _passCode;
     ItemBox* _itemBox;
     cocos2d::ui::Button* _nextBallHolder;
+    cocos2d::Node* _pausePanel;
     
     
     //ojbect on state

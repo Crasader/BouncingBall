@@ -83,6 +83,7 @@ enum class GameState
 {
     sendDeviceName, //only multi
     prepareShooting,
+    pause,
     shooting,
     gameOver,
     createItem,

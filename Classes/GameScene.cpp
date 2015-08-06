@@ -400,6 +400,8 @@ void GameScene::setupMap()
     _itemBox = rootNode->getChildByName<ItemBox*>("ItemBox");
     _nextBallHolder = rootNode->getChildByName<ui::Button*>("NextBallHolder");
     _nextBallHolder->addTouchEventListener(CC_CALLBACK_2(GameScene::ballHolderButtonPressed,this));
+    _pausePanel = rootNode->getChildByName("pausePanel");
+    _pausePanel->setZOrder(1);
     
     _mainScene = rootNode;
     
@@ -471,18 +473,14 @@ void GameScene::setupMap()
     if (!_tutorial) {
         _passCode = PassCode::createWithStr(mapState.passCode);
         _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
-        _passCode->setPosition(Vec2(visibleSize.width * 0.37f, visibleSize.height * 0.955f));
+        _passCode->setPosition(Vec2(visibleSize.width * 0.42f, visibleSize.height * 0.955f));
         _mainScene->addChild(_passCode);
     } else {
         rootNode->getChildByName("EqualLabel")->setVisible(false);
     }
     
-    ui::Button* backButton = ui::Button::create();
-    backButton->setAnchorPoint(Vec2(0.0f,0.5f));
-    backButton->setPosition(Vec2(0.0f,visibleSize.height* 0.95f));
-    backButton->loadTextures("backButton.png", "backButtonPressed.png");
+    ui::Button* backButton = rootNode->getChildByName<ui::Button*>("buttonPause");
     backButton->addTouchEventListener(CC_CALLBACK_2(GameScene::backButtonPressed,this));
-    _mainScene->addChild(backButton);
     
     std::string fileName = _ballsInBag.front()->getBallFileName();
     _ballPreview = Sprite::create(fileName);
@@ -1171,7 +1169,42 @@ LevelClear* GameScene::createLevelClearPanel()
 void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        SceneManager::getInstance()->backToLobby();
+        _pausePanel->runAction(FadeIn::create(0.5f));
+        
+        _gameState = GameState::pause;
+        this->unscheduleUpdate();
+        ui::Button* menuButton = _pausePanel->getChildByName<ui::Button*>("menuButton");
+        ui::Button* restartButton = _pausePanel->getChildByName<ui::Button*>("restartButton");
+        ui::Button* continueButton = _pausePanel->getChildByName<ui::Button*>("continueButton");
+        menuButton->setTouchEnabled(true);
+        restartButton->setTouchEnabled(true);
+        continueButton->setTouchEnabled(true);
+        
+        restartButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+            if (type == ui::Widget::TouchEventType::ENDED) {
+                SceneManager::getInstance()->backToLobby();
+                SceneManager::getInstance()->enterGameScene(_level, false);
+            }
+        });
+        
+        continueButton->addTouchEventListener([&,menuButton,restartButton,continueButton](Ref* sender, ui::Widget::TouchEventType type){
+            if (type == ui::Widget::TouchEventType::ENDED) {
+                _pausePanel->runAction(FadeOut::create(0.5f));
+                menuButton->setTouchEnabled(false);
+                restartButton->setTouchEnabled(false);
+                continueButton->setTouchEnabled(false);
+                this->scheduleUpdate();
+                _gameState = GameState::prepareShooting;
+            }
+        });
+        
+        
+        menuButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+            if (type == ui::Widget::TouchEventType::ENDED) {
+                SceneManager::getInstance()->backToLobby();
+            }
+        });
+        
     }
     
 }
