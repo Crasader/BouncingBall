@@ -24,7 +24,7 @@ const static float BOMB_SPEED = 1000.0f;
 
 const static int COIN_NUMS_IF_ITEM_IS_GETTED = 5;
 
-const static bool DEBUG_MODE = false;
+const static bool DEBUG_MODE = true;
 
 const static int BASIC_LEVEL_NUMS = 0;
 
@@ -103,7 +103,7 @@ enum class GameState
     waiting,         //only multi
     waitForSimulate,   //only multi
     waitForFinish,
-    tutorial
+    tutorial,
     
     //only for multiPlay
 };
@@ -119,6 +119,14 @@ enum class TutorialStep
     createCoin,
     collectCoin,
     collectCoinShooting,
+    itemInitInfo,
+    generateItem,
+    creatingItem,
+    usingItem,
+    dragTransport,
+    finishUsingTransport,
+    gameOver
+    
 };
 
 enum class BallColor

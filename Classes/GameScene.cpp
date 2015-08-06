@@ -68,8 +68,12 @@ bool GameScene::initWithLevel(int level)
     _currentScore = 0;
     _opponetScore = 0;
     
-    //FIXME:
-    if (_level == 1 && DEBUG_MODE) {
+    //FIXME: bad code
+    if (_level == 1) {
+        _tutorial = true;
+    }
+    
+    if (_level == 3) {
         _tutorial = true;
     }
     
@@ -95,7 +99,11 @@ void GameScene::onEnter()
         setGameState(GameState::tutorial);
         setupTutorialTouchHandling();
         setupTutorialContanctHandling();
-        setTutorialStep(TutorialStep::initInfo);
+        if (_level == 3) {
+            setTutorialStep(TutorialStep::itemInitInfo);
+        } else {
+            setTutorialStep(TutorialStep::initInfo);
+        }
     } else {
         setupContactHandling();
         setupTouchHandling();
@@ -125,24 +133,53 @@ void GameScene::setupTutorialTouchHandling()
         allowToMove = false;
         
         switch (_tutorialStep) {
+            case TutorialStep::finishUsingTransport:
             case TutorialStep::swipingCannon:
             {
                 allowToMove = true;
+                allowToShoot = true;
                 return true;
             }
                 break;
+            case TutorialStep::collectCoin:
             case TutorialStep::shootball:
+            case TutorialStep::itemInitInfo:
             {
                 allowToShoot = true;
                 return true;
             }
                 break;
             case TutorialStep::ballCrack:
-            case TutorialStep::collectCoin:
             {
                 allowToMove = true;
                 allowToShoot = true;
                 return true;
+            }
+                break;
+            case TutorialStep::usingItem:
+            {
+                Vec2 localPosInItemBox = touchPos - _itemBox->getPosition();
+                if (_itemBox->isClicked(localPosInItemBox)) {
+                    ItemCategory itemCategory = _itemBox->pickUpItemFromPos(localPosInItemBox);
+                    if (ItemCategory::none != itemCategory) {
+                        createItemWhenTouchedItemBox(itemCategory);
+                        setTutorialStep(TutorialStep::dragTransport);
+                    }
+                    return false;
+                }
+                allowToShoot = true;
+                return true;
+            }
+                break;
+            case TutorialStep::dragTransport:
+            {
+                Transport* transport = _transportOnStage.back();
+                Vec2 localPos = touchPos - transport->getPosition();
+                _selectedItem = transport->getTouchedCircle(localPos);
+                if (_selectedItem) {
+                    transport->disableOKButton();
+                    return true;
+                }
             }
                 break;
         }
@@ -152,6 +189,17 @@ void GameScene::setupTutorialTouchHandling()
     
     touchListener->onTouchMoved = [&](Touch* touch, Event* event)
     {
+        Vec2 touchPos = this->convertTouchToNodeSpace(touch);
+        
+        if (_tutorialStep == TutorialStep::dragTransport) {
+            if (_selectedItem && _edgeSp->getBoundingBox().containsPoint(touchPos)) {
+                Transport* transport = _transportOnStage.back();
+                Vec2 localPos = touchPos - transport->getPosition();
+                _selectedItem->setPosition(localPos);
+            }
+            return ;
+        }
+        
         if (allowToMove) {
             Vec2 touchPos = this->convertTouchToNodeSpace(touch);
             //change 180 degree when move from left of screen to right
@@ -195,6 +243,25 @@ void GameScene::setupTutorialTouchHandling()
                     setTutorialStep(TutorialStep::collectCoinShooting);
                 }
                 break;
+            case TutorialStep::itemInitInfo:
+                if (allowToShoot) {
+                    shootCurrentBall();
+                    setTutorialStep(TutorialStep::generateItem);
+                }
+                break;
+            case TutorialStep::dragTransport:
+            {
+                Transport* transport = _transportOnStage.back();
+                transport->enableOKButton();
+            }
+                break;
+            case TutorialStep::finishUsingTransport:
+            {
+                if (allowToShoot) {
+                    shootCurrentBall();
+                    setTutorialStep(TutorialStep::gameOver);
+                }
+            }
         }
     
     };
@@ -237,6 +304,23 @@ bool GameScene::onContactBeginTutorial(cocos2d::PhysicsContact &contact)
         _currentScore += 1;
         updateScoreLabel(_currentScore);
         
+    }
+    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+        _passCode->EnterOneColor(BallColor::green);
+    }
+    
+    if ((a->getCategoryBitmask() | b->getCategoryBitmask()) == BALL_HIT_TRANSPORT) {
+        Ball* ball;
+        Transport* transport;
+        if (a->getCategoryBitmask() == BALL_CATEGORY) {
+            ball = static_cast<Ball*>(a->getNode());
+            transport = static_cast<Transport*>(b->getNode()->getParent());
+        } else {
+            ball = static_cast<Ball*>(b->getNode());
+            transport = static_cast<Transport*>(a->getNode()->getParent());
+        }
+        Vec2 newPos = transport->getPosition() + transport->getTransportPos();
+        ball->setPositionInCallBack(newPos);
     }
     
     return true;
@@ -311,9 +395,38 @@ void GameScene::updateTutorial()
         }
             break;
         case TutorialStep::collectCoinShooting:
+        case TutorialStep::gameOver:
         {
             if (allBallIsSpeedAreLowEnough()) {
                 triggerGameOver();
+            }
+        }
+            break;
+        case TutorialStep::generateItem:
+        {
+            if (this->allBallIsSpeedAreLowEnough()) {
+                ItemCategory item = ItemCategory::transport;
+                CallFunc* addItem = CallFunc::create([item,this](){
+                    _itemBox->addItem(item);
+                    _ballWaitShooting = nullptr;
+                    enableCoin();
+                    createNextBall();
+                    setTutorialStep(TutorialStep::usingItem);
+                });
+                Casino* cusino = dynamic_cast<Casino*>(CSLoader::createNode("Casino.csb"));
+                _mainScene->addChild(cusino);
+                cusino->setPosition(Vec2(320,600));
+                cusino->runCreateItemAnimation(item, addItem);
+                setTutorialStep(TutorialStep::creatingItem);
+            }
+        }
+            break;
+        case TutorialStep::dragTransport:
+        {
+            Transport* transport = _transportOnStage.back();
+            if(transport->isReady()) {
+                transport->enableTransport();
+                setTutorialStep(TutorialStep::finishUsingTransport);
             }
         }
             break;
@@ -367,9 +480,41 @@ void GameScene::setTutorialStep(TutorialStep step)
             this->addChild(tapInfo);
         }
             break;
-        default:
-            return;
-            
+        case TutorialStep::itemInitInfo:
+        {
+            infoList.push_back("Hit green ball");
+            infoList.push_back("to get item");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
+        }
+            break;
+        case TutorialStep::usingItem:
+        {
+            infoList.push_back("You got a warp!");
+            infoList.push_back("Ball will transport");
+            infoList.push_back("from in to out");
+            infoList.push_back(" ");
+            infoList.push_back("Tap item to use");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
+        }
+            break;
+        case TutorialStep::dragTransport:
+        {
+            infoList.push_back("drag to move");
+            infoList.push_back("click OK to fix");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
+        }
+            break;
+        case TutorialStep::finishUsingTransport:
+        {
+            infoList.push_back("Good!");
+            infoList.push_back("shoot ball into warp");
+            tapInfo->displayInfo(infoList);
+            this->addChild(tapInfo);
+        }
+            break;
     }
 }
 
@@ -471,9 +616,6 @@ void GameScene::setupMap()
     _edgeSp->setPhysicsBody(edgeBody);
     _edgeSp->setContentSize(Size(edgeWidth, edgeHeight));
     _mainScene->addChild(_edgeSp);
-    
-    _itemBox->addItem(ItemCategory::bomb);
-    _itemBox->addItem(ItemCategory::bomb);
     
     this->addChild(rootNode);
     
@@ -888,7 +1030,6 @@ void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 ballPos,bool enable)
         if (_isMultiplay) {
             coin->setTag(COIN_WILL_NOT_BE_CREATED_IN_NEXT_TURN);
         }
-      
     }
 }
 
@@ -1087,21 +1228,6 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
         }
         Vec2 newPos = transport->getPosition() + transport->getTransportPos();
         ball->setPositionInCallBack(newPos);
-
-        /*
-        Vec2 newVelocity = ball->getPhysicsBody()->getVelocity();
-        BallColor newColor = ball->getBallColor();
-        ball->removeFromParent();
-        auto it = _ballsOnState.find(ball);
-        _ballsOnState.erase(it);
-        
-        Ball* newBall = Ball::createWithColor(newColor);
-        newBall->setPosition(newPos);
-        newBall->getPhysicsBody()->setVelocity(newVelocity);
-        _ballsOnState.pushBack(newBall);
-        _ballWaitShooting = newBall;
-        _mainScene->addChild(newBall);
-         */
     }
     
     return true;
