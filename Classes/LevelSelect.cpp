@@ -53,13 +53,29 @@ void LevelSelect::onEnter()
     ui::Button* prevPageButton = rootNode->getChildByName<ui::Button*>("prevPageButton");
     
     titleButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
+        if (type == ui::Widget::TouchEventType::BEGAN) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        }
+        if (type == ui::Widget::TouchEventType::CANCELED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        }
         if (type == ui::Widget::TouchEventType::ENDED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
             SceneManager::getInstance()->backToLobby();
         }
     });
     
     nextPageButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
+        if (type == ui::Widget::TouchEventType::BEGAN) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        }
+        if (type == ui::Widget::TouchEventType::CANCELED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        }
         if (type == ui::Widget::TouchEventType::ENDED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
             if (_levelPageNum < MAX_LEVEL_PAGE_NUMS) {
                 _levelPageNum++;
                 _levelPage->removeFromParent();
@@ -71,7 +87,15 @@ void LevelSelect::onEnter()
     
     
     prevPageButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
+        if (type == ui::Widget::TouchEventType::BEGAN) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        }
+        if (type == ui::Widget::TouchEventType::CANCELED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        }
         if (type == ui::Widget::TouchEventType::ENDED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
             if (_levelPageNum > MIN_LEVEL_PAGE_NUMS) {
                 _levelPageNum--;
                 _levelPage->removeFromParent();
@@ -126,7 +150,14 @@ void LevelSelect::levelButtonPressed(Ref* pSender, ui::Widget::TouchEventType eE
     auto button = dynamic_cast<ui::Button*>(pSender);
     LevelGrid* levelGrid = dynamic_cast<LevelGrid*>(button->getParent());
 
+    if (eEventType == ui::Widget::TouchEventType::BEGAN) {
+        button->runAction(ScaleBy::create(0.1f, 0.9));
+    }
+    if (eEventType == ui::Widget::TouchEventType::CANCELED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+    }
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
         SceneManager::getInstance()->enterGameScene(levelGrid->getLevel(), false);
     }
 }

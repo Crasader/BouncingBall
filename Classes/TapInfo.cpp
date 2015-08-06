@@ -20,7 +20,8 @@ bool TapInfo::init()
     return true;
 }
 
-#pragma mark - View lifecycle
+#pragma mark -
+#pragma mark View lifecycle
 
 void TapInfo::onEnter()
 {
@@ -34,6 +35,7 @@ void TapInfo::onEnter()
     listener->onTouchEnded = CC_CALLBACK_2(TapInfo::onTouchEnd, this);
     dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
+
 void TapInfo::displayInfo(const std::vector<std::string> &infoList)
 {
     Vec2 startPos = Vec2(320,600);

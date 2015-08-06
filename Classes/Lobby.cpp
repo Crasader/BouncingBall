@@ -19,8 +19,6 @@ bool Lobby::init()
         return false;
     }
     
-
-    
     return true;
 }
 
@@ -49,16 +47,35 @@ void Lobby::setupUI()
 
 void Lobby::SinglePlayerPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
+    auto button = dynamic_cast<ui::Button*>(pSender);
+    
+    if (eEventType == ui::Widget::TouchEventType::BEGAN) {
+        button->runAction(ScaleBy::create(0.1f, 0.9));
+    }
+
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
         SceneManager::getInstance()->enterLevelSelect();
+    }
+    if (eEventType == ui::Widget::TouchEventType::CANCELED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
     }
 }
 
 
 void Lobby::multiplayerPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
+    auto button = dynamic_cast<ui::Button*>(pSender);
+    
+    if (eEventType == ui::Widget::TouchEventType::BEGAN) {
+        button->runAction(ScaleBy::create(0.1f, 0.9));
+    }
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
         SceneManager::getInstance()->showPeerList();
+    }
+    if (eEventType == ui::Widget::TouchEventType::CANCELED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
     }
     
 }
