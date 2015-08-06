@@ -54,8 +54,8 @@ ItemCategory ItemBox::pickUpItemFromPos(cocos2d::Vec2 pos)
     for (int i=0; i < _items.size(); ++i) {
         if (_items[i]->getBoundingBox().containsPoint(pos)) {
             ItemCategory itemCategory = static_cast<ItemCategory>(_items[i]->getTag());
-            _items.erase(_items.begin() +i);
             _items[i]->removeFromParent();
+            _items.erase(_items.begin() +i);
             return itemCategory;
         }
     }
