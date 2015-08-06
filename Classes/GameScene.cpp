@@ -228,25 +228,6 @@ bool GameScene::onContactBeginTutorial(cocos2d::PhysicsContact &contact)
         return false;
     }
     
-    // Ball hit Ball
-    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
-        Ball* ballA = static_cast<Ball*>(a->getNode());
-        Ball* ballB = static_cast<Ball*>(b->getNode());
-        
-        if (ballA->getBallColor() == ballB->getBallColor()) {
-            Coin* coin = Coin::create();
-            coin->setPosition(a->getPosition());
-            _mainScene->addChild(coin);
-            coin->runGetCoinAnimation();
-            _currentScore += 1;
-            updateScoreLabel(_currentScore);
-            //TODO: make it only appear once
-            displayInfo("You can also get one coin",2.0f, 0.6f);
-            displayInfo("by hit the same color ball",2.0f, 0.6f,50);
-        }
-        
-    }
-    
     //Ball hit Coin
     if (b->getCategoryBitmask() == COIN_CATEGORY || a->getCategoryBitmask() == COIN_CATEGORY) {
         Coin* coin;
@@ -998,19 +979,6 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
             _passCode->EnterOneColor(aColor);
             if (_passCode->EnterOneColor(bColor)) {
                 _passCode->EnterOneColor(aColor);
-            }
-        }
-       
-        if (aColor == bColor) {
-            Coin* coin = Coin::create();
-            coin->setPosition(a->getPosition());
-            _mainScene->addChild(coin);
-            coin->runGetCoinAnimation();
-            if (!isMyTurn()) {
-                _opponetScore++;
-            } else {
-                _currentScore += 1;
-                updateScoreLabel(_currentScore);
             }
         }
     }
