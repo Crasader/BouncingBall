@@ -75,6 +75,7 @@
           <Image Name="continueButton.png" />
           <Image Name="levelPause.png" />
           <Image Name="pauseButton.png" />
+          <Image Name="ballNums.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
@@ -91,6 +92,7 @@
         <Project Name="LevelSelect.csd" Type="Scene" />
         <Project Name="Title.csd" Type="Scene" />
         <Project Name="LevelPause.csd" Type="Node" />
+        <Fnt Name="font02.fnt" />
       </RootFolder>
     </Group>
   </SolutionFolder>

@@ -38,6 +38,7 @@ protected:
     //pointer instance
     cocos2d::Scene* _physicsScene;
     cocos2d::ui::TextBMFont* _scoreLabel;
+    cocos2d::ui::TextBMFont* _ballNumsLabel;
     cocos2d::PhysicsWorld* _physicsWorld;
     cocos2d::Node* _mainScene;
     Cannon* _cannon;
@@ -47,6 +48,7 @@ protected:
     ItemBox* _itemBox;
     cocos2d::ui::Button* _nextBallHolder;
     cocos2d::Node* _pausePanel;
+    
     
     
     //ojbect on state

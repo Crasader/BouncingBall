@@ -265,6 +265,27 @@
             <PreSize />
             <FileData Type="Normal" Path="LevelPause.csd" Plist="" />
           </AbstractNodeData>
+          <AbstractNodeData Name="ballNums_173" ActionTag="466155018" Tag="605" IconVisible="False" LeftMargin="599.1857" RightMargin="-4.1857" TopMargin="960.5642" BottomMargin="130.4358" ctype="SpriteObjectData">
+            <Size X="45.0000" Y="45.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="621.6857" Y="152.9358" />
+            <Scale ScaleX="1.5000" ScaleY="1.5000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.9714" Y="0.1346" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/ballNums.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="ballNumsLabel" ActionTag="-1885925860" Tag="606" IconVisible="False" LeftMargin="594.8580" RightMargin="8.1420" TopMargin="934.6899" BottomMargin="118.3101" LabelText="1" ctype="TextBMFontObjectData">
+            <Size X="37.0000" Y="83.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="613.3580" Y="159.8101" />
+            <Scale ScaleX="0.4000" ScaleY="0.4000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.9584" Y="0.1407" />
+            <PreSize X="0.7719" Y="0.0731" />
+            <LabelBMFontFile_CNB Type="Normal" Path="font02.fnt" Plist="" />
+          </AbstractNodeData>
         </Children>
       </ObjectData>
     </Content>

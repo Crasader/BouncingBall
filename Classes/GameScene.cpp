@@ -408,6 +408,7 @@ void GameScene::setupMap()
     _nextBallHolder->addTouchEventListener(CC_CALLBACK_2(GameScene::ballHolderButtonPressed,this));
     _pausePanel = rootNode->getChildByName("pausePanel");
     _pausePanel->setZOrder(1);
+    _ballNumsLabel = rootNode->getChildByName<ui::TextBMFont*>("ballNumsLabel");
     
     _mainScene = rootNode;
     
@@ -841,6 +842,7 @@ void GameScene::createNextBall()
 
 void GameScene::updateBallPreview()
 {
+    _ballNumsLabel->setString(StringUtils::toString(_ballsInBag.size()));
     if (_ballsInBag.begin() == _ballsInBag.end()) {
         _ballPreview->setVisible(false);
     } else {
