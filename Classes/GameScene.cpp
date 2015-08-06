@@ -971,7 +971,8 @@ void GameScene::dealWithHpBall(Ball *ball)
     auto it = _ballsOnState.find(ball);
     _ballsOnState.erase(it);
     
-    createCoinByPosWhenBallHpIsZero(pos);
+    bool enableCoin = _isMultiplay ? false : true;
+    createCoinByPosWhenBallHpIsZero(pos, enableCoin);
 }
 
 
