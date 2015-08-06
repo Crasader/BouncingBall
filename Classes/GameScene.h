@@ -85,7 +85,7 @@ protected:
     
     //Game Logic
     void enableCoin();
-    void createCoinByPosWhenBallHpIsZero(cocos2d::Vec2 pos);
+    void createCoinByPosWhenBallHpIsZero(cocos2d::Vec2 pos,bool enable = false);
     void createItemWhenTouchedItemBox(ItemCategory itemCategory);
     LevelClear* createLevelClearPanel();
     void shootCurrentBall();

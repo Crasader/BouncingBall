@@ -50,7 +50,9 @@ std::string SceneManager::getDeviceName()
 void SceneManager::enterGameScene(int level, bool networked)
 {
     Scene* physicsScene = Scene::createWithPhysics();
- //   physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    if (DEBUG_MODE) {
+        physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    }
     
     this->_gameScene = GameScene::createWithLevel(level);
     this->_gameScene->setMultiplay(networked);

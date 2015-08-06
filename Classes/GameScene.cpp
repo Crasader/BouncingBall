@@ -69,7 +69,7 @@ bool GameScene::initWithLevel(int level)
     _opponetScore = 0;
     
     //FIXME:
-    if (_level == 1) {
+    if (_level == 1 && DEBUG_MODE) {
         _tutorial = true;
     }
     
@@ -472,19 +472,21 @@ void GameScene::setupMap()
     _edgeSp->setContentSize(Size(edgeWidth, edgeHeight));
     _mainScene->addChild(_edgeSp);
     
+    _itemBox->addItem(ItemCategory::bomb);
+    _itemBox->addItem(ItemCategory::bomb);
+    
     this->addChild(rootNode);
     
     //Setup UI
     
-    //FIXME: try to refactoring this
-    if (!_tutorial) {
+    if (_level > BASIC_LEVEL_NUMS) {
         _passCode = PassCode::createWithStr(mapState.passCode);
         _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
         _passCode->setPosition(Vec2(visibleSize.width * 0.42f, visibleSize.height * 0.955f));
         _mainScene->addChild(_passCode);
     } else {
         rootNode->getChildByName("EqualLabel")->setVisible(false);
-        
+        rootNode->getChildByName("CasinoBox")->setVisible(false);
     }
     
     ui::Button* backButton = rootNode->getChildByName<ui::Button*>("buttonPause");
@@ -518,7 +520,7 @@ void GameScene::setupTouchHandling()
             {
                 Vec2 localPosInItemBox = touchPos - _itemBox->getPosition();
                 if (_itemBox->isClicked(localPosInItemBox)) {
-                    ItemCategory itemCategory = _itemBox->pickUpItemFromPos(touchPos);
+                    ItemCategory itemCategory = _itemBox->pickUpItemFromPos(localPosInItemBox);
                     if (ItemCategory::none != itemCategory) {
                         createItemWhenTouchedItemBox(itemCategory);
                         GameState nextState = getStateByItem(itemCategory);
@@ -852,7 +854,8 @@ void GameScene::updateBallPreview()
     }
 }
 
-void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 ballPos)
+/* default coin will not enable till next turn*/
+void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 ballPos,bool enable)
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Explode* ballExplode = dynamic_cast<Explode*>(CSLoader::createNode("Explode.csb"));
@@ -881,11 +884,11 @@ void GameScene::createCoinByPosWhenBallHpIsZero(Vec2 ballPos)
         _mainScene->addChild(coin);
         _coinOnStage.pushBack(coin);
         coin->initCollision();
-        coin->runAppearAnimation(Vec2(ballPos.x + indicator.x * movePos[i].x, ballPos.y + indicator.y * movePos[i].y));
-        
+        coin->runAppearAnimation(Vec2(ballPos.x + indicator.x * movePos[i].x, ballPos.y + indicator.y * movePos[i].y),enable);
         if (_isMultiplay) {
             coin->setTag(COIN_WILL_NOT_BE_CREATED_IN_NEXT_TURN);
         }
+      
     }
 }
 
@@ -988,13 +991,15 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     }
 
     // Ball hit Ball
-    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
-        BallColor aColor = static_cast<Ball*>(a->getNode())->getBallColor();
-        BallColor bColor = static_cast<Ball*>(b->getNode())->getBallColor();
-        if (isMyTurn()) {
-            _passCode->EnterOneColor(aColor);
-            if (_passCode->EnterOneColor(bColor)) {
+    if (_level > BASIC_LEVEL_NUMS) {
+        if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+            BallColor aColor = static_cast<Ball*>(a->getNode())->getBallColor();
+            BallColor bColor = static_cast<Ball*>(b->getNode())->getBallColor();
+            if (isMyTurn()) {
                 _passCode->EnterOneColor(aColor);
+                if (_passCode->EnterOneColor(bColor)) {
+                    _passCode->EnterOneColor(aColor);
+                }
             }
         }
     }
@@ -1056,7 +1061,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
                 Vec2 pos = (*it)->getPosition();
                 (*it)->removeFromParent();
                 _ballsOnState.erase(it);
-                createCoinByPosWhenBallHpIsZero(pos);
+                createCoinByPosWhenBallHpIsZero(pos,true);
             } else {
                 it++;
             }
