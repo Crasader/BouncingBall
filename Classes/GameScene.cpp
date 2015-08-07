@@ -113,7 +113,6 @@ void GameScene::onEnter()
  
     //if tutorial call tutorial touch event
     this->scheduleUpdate();
-    _itemBox->addItem(ItemCategory::bomb);
 }
 
 #pragma mark -
@@ -1343,7 +1342,10 @@ LevelClear* GameScene::createLevelClearPanel()
         if (type == ui::Widget::TouchEventType::ENDED) {
             buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
             SceneManager::getInstance()->backToLobby();
-            SceneManager::getInstance()->enterGameScene(_level+1, false);
+            if (_level < CURRENT_MAX_LEVEL) {
+                SceneManager::getInstance()->enterGameScene(_level+1, false);
+            }
+
         }
     });
     

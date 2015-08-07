@@ -17,7 +17,7 @@ const static int LEVELGIRD_ROW_NUM = 3;
 const static int LEVELGIRD_COLUMN_NUM = 3;
 const static int LEVEL_NUM_PER_PAGE = 9;
 
-const static int MAX_LEVEL_PAGE_NUMS = 3;
+const static int MAX_LEVEL_PAGE_NUMS = 2;
 const static int MIN_LEVEL_PAGE_NUMS = 1;
 
 const static float GRID_INIT_X_POS = 170.0f;
