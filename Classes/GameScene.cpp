@@ -868,6 +868,7 @@ void GameScene::update(float dt)
                 createNextBall();
                 enableCoin();
                 setGameState(GameState::prepareShooting);
+                displayInfo("It's YOUR TURN");
             }
         }
             break;
