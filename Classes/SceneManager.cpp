@@ -121,8 +121,8 @@ void SceneManager::stateChanged(ConnectionState state)
             CCLOG("Connecting..");
             break;
         case ConnectionState::NOT_CONNECTED:
-            CCLOG("Not Connected");
-            this->backToLobby();
+            MessageBox("Unable to connect, please check your internet connection", "CONNECTION ERROR");
+            SceneManager::getInstance()->backToLobby();
             break;
         case ConnectionState::CONNECTED:
             CCLOG("Connected");
