@@ -113,6 +113,7 @@ void GameScene::onEnter()
  
     //if tutorial call tutorial touch event
     this->scheduleUpdate();
+    _itemBox->addItem(ItemCategory::bomb);
 }
 
 #pragma mark -
@@ -1212,6 +1213,9 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     //Bomb hitted
     if (a->getCategoryBitmask() == BOMB_CATEGORY || b->getCategoryBitmask() == BOMB_CATEGORY) {
         Bomb* bomb = _mainScene->getChildByName<Bomb*>("bomb");
+        if (! bomb) {
+            return false;
+        }
         
         Explode* bombExplode = dynamic_cast<Explode*>(CSLoader::createNode("Explode.csb"));
         bombExplode->setPosition(bomb->getPosition());
