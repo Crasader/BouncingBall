@@ -36,9 +36,10 @@ void TapInfo::onEnter()
     dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void TapInfo::displayInfo(const std::vector<std::string> &infoList)
+/* default height = 600*/
+void TapInfo::displayInfo(const std::vector<std::string> &infoList,float startHeight)
 {
-    Vec2 startPos = Vec2(320,600);
+    Vec2 startPos = Vec2(320,startHeight);
     float lineInterval = 50;
     
     for (int i=0;i < infoList.size();++i) {

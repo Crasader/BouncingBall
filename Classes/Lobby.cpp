@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
+#include "TapInfo.h"
 
 using namespace cocos2d;
 
@@ -33,18 +34,43 @@ void Lobby::onEnter()
 
 void Lobby::setupUI()
 {
-    Size visiableSize = Director::getInstance()->getVisibleSize();
-
     auto rootNode = CSLoader::createNode("Title.csb");
     ui::Button* singlePlayerButton = rootNode->getChildByName<ui::Button*>("singlePlayButton");
     ui::Button* multiplayerButton = rootNode->getChildByName<ui::Button*>("multiplayButton");
-    ui::Button* optionButton = rootNode->getChildByName<ui::Button*>("optionButton");
+    ui::Button* specialThankButton = rootNode->getChildByName<ui::Button*>("specialThankButton");
     
     singlePlayerButton->addTouchEventListener(CC_CALLBACK_2(Lobby::SinglePlayerPressed,this));
     multiplayerButton->addTouchEventListener(CC_CALLBACK_2(Lobby::multiplayerPressed, this));
+    specialThankButton->addTouchEventListener(CC_CALLBACK_2(Lobby::specialThankPressed, this));
+    
     this->addChild(rootNode);
+    
 }
 
+void Lobby::specialThankPressed(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType eEventType)
+{
+    auto buttonInPanel = dynamic_cast<ui::Button*>(pSender);
+    if (eEventType == ui::Widget::TouchEventType::BEGAN) {
+        buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+    }
+    if (eEventType == ui::Widget::TouchEventType::CANCELED) {
+        buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+    }
+    if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        std::vector<std::string> infoList;
+        TapInfo* tapInfo = TapInfo::create();
+        infoList.push_back("Special Thanks:");
+        infoList.push_back("");
+        infoList.push_back("Daniel Haaser");
+        infoList.push_back("");
+        infoList.push_back("Ken Watanabe");
+        infoList.push_back("");
+        infoList.push_back("Ying Huang");
+        tapInfo->displayInfo(infoList,900.0f);
+        this->addChild(tapInfo);
+    }
+}
 void Lobby::SinglePlayerPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
 {
     auto button = dynamic_cast<ui::Button*>(pSender);

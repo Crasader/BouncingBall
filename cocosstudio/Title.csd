@@ -1,5 +1,5 @@
 <GameProjectFile>
-  <PropertyGroup Type="Scene" Name="Title_0" ID="ee94d92a-9b5e-45f1-987d-ec2a79d9ac85" Version="2.2.8.0" />
+  <PropertyGroup Type="Scene" Name="Title" ID="ee94d92a-9b5e-45f1-987d-ec2a79d9ac85" Version="2.2.8.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
@@ -68,6 +68,21 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
+          <AbstractNodeData Name="specialThankButton" ActionTag="-1813033438" Tag="708" IconVisible="False" LeftMargin="193.8284" RightMargin="266.1716" TopMargin="625.2246" BottomMargin="333.7754" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="150" Scale9Height="155" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
+            <Size X="180.0000" Y="177.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="283.8284" Y="422.2754" />
+            <Scale ScaleX="1.8000" ScaleY="1.8000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.4435" Y="0.3717" />
+            <PreSize X="0.2813" Y="0.1558" />
+            <TextColor A="255" R="65" G="65" B="70" />
+            <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
+            <PressedFileData Type="Normal" Path="asset/optionButton.png" Plist="" />
+            <NormalFileData Type="Normal" Path="asset/optionButton.png" Plist="" />
+            <OutlineColor A="255" R="255" G="0" B="0" />
+            <ShadowColor A="255" R="110" G="110" B="110" />
+          </AbstractNodeData>
           <AbstractNodeData Name="BitmapFontLabel_2" ActionTag="25840118" Tag="375" IconVisible="False" LeftMargin="47.5577" RightMargin="376.4423" TopMargin="420.7554" BottomMargin="632.2446" LabelText="Single" ctype="TextBMFontObjectData">
             <Size X="216.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
@@ -108,24 +123,23 @@
             <PreSize X="0.7719" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="optionButton" ActionTag="-910506212" Tag="379" IconVisible="False" LeftMargin="192.4557" RightMargin="267.5443" TopMargin="621.0514" BottomMargin="337.9486" ctype="SpriteObjectData">
-            <Size X="180.0000" Y="177.0000" />
+          <AbstractNodeData Name="BitmapFontLabel_2_0_0" ActionTag="-2030067753" Tag="380" IconVisible="False" LeftMargin="155.4600" RightMargin="230.5400" TopMargin="659.5508" BottomMargin="393.4492" LabelText="Special" ctype="TextBMFontObjectData">
+            <Size X="254.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="282.4557" Y="426.4486" />
-            <Scale ScaleX="1.8000" ScaleY="1.8000" />
+            <Position X="282.4600" Y="434.9492" />
+            <Scale ScaleX="0.6000" ScaleY="0.6000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.4413" Y="0.3754" />
-            <PreSize />
-            <FileData Type="Normal" Path="asset/optionButton.png" Plist="" />
-            <BlendFunc Src="1" Dst="771" />
+            <PrePosition X="0.4413" Y="0.3829" />
+            <PreSize X="0.7719" Y="0.0731" />
+            <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="BitmapFontLabel_2_0_0" ActionTag="-2030067753" Tag="380" IconVisible="False" LeftMargin="161.9589" RightMargin="237.0411" TopMargin="671.5509" BottomMargin="381.4491" LabelText="Option" ctype="TextBMFontObjectData">
-            <Size X="241.0000" Y="83.0000" />
+          <AbstractNodeData Name="BitmapFontLabel_2_0_0_0" ActionTag="1761090507" Tag="707" IconVisible="False" LeftMargin="158.9646" RightMargin="233.0354" TopMargin="697.2296" BottomMargin="355.7704" LabelText="Thanks" ctype="TextBMFontObjectData">
+            <Size X="248.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="282.4589" Y="422.9491" />
-            <Scale ScaleX="0.7000" ScaleY="0.7000" />
+            <Position X="282.9646" Y="397.2704" />
+            <Scale ScaleX="0.6000" ScaleY="0.6000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.4413" Y="0.3723" />
+            <PrePosition X="0.4421" Y="0.3497" />
             <PreSize X="0.7719" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>

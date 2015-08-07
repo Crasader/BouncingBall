@@ -15,7 +15,7 @@ class TapInfo : public cocos2d::LayerColor
 {
 public:
     CREATE_FUNC(TapInfo);
-    void displayInfo(const std::vector<std::string>& infoList);
+    void displayInfo(const std::vector<std::string>& infoList,float startHeight = 600);
 
 private:
     bool init() override;
