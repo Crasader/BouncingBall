@@ -39,14 +39,29 @@ void Coin::runGetCoinAnimation()
     this->runAction(Sequence::create(_action, RemoveSelf::create(),nullptr));
 }
 
-
-void Coin::runAppearAnimation(Vec2 newPos)
+/* by default enable = false */
+void Coin::runAppearAnimation(Vec2 newPos,bool enable)
 {
     _action = Spawn::create(
                             JumpTo::create(0.5, newPos, 30, 1),
                             FadeTo::create(0.5f,128),
                             nullptr);
-    this->runAction(_action);
+    if (enable) {
+        CallFunc* enableCoin = CallFunc::create([this](){
+            this->enableCollision();
+        });
+        this->runAction(Sequence::create(_action,enableCoin,NULL));
+    } else {
+        this->runAction(_action);
+    }
+}
+void Coin::runItemCoinAnimation()
+{
+    _action = Spawn::create(
+                            RotateBy::create(0.5f, Vec3(0, 1080, 0)),
+                            MoveBy::create(0.5f, Vec2(0,50)),
+                            FadeOut::create(0.5f),
+                            nullptr);
 }
 
 void Coin::enableCollision()

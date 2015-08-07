@@ -6,26 +6,15 @@
       <ObjectData Name="Scene" ctype="GameNodeObjectData">
         <Size X="640.0000" Y="1136.0000" />
         <Children>
-          <AbstractNodeData Name="BackGround" ActionTag="1213420383" Tag="223" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="-15.0000" RightMargin="-15.0000" TopMargin="-53.0000" ctype="SpriteObjectData">
+          <AbstractNodeData Name="BackGround" ActionTag="1213420383" Tag="223" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="-15.0000" RightMargin="-15.0000" TopMargin="-54.0000" BottomMargin="1.0000" ctype="SpriteObjectData">
             <Size X="670.0000" Y="1189.0000" />
             <AnchorPoint ScaleX="0.5000" />
-            <Position X="320.0000" />
+            <Position X="320.0000" Y="1.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.5000" />
+            <PrePosition X="0.5000" Y="0.0009" />
             <PreSize X="1.0469" Y="1.0467" />
             <FileData Type="Normal" Path="asset/BackGround.png" Plist="" />
-            <BlendFunc Src="1" Dst="771" />
-          </AbstractNodeData>
-          <AbstractNodeData Name="SideNet" ActionTag="391257440" Tag="225" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="310.0000" BottomMargin="252.0000" ctype="SpriteObjectData">
-            <Size X="330.0000" Y="884.0000" />
-            <AnchorPoint ScaleX="1.0000" ScaleY="1.0000" />
-            <Position X="640.0000" Y="1136.0000" />
-            <Scale ScaleX="1.0000" ScaleY="1.0000" />
-            <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="1.0000" Y="1.0000" />
-            <PreSize X="0.5156" Y="0.7782" />
-            <FileData Type="Normal" Path="asset/sideNet.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="BottomBound" ActionTag="571695076" Tag="219" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="-64.0000" RightMargin="-64.0000" TopMargin="863.0000" ctype="SpriteObjectData">
@@ -140,70 +129,158 @@
             <PreSize />
             <FileData Type="Normal" Path="Dogi.csd" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="red_16" ActionTag="1724891620" Tag="134" IconVisible="False" LeftMargin="162.9785" RightMargin="432.0215" TopMargin="327.6466" BottomMargin="763.3534" ctype="SpriteObjectData">
+          <AbstractNodeData Name="red_16" ActionTag="1724891620" Tag="134" IconVisible="False" LeftMargin="428.4428" RightMargin="166.5572" TopMargin="283.0132" BottomMargin="807.9868" ctype="SpriteObjectData">
             <Size X="45.0000" Y="45.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="185.4785" Y="785.8534" />
+            <Position X="450.9428" Y="830.4868" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.2898" Y="0.6918" />
+            <PrePosition X="0.7046" Y="0.7311" />
             <PreSize />
             <FileData Type="Normal" Path="asset/red.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="green_17" ActionTag="194774668" Tag="135" IconVisible="False" LeftMargin="236.7868" RightMargin="358.2132" TopMargin="420.5021" BottomMargin="670.4979" ctype="SpriteObjectData">
-            <Size X="45.0000" Y="45.0000" />
-            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="259.2868" Y="692.9979" />
-            <Scale ScaleX="1.0000" ScaleY="1.0000" />
-            <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.4051" Y="0.6100" />
-            <PreSize />
-            <FileData Type="Normal" Path="asset/green.png" Plist="" />
-            <BlendFunc Src="1" Dst="771" />
-          </AbstractNodeData>
-          <AbstractNodeData Name="Rock_18" ActionTag="-1647492422" Tag="136" IconVisible="False" LeftMargin="59.4803" RightMargin="528.5197" TopMargin="534.5473" BottomMargin="546.4527" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Rock_19_0" ActionTag="1164835606" Tag="166" IconVisible="False" LeftMargin="276.7910" RightMargin="311.2090" TopMargin="427.5770" BottomMargin="653.4230" ctype="SpriteObjectData">
             <Size X="52.0000" Y="55.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="85.4803" Y="573.9527" />
+            <Position X="302.7910" Y="680.9230" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.1336" Y="0.5052" />
+            <PrePosition X="0.4731" Y="0.5994" />
             <PreSize />
             <FileData Type="Normal" Path="asset/Rock.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Rock_19" ActionTag="1062668138" Tag="137" IconVisible="False" LeftMargin="140.4308" RightMargin="447.5692" TopMargin="532.1666" BottomMargin="548.8334" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Rock_19_1_0" ActionTag="-1812032502" Tag="186" IconVisible="False" LeftMargin="370.5709" RightMargin="217.4291" TopMargin="418.2585" BottomMargin="662.7415" ctype="SpriteObjectData">
             <Size X="52.0000" Y="55.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="166.4308" Y="576.3334" />
+            <Position X="396.5709" Y="690.2415" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.2600" Y="0.5073" />
+            <PrePosition X="0.6196" Y="0.6076" />
             <PreSize />
             <FileData Type="Normal" Path="asset/Rock.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Rock_21" ActionTag="-66713845" Tag="139" IconVisible="False" LeftMargin="216.6201" RightMargin="371.3799" TopMargin="532.1664" BottomMargin="548.8336" ctype="SpriteObjectData">
-            <Size X="52.0000" Y="55.0000" />
+          <AbstractNodeData Name="coin_9_0_1" ActionTag="-386752801" Tag="635" IconVisible="False" LeftMargin="179.6702" RightMargin="385.3298" TopMargin="581.6187" BottomMargin="479.3813" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="242.6201" Y="576.3336" />
+            <Position X="217.1702" Y="516.8813" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.3791" Y="0.5073" />
+            <PrePosition X="0.3393" Y="0.4550" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_4" ActionTag="-2101354684" Tag="638" IconVisible="False" LeftMargin="311.9078" RightMargin="253.0922" TopMargin="251.0302" BottomMargin="809.9698" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="349.4078" Y="847.4698" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5459" Y="0.7460" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_5" ActionTag="1917935671" Tag="639" IconVisible="False" LeftMargin="162.4189" RightMargin="402.5811" TopMargin="314.2720" BottomMargin="746.7280" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="199.9189" Y="784.2280" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.3124" Y="0.6903" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_6" ActionTag="1263980197" Tag="640" IconVisible="False" LeftMargin="225.6685" RightMargin="339.3315" TopMargin="262.5281" BottomMargin="798.4719" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.6150" ScaleY="0.5767" />
+            <Position X="271.7902" Y="841.7222" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.4247" Y="0.7410" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_4_0" ActionTag="1219638523" Tag="642" IconVisible="False" LeftMargin="283.1572" RightMargin="281.8428" TopMargin="590.2427" BottomMargin="470.7573" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="320.6572" Y="508.2573" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5010" Y="0.4474" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_4_1" ActionTag="-991097325" Tag="643" IconVisible="False" LeftMargin="110.6771" RightMargin="454.3229" TopMargin="400.5128" BottomMargin="660.4872" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="148.1771" Y="697.9872" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.2315" Y="0.6144" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_4_2" ActionTag="1828810522" Tag="644" IconVisible="False" LeftMargin="107.8035" RightMargin="457.1965" TopMargin="504.0016" BottomMargin="556.9984" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="145.3035" Y="594.4984" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.2270" Y="0.5233" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_4_2_0" ActionTag="-1090904513" Tag="645" IconVisible="False" LeftMargin="369.3920" RightMargin="195.6080" TopMargin="593.1168" BottomMargin="467.8832" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="406.8920" Y="505.3832" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.6358" Y="0.4449" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="coin_9_0_4_0_0" ActionTag="-502365799" Tag="646" IconVisible="False" LeftMargin="363.6453" RightMargin="201.3547" TopMargin="504.0016" BottomMargin="556.9984" ctype="SpriteObjectData">
+            <Size X="75.0000" Y="75.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="401.1453" Y="594.4984" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.6268" Y="0.5233" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/coin.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="Rock_19_1_0_0" ActionTag="1669150564" Tag="647" IconVisible="False" LeftMargin="462.1700" RightMargin="125.8300" TopMargin="425.5123" BottomMargin="655.4877" ctype="SpriteObjectData">
+            <Size X="52.0000" Y="55.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="488.1700" Y="682.9877" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.7628" Y="0.6012" />
             <PreSize />
             <FileData Type="Normal" Path="asset/Rock.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Coin_22" ActionTag="-306282710" Tag="140" IconVisible="False" LeftMargin="362.5386" RightMargin="202.4614" TopMargin="257.9257" BottomMargin="803.0743" ctype="SpriteObjectData">
-            <Size X="46.0000" Y="46.0000" />
+          <AbstractNodeData Name="Rock_19_1_0_0_0" ActionTag="1292823845" Tag="648" IconVisible="False" LeftMargin="384.5527" RightMargin="203.4473" TopMargin="689.9838" BottomMargin="391.0162" ctype="SpriteObjectData">
+            <Size X="52.0000" Y="55.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="400.0386" Y="840.5743" />
+            <Position X="410.5527" Y="418.5162" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.6251" Y="0.7399" />
+            <PrePosition X="0.6415" Y="0.3684" />
             <PreSize />
-            <FileData Type="Default" Path="Default/Sprite.png" Plist="" />
+            <FileData Type="Normal" Path="asset/Rock.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>

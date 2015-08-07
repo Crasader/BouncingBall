@@ -44,4 +44,12 @@ void Dogi::runWinAnimation()
     
 }
 
+void Dogi::runLoseAnimation()
+{
+    this->stopAllActions();
+    this->runAction(_timeline);
+    _timeline->play("Lose",false);
+    
+}
+
 

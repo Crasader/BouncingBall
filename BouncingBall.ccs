@@ -17,12 +17,8 @@
           <Image Name="Cannon_Base.png" />
           <Image Name="green.png" />
           <Image Name="logo.png" />
-          <Image Name="multiplayerButton.png" />
-          <Image Name="multiplayerButtonPressed.png" />
           <Image Name="red.png" />
           <Image Name="sideNet.png" />
-          <Image Name="singlePlayerButton.png" />
-          <Image Name="singlePlayerButtonPressed.png" />
           <Image Name="Steering.png" />
           <Image Name="BackGround.png" />
           <Image Name="sideBar.png" />
@@ -59,6 +55,32 @@
           <Image Name="winDogi1.png" />
           <Image Name="winDogi2.png" />
           <Image Name="winDogi3.png" />
+          <Image Name="transport.png" />
+          <Image Name="okButton.png" />
+          <Image Name="bomb.png" />
+          <Image Name="thunder.png" />
+          <Image Name="box.png" />
+          <Image Name="casinoBomb.png" />
+          <Image Name="casinoCoin.png" />
+          <Image Name="casinoThunder.png" />
+          <Image Name="casinoTransport.png" />
+          <Image Name="singlePlayerButton.png" />
+          <Image Name="multiplayerButton.png" />
+          <Image Name="anchor.png" />
+          <Image Name="optionButton.png" />
+          <Image Name="levelBackGround.png" />
+          <Image Name="nextPageButton.png" />
+          <Image Name="prevPageButton.png" />
+          <Image Name="titleButton.png" />
+          <Image Name="continueButton.png" />
+          <Image Name="levelPause.png" />
+          <Image Name="pauseButton.png" />
+          <Image Name="ballNums.png" />
+          <Image Name="loseDogi1.png" />
+          <Image Name="loseDogi2.png" />
+          <Image Name="loseDogi3.png" />
+          <Image Name="loseDogi4.png" />
+          <Image Name="gameOverPanel.png" />
         </Folder>
         <Project Name="Dogi.csd" Type="Node" />
         <Project Name="LevelGrid.csd" Type="Node" />
@@ -68,6 +90,15 @@
         <Project Name="Explode.csd" Type="Node" />
         <Project Name="testScene.csd" Type="Scene" />
         <Project Name="ItemBox.csd" Type="Node" />
+        <Project Name="testScene_0.csd" Type="Scene" />
+        <Project Name="Transport.csd" Type="Node" />
+        <Project Name="MultiplayGameover.csd" Type="Node" />
+        <Project Name="Casino.csd" Type="Node" />
+        <Project Name="LevelSelect.csd" Type="Scene" />
+        <Project Name="Title.csd" Type="Scene" />
+        <Project Name="LevelPause.csd" Type="Node" />
+        <Fnt Name="font02.fnt" />
+        <Project Name="GameOver.csd" Type="Node" />
       </RootFolder>
     </Group>
   </SolutionFolder>

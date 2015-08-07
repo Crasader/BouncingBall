@@ -16,9 +16,10 @@ class Coin : public cocos2d::Sprite
 public:
     CREATE_FUNC(Coin);
     void runGetCoinAnimation();
-    void runAppearAnimation(cocos2d::Vec2 newPos);
+    void runAppearAnimation(cocos2d::Vec2 newPos,bool enable = false);
     void enableCollision();
     void initCollision();
+    void runItemCoinAnimation();
 private:
     bool init() override;
     cocos2d::Spawn* _action;

@@ -14,21 +14,26 @@
 #include "SceneManager.h"
 #include "Constants.h"
 
+#include "cocostudio/CocoStudio.h"
+#include "ui/CocosGUI.h"
 
 
-//TODO: make a locked menu for level select
+bool LevelSelect::init()
+{
+    if (! Node::init()) {
+        return false;
+    }
+    _levelPageNum = 1;
+    return true;
+}
 
 void LevelSelect::onEnter()
 {
     Node::onEnter();
-    Size visibleSize = Director::getInstance()->getVisibleSize();
     
-    Sprite* backGround = Sprite::create("levelBackGround.png");
+    auto rootNode = CSLoader::createNode("LevelSelect.csb");
     
-    backGround->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
-    backGround->setAnchorPoint(Vec2(0.5f,0.5f));
-    
-    this->addChild(backGround);
+    this->addChild(rootNode);
     
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("LevelGridReader" , (ObjectFactory::Instance) LevelGridReader::getInstance);
@@ -39,13 +44,77 @@ void LevelSelect::onEnter()
     int firstLevel = userDataInstance->getIntegerForKey("1",LOCKED_LEVEL);
     if (firstLevel == -1) {
         userDataInstance->setIntegerForKey("1",0);
-        userDataInstance->setIntegerForKey("2",0);
-        userDataInstance->setIntegerForKey("3",0);
     }
     
+    ui::Button* titleButton = rootNode->getChildByName<ui::Button*>("titleButton");
+    ui::Button* nextPageButton = rootNode->getChildByName<ui::Button*>("nextPageButton");
+    ui::Button* prevPageButton = rootNode->getChildByName<ui::Button*>("prevPageButton");
+    
+    titleButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
+        if (type == ui::Widget::TouchEventType::BEGAN) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        }
+        if (type == ui::Widget::TouchEventType::CANCELED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        }
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            SceneManager::getInstance()->backToLobby();
+        }
+    });
+    
+    nextPageButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
+        if (type == ui::Widget::TouchEventType::BEGAN) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        }
+        if (type == ui::Widget::TouchEventType::CANCELED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        }
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            if (_levelPageNum < MAX_LEVEL_PAGE_NUMS) {
+                _levelPageNum++;
+                _levelPage->removeFromParent();
+                _levelPage = createLeveSelectPage(_levelPageNum);
+                this->addChild(_levelPage);
+            }
+        }
+    });
+    
+    
+    prevPageButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
+        if (type == ui::Widget::TouchEventType::BEGAN) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        }
+        if (type == ui::Widget::TouchEventType::CANCELED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        }
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            if (_levelPageNum > MIN_LEVEL_PAGE_NUMS) {
+                _levelPageNum--;
+                _levelPage->removeFromParent();
+                _levelPage = createLeveSelectPage(_levelPageNum);
+                this->addChild(_levelPage);
+            }
+        }
+    });
+    
+    _levelPage = createLeveSelectPage(_levelPageNum);
+    this->addChild(_levelPage);
+    
+}
+
+Node* LevelSelect::createLeveSelectPage(int pageNum)
+{
+    Node* levelNode = Node::create();
+    UserDefault* userDataInstance = UserDefault::getInstance();
     for (int row = 0; row < LEVELGIRD_ROW_NUM; row++ ) {
         for (int column = 0; column < LEVELGIRD_COLUMN_NUM; ++column) {
-            int level = row * LEVELGIRD_COLUMN_NUM + column + 1;
+            int level = (pageNum - 1) * LEVEL_NUM_PER_PAGE +row * LEVELGIRD_COLUMN_NUM + column + 1;
             //FIXME: more good way to convert
             int starNums = userDataInstance->getIntegerForKey(StringUtils::toString(level).c_str(),LOCKED_LEVEL);
             
@@ -55,8 +124,8 @@ void LevelSelect::onEnter()
                 float xPos = GRID_INIT_X_POS + column * (GRID_WIDTH+GRID_X_INTERVAL);
                 float yPos = GRID_INIT_Y_POS - row * (GRID_HEIGHT+GRID_Y_INTERVAL);
                 lockedGrid->setPosition(Vec2(xPos, yPos));
-                this->addChild(lockedGrid);
-
+                levelNode->addChild(lockedGrid);
+                
             } else {
                 LevelGrid* levelGrid = dynamic_cast<LevelGrid*>(CSLoader::createNode("LevelGrid.csb"));
                 float xPos = GRID_INIT_X_POS + column * (GRID_WIDTH+GRID_X_INTERVAL);
@@ -66,14 +135,12 @@ void LevelSelect::onEnter()
                 levelGrid->setDisplayStar(starNums);
                 ui::Button* button = levelGrid->getChildByName<ui::Button*>("Button");
                 button->addTouchEventListener(CC_CALLBACK_2(LevelSelect::levelButtonPressed, this));
-                this->addChild(levelGrid);
+                levelNode->addChild(levelGrid);
             }
             
-
-
         }
     }
-    
+    return levelNode;
 }
 
 void LevelSelect::levelButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEventType)
@@ -81,7 +148,14 @@ void LevelSelect::levelButtonPressed(Ref* pSender, ui::Widget::TouchEventType eE
     auto button = dynamic_cast<ui::Button*>(pSender);
     LevelGrid* levelGrid = dynamic_cast<LevelGrid*>(button->getParent());
 
+    if (eEventType == ui::Widget::TouchEventType::BEGAN) {
+        button->runAction(ScaleBy::create(0.1f, 0.9));
+    }
+    if (eEventType == ui::Widget::TouchEventType::CANCELED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+    }
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
+        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
         SceneManager::getInstance()->enterGameScene(levelGrid->getLevel(), false);
     }
 }

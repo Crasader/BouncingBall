@@ -29,6 +29,7 @@ SceneManager* SceneManager::getInstance()
 SceneManager::SceneManager()
 {
     this->_gameScene = nullptr;
+    this->_levelSelect = nullptr;
     this->networkingWrapper = std::unique_ptr<NetworkingWrapper>(new NetworkingWrapper());
     this->networkingWrapper->setDelegate(this);
 }
@@ -49,7 +50,9 @@ std::string SceneManager::getDeviceName()
 void SceneManager::enterGameScene(int level, bool networked)
 {
     Scene* physicsScene = Scene::createWithPhysics();
-    physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    if (DEBUG_MODE) {
+        physicsScene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    }
     
     this->_gameScene = GameScene::createWithLevel(level);
     this->_gameScene->setMultiplay(networked);
@@ -75,6 +78,12 @@ void SceneManager::backToLobby()
         Director::getInstance()->popScene();
         _gameScene = nullptr;
         networkingWrapper->disconnect();
+        return;
+    }
+    if (_levelSelect) {
+        Director::getInstance()->popScene();
+        _levelSelect = nullptr;
+        return;
     }
     
 }
@@ -112,8 +121,8 @@ void SceneManager::stateChanged(ConnectionState state)
             CCLOG("Connecting..");
             break;
         case ConnectionState::NOT_CONNECTED:
-            CCLOG("Not Connected");
-            this->backToLobby();
+            MessageBox("Unable to connect, please check your internet connection", "CONNECTION ERROR");
+            SceneManager::getInstance()->backToLobby();
             break;
         case ConnectionState::CONNECTED:
             CCLOG("Connected");

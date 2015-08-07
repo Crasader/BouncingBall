@@ -151,65 +151,55 @@
             <FileData Type="Normal" Path="asset/arrow.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="BitmapFontLabel_3" ActionTag="170589259" Tag="168" IconVisible="False" LeftMargin="83.9825" RightMargin="513.0175" TopMargin="12.3250" BottomMargin="1040.6750" LabelText="?" ctype="TextBMFontObjectData">
-            <Size X="43.0000" Y="83.0000" />
-            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="105.4825" Y="1082.1750" />
-            <Scale ScaleX="1.0000" ScaleY="1.0000" />
-            <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.1648" Y="0.9526" />
-            <PreSize X="0.7719" Y="0.0731" />
-            <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
-          </AbstractNodeData>
-          <AbstractNodeData Name="BitmapFontLabel_4" ActionTag="927297568" Tag="169" IconVisible="False" LeftMargin="126.7864" RightMargin="471.2136" TopMargin="20.0601" BottomMargin="1032.9399" LabelText="=" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="EqualLabel" ActionTag="927297568" Tag="169" IconVisible="False" LeftMargin="199.7686" RightMargin="398.2314" TopMargin="12.2916" BottomMargin="1040.7084" LabelText="=" ctype="TextBMFontObjectData">
             <Size X="42.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="147.7864" Y="1074.4399" />
+            <Position X="220.7686" Y="1082.2084" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.2309" Y="0.9458" />
+            <PrePosition X="0.3450" Y="0.9526" />
             <PreSize X="0.0656" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="line_65" ActionTag="-122098889" Tag="170" IconVisible="False" LeftMargin="48.5325" RightMargin="546.4675" TopMargin="1.5825" BottomMargin="1039.4175" ctype="SpriteObjectData">
+          <AbstractNodeData Name="line_65" ActionTag="-122098889" Tag="170" IconVisible="False" LeftMargin="72.5000" RightMargin="522.5000" TopMargin="1.5823" BottomMargin="1039.4177" ctype="SpriteObjectData">
             <Size X="45.0000" Y="95.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="71.0325" Y="1086.9175" />
+            <Position X="95.0000" Y="1086.9177" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.1110" Y="0.9568" />
+            <PrePosition X="0.1484" Y="0.9568" />
             <PreSize />
             <FileData Type="Normal" Path="asset/line.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ScoreLabel" ActionTag="110137252" Tag="171" IconVisible="False" LeftMargin="514.1056" RightMargin="75.8944" TopMargin="11.7646" BottomMargin="1041.2354" LabelText="0" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="ScoreLabel" ActionTag="110137252" Tag="171" IconVisible="False" LeftMargin="516.3776" RightMargin="73.6224" TopMargin="9.5532" BottomMargin="1043.4468" LabelText="0" ctype="TextBMFontObjectData">
             <Size X="50.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="539.1056" Y="1082.7354" />
+            <Position X="541.3776" Y="1084.9468" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.8424" Y="0.9531" />
+            <PrePosition X="0.8459" Y="0.9551" />
             <PreSize X="0.7719" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Coin_66" ActionTag="-999709467" Tag="172" IconVisible="False" LeftMargin="576.3278" RightMargin="-11.3278" TopMargin="12.6792" BottomMargin="1048.3208" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Coin_66" ActionTag="-999709467" Tag="172" IconVisible="False" LeftMargin="570.3278" RightMargin="-5.3278" TopMargin="12.6792" BottomMargin="1048.3208" ctype="SpriteObjectData">
             <Size X="75.0000" Y="75.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="613.8278" Y="1085.8208" />
+            <Position X="607.8278" Y="1085.8208" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.9591" Y="0.9558" />
+            <PrePosition X="0.9497" Y="0.9558" />
             <PreSize />
             <FileData Type="Normal" Path="asset/coin.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="423.8563" RightMargin="171.1437" TopMargin="-0.0802" BottomMargin="1041.0802" ctype="SpriteObjectData">
+          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="462.8205" RightMargin="132.1795" TopMargin="0.9844" BottomMargin="1040.0156" ctype="SpriteObjectData">
             <Size X="45.0000" Y="95.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="446.3563" Y="1088.5802" />
+            <Position X="485.3205" Y="1087.5156" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.6974" Y="0.9583" />
+            <PrePosition X="0.7583" Y="0.9573" />
             <PreSize />
             <FileData Type="Normal" Path="asset/line.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
@@ -238,6 +228,73 @@
             <NormalFileData Type="Normal" Path="asset/nextBall.png" Plist="" />
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="CasinoBox" ActionTag="1092483359" Tag="302" IconVisible="False" LeftMargin="109.4992" RightMargin="451.5008" TopMargin="8.1892" BottomMargin="1053.8108" ctype="SpriteObjectData">
+            <Size X="79.0000" Y="74.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="148.9992" Y="1090.8108" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.2328" Y="0.9602" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/box.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="buttonPause" ActionTag="-1603504544" Tag="507" IconVisible="False" LeftMargin="-24.8386" RightMargin="524.8386" TopMargin="-21.1484" BottomMargin="1020.1484" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="110" Scale9Height="115" OutlineSize="1" ShadowOffsetX="2" ShadowOffsetY="-2" ctype="ButtonObjectData">
+            <Size X="140.0000" Y="137.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="45.1614" Y="1088.6484" />
+            <Scale ScaleX="0.7000" ScaleY="0.7000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.0706" Y="0.9583" />
+            <PreSize X="0.2188" Y="0.1206" />
+            <TextColor A="255" R="65" G="65" B="70" />
+            <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
+            <PressedFileData Type="Normal" Path="asset/pauseButton.png" Plist="" />
+            <NormalFileData Type="Normal" Path="asset/pauseButton.png" Plist="" />
+            <OutlineColor A="255" R="255" G="0" B="0" />
+            <ShadowColor A="255" R="110" G="110" B="110" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="pausePanel" ActionTag="359841385" Tag="525" Alpha="0" IconVisible="True" LeftMargin="319.0837" RightMargin="320.9163" TopMargin="464.1968" BottomMargin="671.8032" InnerActionSpeed="1.0000" ctype="ProjectNodeObjectData">
+            <Size />
+            <AnchorPoint />
+            <Position X="319.0837" Y="671.8032" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.4986" Y="0.5914" />
+            <PreSize />
+            <FileData Type="Normal" Path="LevelPause.csd" Plist="" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="ballNums_173" ActionTag="466155018" Tag="605" IconVisible="False" LeftMargin="599.1857" RightMargin="-4.1857" TopMargin="960.5642" BottomMargin="130.4358" ctype="SpriteObjectData">
+            <Size X="45.0000" Y="45.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="621.6857" Y="152.9358" />
+            <Scale ScaleX="1.5000" ScaleY="1.5000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.9714" Y="0.1346" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/ballNums.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="ballNumsLabel" ActionTag="-1885925860" Tag="606" IconVisible="False" LeftMargin="594.8580" RightMargin="8.1420" TopMargin="934.6899" BottomMargin="118.3101" LabelText="1" ctype="TextBMFontObjectData">
+            <Size X="37.0000" Y="83.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="613.3580" Y="159.8101" />
+            <Scale ScaleX="0.4000" ScaleY="0.4000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.9584" Y="0.1407" />
+            <PreSize X="0.7719" Y="0.0731" />
+            <LabelBMFontFile_CNB Type="Normal" Path="font02.fnt" Plist="" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="unlockLable" ActionTag="-1931815797" Tag="666" VisibleForFrame="False" IconVisible="False" LeftMargin="-36.0909" RightMargin="-70.9091" TopMargin="12.4030" BottomMargin="1040.5970" LabelText="unlock after level 10" ctype="TextBMFontObjectData">
+            <Size X="747.0000" Y="83.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="337.4091" Y="1082.0970" />
+            <Scale ScaleX="0.4000" ScaleY="0.4000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5272" Y="0.9526" />
+            <PreSize X="0.7719" Y="0.0731" />
+            <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
         </Children>
       </ObjectData>

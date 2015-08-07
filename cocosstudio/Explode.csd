@@ -2,7 +2,7 @@
   <PropertyGroup Type="Node" Name="Explode" ID="b387b1b2-a4a5-4ae4-a1ab-28d0d1586116" Version="2.2.8.0" />
   <Content ctype="GameProjectContent">
     <Content>
-      <Animation Duration="7" Speed="0.1667" ActivedAnimationName="BombExplode">
+      <Animation Duration="7" Speed="0.1667">
         <Timeline ActionTag="2132910788" Property="FileData">
           <TextureFrame FrameIndex="1" Tween="False">
             <TextureFile Type="Normal" Path="asset/explode1.png" Plist="" />
@@ -35,15 +35,15 @@
       <ObjectData Name="Node" CustomClassName="Explode" Tag="78" ctype="GameNodeObjectData">
         <Size />
         <Children>
-          <AbstractNodeData Name="explode1_1" ActionTag="2132910788" Tag="79" IconVisible="False" LeftMargin="-29.4011" RightMargin="-30.5989" TopMargin="-28.7535" BottomMargin="-31.2465" ctype="SpriteObjectData">
-            <Size X="60.0000" Y="60.0000" />
-            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="0.5989" Y="-1.2465" />
+          <AbstractNodeData Name="explode1_1" ActionTag="2132910788" Tag="79" Rotation="360.0000" RotationSkewX="360.0000" RotationSkewY="360.0000" IconVisible="False" LeftMargin="-96.7479" RightMargin="-103.2521" TopMargin="-93.2618" BottomMargin="-106.7382" ctype="SpriteObjectData">
+            <Size X="200.0000" Y="200.0000" />
+            <AnchorPoint ScaleX="0.4810" ScaleY="0.5392" />
+            <Position X="-0.5382" Y="1.1071" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="asset/expload3.png" Plist="" />
+            <FileData Type="Normal" Path="asset/bombExplode3.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>

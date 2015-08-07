@@ -12,6 +12,8 @@
 #include "cocos2d.h"
 #include "Constants.h"
 
+class Transport;
+
 namespace JSONPacker
 {
     struct BallConfig
@@ -37,11 +39,19 @@ namespace JSONPacker
         std::string passCode;
         StarConfig starConfig;
     };
+    struct TransportState
+    {
+        cocos2d::Vec2 pos;
+        cocos2d::Vec2 circle1Pos;
+        cocos2d::Vec2 circle2Pos;
+        
+    };
     
     struct MultiInputData
     {
         GameState gameState;
         ItemCategory itemUsed;
+        TransportState transportState;
         float angle;
         cocos2d::Vec2 pos;
         std::string deviceName;

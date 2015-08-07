@@ -26,12 +26,17 @@ void ItemBox::addItem(ItemCategory itemCategory)
         //TODO: can be refactoring
         Sprite* displayItem;
         switch (itemCategory) {
-            case ItemCategory::ballBox:
-                displayItem = Sprite::create("ballBox.png");
-            case ItemCategory::aim:
-                displayItem = Sprite::create("aim.png");
+            case ItemCategory::thunder:
+                displayItem = Sprite::create("thunder.png");
+                break;
+            case ItemCategory::transport:
+                displayItem = Sprite::create("transport.png");
+                break;
             case ItemCategory::bomb:
                 displayItem = Sprite::create("bomb.png");
+                break;
+            case ItemCategory::coin:
+                return;
             case ItemCategory::none:
                 break;
         }
@@ -49,8 +54,8 @@ ItemCategory ItemBox::pickUpItemFromPos(cocos2d::Vec2 pos)
     for (int i=0; i < _items.size(); ++i) {
         if (_items[i]->getBoundingBox().containsPoint(pos)) {
             ItemCategory itemCategory = static_cast<ItemCategory>(_items[i]->getTag());
-            _items.erase(_items.begin() +i);
             _items[i]->removeFromParent();
+            _items.erase(_items.begin() +i);
             return itemCategory;
         }
     }

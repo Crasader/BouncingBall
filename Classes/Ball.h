@@ -11,28 +11,41 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
-#include "JSONPacker.h"
 
+//FINISH REFACTORING 8/3
 class Ball : public cocos2d::Sprite
 {
 public:
+    //init Method
     static Ball* createWithColor(std::string color);
-    static Ball* createRandomBall();
-    bool init() override;
-    void shoot(float speed, float angle);
-    bool isStoped();
+    static Ball* createWithColor(BallColor color);
     CREATE_FUNC(Ball);
-    void runDestroyAnimation();
+
+    //Ball Game Logic
+    void shoot(float speed, float angle);
     void gotHit();
+    void addCrack();
+    bool isStoped() const;
+    void stop();
+    void addThunderEffect();
+    void removeThunderEffect();
+    
+    //Getter Setter
     void setHp(int hp);
-    int getHp();
-    std::string getBallFileName();
+    int getHp() const;
+    BallColor getBallColor() const;
+    std::string getBallFileName() const;
+    BallColor getBallColorFromStr(std::string color);
+    void setPositionInCallBack(const cocos2d::Vec2& pos);
+    
 
 private:
     int _hp;
     BallColor _color;
+    
+    //init Method
     bool initWithColor(std::string color);
-    BallColor getBallColorFromStr(std::string color);
+    bool init() override;
     cocos2d::PhysicsBody* createBallPhysicsBody(BallColor color);
 
 };
