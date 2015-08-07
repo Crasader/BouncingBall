@@ -2,7 +2,7 @@
   <PropertyGroup Type="Node" Name="Dogi" ID="04dc5b1b-488b-467b-929f-bea08d92e358" Version="2.2.8.0" />
   <Content ctype="GameProjectContent">
     <Content>
-      <Animation Duration="23" Speed="0.1333">
+      <Animation Duration="30" Speed="0.1333" ActivedAnimationName="Lose">
         <Timeline ActionTag="-450043310" Property="Position">
           <PointFrame FrameIndex="0" X="0.0000" Y="0.0000">
             <EasingData Type="0" />
@@ -44,6 +44,9 @@
             <EasingData Type="0" />
           </PointFrame>
           <PointFrame FrameIndex="23" X="0.0000" Y="0.0000">
+            <EasingData Type="0" />
+          </PointFrame>
+          <PointFrame FrameIndex="30" X="20.0012" Y="0.0008">
             <EasingData Type="0" />
           </PointFrame>
         </Timeline>
@@ -112,6 +115,18 @@
           <TextureFrame FrameIndex="23" Tween="False">
             <TextureFile Type="Normal" Path="asset/winDogi1.png" Plist="" />
           </TextureFrame>
+          <TextureFrame FrameIndex="24" Tween="False">
+            <TextureFile Type="Normal" Path="asset/loseDogi1.png" Plist="" />
+          </TextureFrame>
+          <TextureFrame FrameIndex="26" Tween="False">
+            <TextureFile Type="Normal" Path="asset/loseDogi2.png" Plist="" />
+          </TextureFrame>
+          <TextureFrame FrameIndex="28" Tween="False">
+            <TextureFile Type="Normal" Path="asset/loseDogi3.png" Plist="" />
+          </TextureFrame>
+          <TextureFrame FrameIndex="30" Tween="False">
+            <TextureFile Type="Normal" Path="asset/loseDogi4.png" Plist="" />
+          </TextureFrame>
         </Timeline>
       </Animation>
       <AnimationList>
@@ -119,21 +134,24 @@
           <RenderColor A="255" R="0" G="191" B="255" />
         </AnimationInfo>
         <AnimationInfo Name="Win" StartIndex="5" EndIndex="23">
-          <RenderColor A="150" R="230" G="230" B="250" />
+          <RenderColor A="255" R="230" G="230" B="250" />
+        </AnimationInfo>
+        <AnimationInfo Name="Lose" StartIndex="24" EndIndex="30">
+          <RenderColor A="150" R="255" G="228" B="225" />
         </AnimationInfo>
       </AnimationList>
       <ObjectData Name="Node" CustomClassName="Dogi" Tag="244" ctype="GameNodeObjectData">
         <Size />
         <Children>
-          <AbstractNodeData Name="dogi" ActionTag="-450043310" Tag="245" IconVisible="False" LeftMargin="-110.0000" RightMargin="-110.0000" TopMargin="-220.0000" ctype="SpriteObjectData">
-            <Size X="220.0000" Y="220.0000" />
+          <AbstractNodeData Name="dogi" ActionTag="-450043310" Tag="245" IconVisible="False" LeftMargin="-59.9988" RightMargin="-100.0012" TopMargin="-160.0008" BottomMargin="0.0008" ctype="SpriteObjectData">
+            <Size X="160.0000" Y="160.0000" />
             <AnchorPoint ScaleX="0.5000" />
-            <Position />
+            <Position X="20.0012" Y="0.0008" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="asset/dogi1.png" Plist="" />
+            <FileData Type="Normal" Path="asset/loseDogi4.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>

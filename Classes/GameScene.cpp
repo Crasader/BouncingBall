@@ -896,23 +896,27 @@ void GameScene::triggerGameOver()
     
     if (_isMultiplay) {
         std::string messageContent;
+        auto gameOver = createGameOverPanel();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        gameOver->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+        _mainScene->addChild(gameOver);
         if (_currentScore > _opponetScore) {
-            messageContent = "Your Win !";
+            gameOver->getChildByName<ui::TextBMFont*>("resultLabel")->setString("You Win!");
+            _dogi->runWinAnimation();
         } else if (_currentScore < _opponetScore) {
-            messageContent = "Your Lose !";
+            _dogi->runLoseAnimation();
         } else {
-            messageContent = "Draw !";
         }
-        MessageBox(messageContent.c_str(), "Game Over!!");
-        SceneManager::getInstance()->backToLobby();
         return;
     }
 
     int starsNum = evaluateStars(_currentScore);
     if (starsNum == 0) {
-        std::string messageContent = "Your Failed !";
-        MessageBox(messageContent.c_str(), "Game Over!!");
-        SceneManager::getInstance()->backToLobby();
+        auto gameOver = createGameOverPanel();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        gameOver->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+        _mainScene->addChild(gameOver);
+        _dogi->runLoseAnimation();
         return ;
     }
 
@@ -942,6 +946,32 @@ void GameScene::triggerGameOver()
 
 #pragma mark - 
 #pragma mark Game Logic
+
+Node* GameScene::createGameOverPanel()
+{
+    auto gameOver = CSLoader::createNode("GameOver.csb");
+    Dogi* dogi = dynamic_cast<Dogi*>(CSLoader::createNode("Dogi.csb"));
+    dogi->setPosition(Vec2(-140.0f,-80.0f));
+    gameOver->addChild(dogi);
+    _dogi = dogi;
+    
+    auto homeButton = gameOver->getChildByName<ui::Button*>("homeButton");
+    
+    homeButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+        auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
+        if (type == ui::Widget::TouchEventType::BEGAN) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        }
+        if (type == ui::Widget::TouchEventType::CANCELED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        }
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            SceneManager::getInstance()->backToLobby();
+        }
+    });
+    return gameOver;
+}
 
 ItemCategory GameScene::randomGenerateItem()
 {
@@ -1741,7 +1771,9 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             break;
         case GameState::gameOver:
         {
-            _gameState = GameState::waitForFinish;
+            if (_gameState != GameState::gameOver) {
+                _gameState = GameState::waitForFinish;
+            }
         }
             break;
         default:

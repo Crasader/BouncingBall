@@ -94,6 +94,7 @@ protected:
     void triggerGameOver();
     void updateBallPreview();
     ItemCategory randomGenerateItem();
+    cocos2d::Node* createGameOverPanel();
     
     //Getter Setter
     std::string getConfigFileName() const;

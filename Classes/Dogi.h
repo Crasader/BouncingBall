@@ -20,6 +20,7 @@ public:
     void onExit() override;
     void runShootingAnimation();
     void runWinAnimation();
+    void runLoseAnimation();
     
 protected:
     cocostudio::timeline::ActionTimeline* _timeline;
