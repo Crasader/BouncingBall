@@ -24,7 +24,7 @@ const static float BOMB_SPEED = 1000.0f;
 
 const static int COIN_NUMS_IF_ITEM_IS_GETTED = 5;
 
-const static bool DEBUG_MODE = true;
+const static bool DEBUG_MODE = false;
 
 const static int BASIC_LEVEL_NUMS = 0;
 

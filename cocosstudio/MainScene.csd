@@ -193,13 +193,13 @@
             <FileData Type="Normal" Path="asset/coin.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="449.8563" RightMargin="145.1437" TopMargin="-0.0804" BottomMargin="1041.0804" ctype="SpriteObjectData">
+          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="465.8210" RightMargin="129.1790" TopMargin="0.9840" BottomMargin="1040.0160" ctype="SpriteObjectData">
             <Size X="45.0000" Y="95.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="472.3563" Y="1088.5804" />
+            <Position X="488.3210" Y="1087.5160" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.7381" Y="0.9583" />
+            <PrePosition X="0.7630" Y="0.9573" />
             <PreSize />
             <FileData Type="Normal" Path="asset/line.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
@@ -229,13 +229,13 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="CasinoBox" ActionTag="1092483359" Tag="302" IconVisible="False" LeftMargin="113.4992" RightMargin="447.5008" TopMargin="8.1892" BottomMargin="1053.8108" ctype="SpriteObjectData">
+          <AbstractNodeData Name="CasinoBox" ActionTag="1092483359" Tag="302" IconVisible="False" LeftMargin="109.4992" RightMargin="451.5008" TopMargin="8.1892" BottomMargin="1053.8108" ctype="SpriteObjectData">
             <Size X="79.0000" Y="74.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="152.9992" Y="1090.8108" />
+            <Position X="148.9992" Y="1090.8108" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.2391" Y="0.9602" />
+            <PrePosition X="0.2328" Y="0.9602" />
             <PreSize />
             <FileData Type="Normal" Path="asset/box.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
@@ -285,6 +285,16 @@
             <PrePosition X="0.9584" Y="0.1407" />
             <PreSize X="0.7719" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font02.fnt" Plist="" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="unlockLable" ActionTag="-1931815797" Tag="666" VisibleForFrame="False" IconVisible="False" LeftMargin="-36.0909" RightMargin="-70.9091" TopMargin="12.4030" BottomMargin="1040.5970" LabelText="unlock after level 10" ctype="TextBMFontObjectData">
+            <Size X="747.0000" Y="83.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="337.4091" Y="1082.0970" />
+            <Scale ScaleX="0.4000" ScaleY="0.4000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5272" Y="0.9526" />
+            <PreSize X="0.7719" Y="0.0731" />
+            <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
         </Children>
       </ObjectData>

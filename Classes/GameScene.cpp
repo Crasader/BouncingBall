@@ -73,7 +73,7 @@ bool GameScene::initWithLevel(int level)
         _tutorial = true;
     }
     
-    if (_level == 3) {
+    if (_level == 10) {
         _tutorial = true;
     }
     
@@ -99,7 +99,7 @@ void GameScene::onEnter()
         setGameState(GameState::tutorial);
         setupTutorialTouchHandling();
         setupTutorialContanctHandling();
-        if (_level == 3) {
+        if (_level == 10) {
             setTutorialStep(TutorialStep::itemInitInfo);
         } else {
             setTutorialStep(TutorialStep::initInfo);
@@ -628,7 +628,7 @@ void GameScene::setupMap()
         _mainScene->addChild(_passCode);
     } else {
         rootNode->getChildByName("EqualLabel")->setVisible(false);
-        rootNode->getChildByName("CasinoBox")->setVisible(false);
+        rootNode->getChildByName("unlickLable")->setVisible(true);
     }
     
     ui::Button* backButton = rootNode->getChildByName<ui::Button*>("buttonPause");
