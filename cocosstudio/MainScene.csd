@@ -172,20 +172,20 @@
             <FileData Type="Normal" Path="asset/line.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ScoreLabel" ActionTag="110137252" Tag="171" IconVisible="False" LeftMargin="523.3778" RightMargin="66.6222" TopMargin="9.5527" BottomMargin="1043.4473" LabelText="0" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="ScoreLabel" ActionTag="110137252" Tag="171" IconVisible="False" LeftMargin="516.3776" RightMargin="73.6224" TopMargin="9.5532" BottomMargin="1043.4468" LabelText="0" ctype="TextBMFontObjectData">
             <Size X="50.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="548.3778" Y="1084.9473" />
+            <Position X="541.3776" Y="1084.9468" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.8568" Y="0.9551" />
+            <PrePosition X="0.8459" Y="0.9551" />
             <PreSize X="0.7719" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="Coin_66" ActionTag="-999709467" Tag="172" IconVisible="False" LeftMargin="570.3280" RightMargin="-5.3280" TopMargin="12.6790" BottomMargin="1048.3210" ctype="SpriteObjectData">
+          <AbstractNodeData Name="Coin_66" ActionTag="-999709467" Tag="172" IconVisible="False" LeftMargin="570.3278" RightMargin="-5.3278" TopMargin="12.6792" BottomMargin="1048.3208" ctype="SpriteObjectData">
             <Size X="75.0000" Y="75.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="607.8280" Y="1085.8210" />
+            <Position X="607.8278" Y="1085.8208" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.9497" Y="0.9558" />
@@ -193,13 +193,13 @@
             <FileData Type="Normal" Path="asset/coin.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="465.8210" RightMargin="129.1790" TopMargin="0.9840" BottomMargin="1040.0160" ctype="SpriteObjectData">
+          <AbstractNodeData Name="line_67" ActionTag="-1236399643" Tag="174" IconVisible="False" LeftMargin="462.8205" RightMargin="132.1795" TopMargin="0.9844" BottomMargin="1040.0156" ctype="SpriteObjectData">
             <Size X="45.0000" Y="95.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="488.3210" Y="1087.5160" />
+            <Position X="485.3205" Y="1087.5156" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.7630" Y="0.9573" />
+            <PrePosition X="0.7583" Y="0.9573" />
             <PreSize />
             <FileData Type="Normal" Path="asset/line.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />

@@ -68,14 +68,16 @@ bool GameScene::initWithLevel(int level)
     _currentScore = 0;
     _opponetScore = 0;
     
-    //FIXME: bad code
-    if (_level == 1) {
+    bool tutorial1Finish = UserDefault::getInstance()->getBoolForKey("tutorial1",false);
+    bool tutorial2Finish = UserDefault::getInstance()->getBoolForKey("tutorial2",false);
+    if (_level == 1 && !tutorial1Finish) {
         _tutorial = true;
     }
-    
-    if (_level == 10) {
+        
+    if (_level == 10 && !tutorial2Finish) {
         _tutorial = true;
     }
+    _itemAvailable = tutorial2Finish || (_level == 10);
     
     return true;
 }
@@ -141,7 +143,6 @@ void GameScene::setupTutorialTouchHandling()
                 return true;
             }
                 break;
-            case TutorialStep::collectCoin:
             case TutorialStep::shootball:
             case TutorialStep::itemInitInfo:
             {
@@ -149,6 +150,7 @@ void GameScene::setupTutorialTouchHandling()
                 return true;
             }
                 break;
+            case TutorialStep::collectCoin:
             case TutorialStep::ballCrack:
             {
                 allowToMove = true;
@@ -305,8 +307,10 @@ bool GameScene::onContactBeginTutorial(cocos2d::PhysicsContact &contact)
         updateScoreLabel(_currentScore);
         
     }
-    if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
-        _passCode->EnterOneColor(BallColor::green);
+    if (_level == 10) {
+        if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
+            _passCode->EnterOneColor(BallColor::green);
+        }
     }
     
     if ((a->getCategoryBitmask() | b->getCategoryBitmask()) == BALL_HIT_TRANSPORT) {
@@ -444,7 +448,7 @@ void GameScene::setTutorialStep(TutorialStep step)
         case TutorialStep::initInfo:
         {
             infoList.push_back("Goal:");
-            infoList.push_back("Try to get coin");
+            infoList.push_back("Try to get coins");
             infoList.push_back("as many as possible");
             tapInfo->displayInfo(infoList);
             tapInfo->setName("info");
@@ -453,7 +457,7 @@ void GameScene::setTutorialStep(TutorialStep step)
             break;
         case TutorialStep::swipingCannon:
         {
-            infoList.push_back("Swipe to move");
+            infoList.push_back("Drag to move");
             tapInfo->displayInfo(infoList);
             this->addChild(tapInfo);
         }
@@ -467,23 +471,23 @@ void GameScene::setTutorialStep(TutorialStep step)
             break;
         case TutorialStep::ballCrack:
         {
-            infoList.push_back("hit crack ball");
-            infoList.push_back("will create three coin");
+            infoList.push_back("hitting the ball twice");
+            infoList.push_back("will spawn three coins");
             tapInfo->displayInfo(infoList);
             this->addChild(tapInfo);
         }
             break;
         case TutorialStep::collectCoin:
         {
-            infoList.push_back("Collect the coin");
+            infoList.push_back("Collect the coins");
             tapInfo->displayInfo(infoList);
             this->addChild(tapInfo);
         }
             break;
         case TutorialStep::itemInitInfo:
         {
-            infoList.push_back("Hit green ball");
-            infoList.push_back("to get item");
+            infoList.push_back("Hit the green ball");
+            infoList.push_back("to get an item");
             tapInfo->displayInfo(infoList);
             this->addChild(tapInfo);
         }
@@ -491,26 +495,26 @@ void GameScene::setTutorialStep(TutorialStep step)
         case TutorialStep::usingItem:
         {
             infoList.push_back("You got a warp!");
-            infoList.push_back("Ball will transport");
-            infoList.push_back("from in to out");
+            infoList.push_back("The ball will teleport");
+            infoList.push_back("from one to another");
             infoList.push_back(" ");
-            infoList.push_back("Tap item to use");
+            infoList.push_back("Tap the item to use");
             tapInfo->displayInfo(infoList);
             this->addChild(tapInfo);
         }
             break;
         case TutorialStep::dragTransport:
         {
-            infoList.push_back("drag to move");
-            infoList.push_back("click OK to fix");
+            infoList.push_back("Drag to move");
+            infoList.push_back("Click OK to place");
             tapInfo->displayInfo(infoList);
             this->addChild(tapInfo);
         }
             break;
         case TutorialStep::finishUsingTransport:
         {
-            infoList.push_back("Good!");
-            infoList.push_back("shoot ball into warp");
+            infoList.push_back("Good!shoot the");
+            infoList.push_back("ball into the warp");
             tapInfo->displayInfo(infoList);
             this->addChild(tapInfo);
         }
@@ -619,16 +623,16 @@ void GameScene::setupMap()
     
     this->addChild(rootNode);
     
-    //Setup UI
+    //Setup UIf_itemAvailable
     
-    if (_level > BASIC_LEVEL_NUMS) {
+    if (_itemAvailable) {
         _passCode = PassCode::createWithStr(mapState.passCode);
         _passCode->setAnchorPoint(Vec2(0.5f,0.5f));
         _passCode->setPosition(Vec2(visibleSize.width * 0.42f, visibleSize.height * 0.955f));
         _mainScene->addChild(_passCode);
     } else {
         rootNode->getChildByName("EqualLabel")->setVisible(false);
-        rootNode->getChildByName("unlickLable")->setVisible(true);
+        rootNode->getChildByName("unlockLable")->setVisible(true);
     }
     
     ui::Button* backButton = rootNode->getChildByName<ui::Button*>("buttonPause");
@@ -940,6 +944,13 @@ void GameScene::triggerGameOver()
     if (UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level+1).c_str(), LOCKED_LEVEL) == LOCKED_LEVEL) {
         UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level+1).c_str(), UNLOCKED_LEVEL);
     }
+    if (_level ==1) {
+        UserDefault::getInstance()->setBoolForKey("tutorial1",true);
+    }
+    
+    if (_level == 10) {
+        UserDefault::getInstance()->setBoolForKey("tutorial2",true);
+    }
     
 }
 
@@ -1164,7 +1175,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
     }
 
     // Ball hit Ball
-    if (_level > BASIC_LEVEL_NUMS) {
+    if (_itemAvailable) {
         if (a->getCategoryBitmask() == BALL_CATEGORY && b->getCategoryBitmask() == BALL_CATEGORY) {
             BallColor aColor = static_cast<Ball*>(a->getNode())->getBallColor();
             BallColor bColor = static_cast<Ball*>(b->getNode())->getBallColor();
@@ -1542,7 +1553,12 @@ void GameScene::stopAllBall()
 
 bool GameScene::canUserGetItem() const
 {
-    return _passCode->isPassCodeClear();
+    if (_itemAvailable) {
+        return _passCode->isPassCodeClear();
+    } else {
+        return false;
+    }
+    
 }
 
 bool GameScene::isGameOver() const
@@ -1657,7 +1673,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
                 }
                     break;
                 case GameState::waiting:
-                    CCLOG("everything sames good");
+                    displayInfo("Opponent turn!");
                     break;
                 default:
                     break;

@@ -22,7 +22,7 @@ const static float MAX_SHOOTING_SPEED = 1500.0f;
 const static float BOMB_RANGE = 100.0f;
 const static float BOMB_SPEED = 1000.0f;
 
-const static int COIN_NUMS_IF_ITEM_IS_GETTED = 5;
+const static int COIN_NUMS_IF_ITEM_IS_GETTED = 3;
 
 const static bool DEBUG_MODE = false;
 

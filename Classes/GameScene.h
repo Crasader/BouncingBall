@@ -63,6 +63,7 @@ protected:
     int _twoStarScore;
     int _threeStarScore;
     int _level;
+    bool _itemAvailable;
     
     //life cycal
     bool initWithLevel(int level);

@@ -44,8 +44,6 @@ void LevelSelect::onEnter()
     int firstLevel = userDataInstance->getIntegerForKey("1",LOCKED_LEVEL);
     if (firstLevel == -1) {
         userDataInstance->setIntegerForKey("1",0);
-        userDataInstance->setIntegerForKey("2",0);
-        userDataInstance->setIntegerForKey("3",0);
     }
     
     ui::Button* titleButton = rootNode->getChildByName<ui::Button*>("titleButton");
