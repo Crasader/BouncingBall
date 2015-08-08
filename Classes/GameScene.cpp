@@ -91,7 +91,7 @@ void GameScene::onEnter()
     createNextBall();
     
     if  (_isMultiplay) {
-        setGameState(GameState::sendDeviceName);
+         setGameState(GameState::sendDeviceName);
         _simulating = false;
     } else {
         setGameState(GameState::prepareShooting);
@@ -624,6 +624,9 @@ void GameScene::setupMap()
     this->addChild(rootNode);
     
     //Setup UIf_itemAvailable
+    if (_isMultiplay) {
+        _itemAvailable = true;
+    }
     
     if (_itemAvailable) {
         _passCode = PassCode::createWithStr(mapState.passCode);
@@ -906,10 +909,17 @@ void GameScene::triggerGameOver()
         _mainScene->addChild(gameOver);
         if (_currentScore > _opponetScore) {
             gameOver->getChildByName<ui::TextBMFont*>("resultLabel")->setString("You Win!");
+            std::string score = StringUtils::toString(_currentScore) + " - " + StringUtils::toString(_opponetScore);
+            gameOver->getChildByName<ui::TextBMFont*>("scoreLable")->setString(score);
             _dogi->runWinAnimation();
         } else if (_currentScore < _opponetScore) {
+            std::string score = StringUtils::toString(_currentScore) + " - " + StringUtils::toString(_opponetScore);
+            gameOver->getChildByName<ui::TextBMFont*>("scoreLable")->setString(score);
             _dogi->runLoseAnimation();
         } else {
+            std::string score = StringUtils::toString(_currentScore) + " - " + StringUtils::toString(_opponetScore);
+            gameOver->getChildByName<ui::TextBMFont*>("scoreLable")->setString(score);
+            gameOver->getChildByName<ui::TextBMFont*>("resultLabel")->setString("Draw!");
         }
         return;
     }

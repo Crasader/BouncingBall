@@ -17,10 +17,10 @@
             <FileData Type="Normal" Path="asset/gameOverPanel.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="resultLabel" ActionTag="1947712360" Tag="688" IconVisible="False" LeftMargin="-71.1495" RightMargin="-246.8505" TopMargin="-34.2668" BottomMargin="-48.7332" LabelText="You Lose!" ctype="TextBMFontObjectData">
+          <AbstractNodeData Name="resultLabel" ActionTag="1947712360" Tag="688" IconVisible="False" LeftMargin="-73.6366" RightMargin="-251.3634" TopMargin="-10.9762" BottomMargin="-72.0238" LabelText="You Lose!" ctype="TextBMFontObjectData">
             <Size X="325.0000" Y="83.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="87.8505" Y="-7.2332" />
+            <Position X="88.8634" Y="-30.5238" />
             <Scale ScaleX="0.9000" ScaleY="0.9000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
@@ -41,6 +41,16 @@
             <NormalFileData Type="Normal" Path="asset/titleButton.png" Plist="" />
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="scoreLable" ActionTag="526393813" Tag="170" IconVisible="False" LeftMargin="-75.7880" RightMargin="-249.2120" TopMargin="-98.1904" BottomMargin="15.1904" LabelText="" ctype="TextBMFontObjectData">
+            <Size />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="86.7120" Y="56.6904" />
+            <Scale ScaleX="0.9000" ScaleY="0.9000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition />
+            <PreSize />
+            <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
         </Children>
       </ObjectData>
