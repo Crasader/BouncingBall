@@ -51,13 +51,13 @@ void Lobby::specialThankPressed(cocos2d::Ref *pSender, cocos2d::ui::Widget::Touc
 {
     auto buttonInPanel = dynamic_cast<ui::Button*>(pSender);
     if (eEventType == ui::Widget::TouchEventType::BEGAN) {
-        buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+        buttonInPanel->runAction(ScaleTo::create(0.1f, 1.6));
     }
     if (eEventType == ui::Widget::TouchEventType::CANCELED) {
-        buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        buttonInPanel->runAction(ScaleTo::create(0.1f, 1.8f));
     }
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        buttonInPanel->runAction(ScaleTo::create(0.1f, 1.8f));
         std::vector<std::string> infoList;
         TapInfo* tapInfo = TapInfo::create();
         infoList.push_back("Special Thanks:");
@@ -76,15 +76,15 @@ void Lobby::SinglePlayerPressed(Ref* pSender, ui::Widget::TouchEventType eEventT
     auto button = dynamic_cast<ui::Button*>(pSender);
     
     if (eEventType == ui::Widget::TouchEventType::BEGAN) {
-        button->runAction(ScaleBy::create(0.1f, 0.9));
+        button->runAction(ScaleTo::create(0.1f, 1.6));
     }
 
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        button->runAction(ScaleTo::create(0.1f, 1.8f));
         SceneManager::getInstance()->enterLevelSelect();
     }
     if (eEventType == ui::Widget::TouchEventType::CANCELED) {
-        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        button->runAction(ScaleTo::create(0.1f, 1.8f));
     }
 }
 
@@ -94,14 +94,14 @@ void Lobby::multiplayerPressed(Ref* pSender, ui::Widget::TouchEventType eEventTy
     auto button = dynamic_cast<ui::Button*>(pSender);
     
     if (eEventType == ui::Widget::TouchEventType::BEGAN) {
-        button->runAction(ScaleBy::create(0.1f, 0.9));
+        button->runAction(ScaleTo::create(0.1f, 1.6));
     }
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        button->runAction(ScaleTo::create(0.1f, 1.8f));
         SceneManager::getInstance()->showPeerList();
     }
     if (eEventType == ui::Widget::TouchEventType::CANCELED) {
-        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        button->runAction(ScaleTo::create(0.1f, 1.8f));
     }
     
 }

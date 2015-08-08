@@ -981,13 +981,13 @@ Node* GameScene::createGameOverPanel()
     homeButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
         auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
         if (type == ui::Widget::TouchEventType::BEGAN) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9));
         }
         if (type == ui::Widget::TouchEventType::CANCELED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
         }
         if (type == ui::Widget::TouchEventType::ENDED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
             SceneManager::getInstance()->backToLobby();
         }
     });
@@ -1329,13 +1329,13 @@ LevelClear* GameScene::createLevelClearPanel()
     restartButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
         auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
         if (type == ui::Widget::TouchEventType::BEGAN) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.8));
         }
         if (type == ui::Widget::TouchEventType::CANCELED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9f));
         }
         if (type == ui::Widget::TouchEventType::ENDED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9f));
             SceneManager::getInstance()->backToLobby();
             SceneManager::getInstance()->enterGameScene(_level, false);
         }
@@ -1344,13 +1344,13 @@ LevelClear* GameScene::createLevelClearPanel()
     nextButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
         auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
         if (type == ui::Widget::TouchEventType::BEGAN) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.8));
         }
         if (type == ui::Widget::TouchEventType::CANCELED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9f));
         }
         if (type == ui::Widget::TouchEventType::ENDED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9f));
             SceneManager::getInstance()->backToLobby();
             if (_level < CURRENT_MAX_LEVEL) {
                 SceneManager::getInstance()->enterGameScene(_level+1, false);
@@ -1363,13 +1363,13 @@ LevelClear* GameScene::createLevelClearPanel()
     menuButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
         auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
         if (type == ui::Widget::TouchEventType::BEGAN) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.8));
         }
         if (type == ui::Widget::TouchEventType::CANCELED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9f));
         }
         if (type == ui::Widget::TouchEventType::ENDED) {
-            buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+            buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9f));
             SceneManager::getInstance()->backToLobby();
         }
     });
@@ -1381,14 +1381,14 @@ void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEven
     auto button = dynamic_cast<ui::Button*>(pSender);
     
     if (eEventType == ui::Widget::TouchEventType::BEGAN) {
-        button->runAction(ScaleBy::create(0.1f, 0.9));
+        button->runAction(ScaleTo::create(0.1f, 0.6));
     }
     if (eEventType == ui::Widget::TouchEventType::CANCELED) {
-        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        button->runAction(ScaleTo::create(0.1f, 0.7f));
     }
     
     if (eEventType == ui::Widget::TouchEventType::ENDED) {
-        button->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+        button->runAction(ScaleTo::create(0.1f, 0.7f));
         _pausePanel->runAction(FadeIn::create(0.5f));
         
         _gameState = GameState::pause;
@@ -1403,13 +1403,13 @@ void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEven
         restartButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
             auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
             if (type == ui::Widget::TouchEventType::BEGAN) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9));
             }
             if (type == ui::Widget::TouchEventType::CANCELED) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
             }
             if (type == ui::Widget::TouchEventType::ENDED) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
                 SceneManager::getInstance()->backToLobby();
                 SceneManager::getInstance()->enterGameScene(_level, false);
             }
@@ -1418,13 +1418,13 @@ void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEven
         continueButton->addTouchEventListener([&,menuButton,restartButton,continueButton](Ref* sender, ui::Widget::TouchEventType type){
             auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
             if (type == ui::Widget::TouchEventType::BEGAN) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9));
             }
             if (type == ui::Widget::TouchEventType::CANCELED) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
             }
             if (type == ui::Widget::TouchEventType::ENDED) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
                 _pausePanel->runAction(FadeOut::create(0.5f));
                 menuButton->setTouchEnabled(false);
                 restartButton->setTouchEnabled(false);
@@ -1438,13 +1438,13 @@ void GameScene::backButtonPressed(Ref* pSender, ui::Widget::TouchEventType eEven
         menuButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
             auto buttonInPanel = dynamic_cast<ui::Button*>(sender);
             if (type == ui::Widget::TouchEventType::BEGAN) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 0.9));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 0.9));
             }
             if (type == ui::Widget::TouchEventType::CANCELED) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
             }
             if (type == ui::Widget::TouchEventType::ENDED) {
-                buttonInPanel->runAction(ScaleBy::create(0.1f, 1 / 0.9f));
+                buttonInPanel->runAction(ScaleTo::create(0.1f, 1.0f));
                 SceneManager::getInstance()->backToLobby();
             }
         });
@@ -1853,9 +1853,12 @@ bool GameScene::isMyTurn() const
 
 void GameScene::setBallPosOnState(std::vector<Vec2> ballPos)
 {
-    for (int i =0; i < ballPos.size(); ++i) {
-        _ballsOnState.at(i)->setPositionInCallBack(ballPos[i]);
+    if (ballPos.size() == _ballsOnState.size()) {
+        for (int i =0; i < ballPos.size(); ++i) {
+            _ballsOnState.at(i)->setPositionInCallBack(ballPos[i]);
+        }
     }
+   
 }
 
 
