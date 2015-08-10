@@ -143,6 +143,28 @@
             <PreSize X="0.7719" Y="0.0731" />
             <LabelBMFontFile_CNB Type="Normal" Path="font01.fnt" Plist="" />
           </AbstractNodeData>
+          <AbstractNodeData Name="dogiShadow" ActionTag="522592259" Tag="200" IconVisible="False" LeftMargin="-200.0000" RightMargin="740.0000" TopMargin="1046.0000" BottomMargin="40.0000" ctype="SpriteObjectData">
+            <Size X="100.0000" Y="50.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="-150.0000" Y="65.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="-0.2344" Y="0.0572" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/dogiShadow.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="dogi" ActionTag="-211999050" Tag="201" IconVisible="False" LeftMargin="-256.2434" RightMargin="716.2434" TopMargin="860.0174" BottomMargin="75.9826" ctype="SpriteObjectData">
+            <Size X="180.0000" Y="200.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="-166.2434" Y="175.9826" />
+            <Scale ScaleX="1.3000" ScaleY="1.3000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="-0.2598" Y="0.1549" />
+            <PreSize />
+            <FileData Type="Normal" Path="asset/winDogi3.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
         </Children>
       </ObjectData>
     </Content>

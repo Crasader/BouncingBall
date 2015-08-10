@@ -35,6 +35,9 @@ void Lobby::onEnter()
 void Lobby::setupUI()
 {
     auto rootNode = CSLoader::createNode("Title.csb");
+
+    auto dogi = rootNode->getChildByName<Sprite*>("dogi");
+    
     ui::Button* singlePlayerButton = rootNode->getChildByName<ui::Button*>("singlePlayButton");
     ui::Button* multiplayerButton = rootNode->getChildByName<ui::Button*>("multiplayButton");
     ui::Button* specialThankButton = rootNode->getChildByName<ui::Button*>("specialThankButton");
@@ -44,7 +47,12 @@ void Lobby::setupUI()
     specialThankButton->addTouchEventListener(CC_CALLBACK_2(Lobby::specialThankPressed, this));
     
     this->addChild(rootNode);
+    dogi->runAction(Sequence::create(JumpTo::create(1, Vec2(145,165), 400, 1),CallFunc::create([dogi]{
+        dogi->setTexture("dogi.png");
+        dogi->setScale(1.1f);
+    }), nullptr));
     
+    rootNode->getChildByName<Sprite*>("dogiShadow")->runAction(MoveTo::create(1,Vec2(150.0f,65.0f)));
 }
 
 void Lobby::specialThankPressed(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType eEventType)

@@ -137,21 +137,21 @@
           <RenderColor A="255" R="230" G="230" B="250" />
         </AnimationInfo>
         <AnimationInfo Name="Lose" StartIndex="24" EndIndex="30">
-          <RenderColor A="150" R="255" G="228" B="225" />
+          <RenderColor A="255" R="255" G="228" B="225" />
         </AnimationInfo>
       </AnimationList>
       <ObjectData Name="Node" CustomClassName="Dogi" Tag="244" ctype="GameNodeObjectData">
         <Size />
         <Children>
-          <AbstractNodeData Name="dogi" ActionTag="-450043310" Tag="245" IconVisible="False" LeftMargin="-59.9988" RightMargin="-100.0012" TopMargin="-160.0008" BottomMargin="0.0008" ctype="SpriteObjectData">
-            <Size X="160.0000" Y="160.0000" />
+          <AbstractNodeData Name="dogi" ActionTag="-450043310" Tag="245" IconVisible="False" LeftMargin="-110.0000" RightMargin="-110.0000" TopMargin="-220.0000" ctype="SpriteObjectData">
+            <Size X="220.0000" Y="220.0000" />
             <AnchorPoint ScaleX="0.5000" />
-            <Position X="20.0012" Y="0.0008" />
+            <Position />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize />
-            <FileData Type="Normal" Path="asset/loseDogi4.png" Plist="" />
+            <FileData Type="Normal" Path="asset/dogi1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
         </Children>
