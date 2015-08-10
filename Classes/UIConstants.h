@@ -28,4 +28,7 @@ const static float GRID_Y_INTERVAL = 20.0f;
 
 const static float GRID_HEIGHT = 147.5f;
 const static float GRID_WIDTH = 103.0f;
+
+const static float BALL_CONTACT_PARTICLE_SCALE = 0.2f;
+
 #endif

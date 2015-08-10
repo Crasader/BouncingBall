@@ -113,6 +113,7 @@ void GameScene::onEnter()
  
     //if tutorial call tutorial touch event
     this->scheduleUpdate();
+    
 }
 
 #pragma mark -
@@ -1195,6 +1196,10 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
                     _passCode->EnterOneColor(aColor);
                 }
             }
+            auto particle = ParticleSystemQuad::create("ballContact.plist");
+            particle->setPosition(a->getNode()->getPosition());
+            particle->setScale(BALL_CONTACT_PARTICLE_SCALE);
+            _mainScene->addChild(particle,3000);
         }
     }
     

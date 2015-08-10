@@ -13,6 +13,7 @@ using namespace cocos2d;
 #pragma mark -
 #pragma mark initialze
 
+
 //random create ball
 bool Ball::init()
 {
@@ -119,6 +120,7 @@ void Ball::addThunderEffect()
     thunder->setScale(0.5f);
     thunder->setName("thunder");
     this->addChild(thunder);
+    
 }
 void Ball::removeThunderEffect()
 {
