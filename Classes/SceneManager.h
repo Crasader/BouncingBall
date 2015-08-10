@@ -35,7 +35,6 @@ private:
     SceneManager();
     ~SceneManager();
     
-    
     void receivedData(const void* state, unsigned long length);
     void stateChanged(ConnectionState state);
 };

@@ -1,5 +1,5 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __GAME_SCENE_H__
+#define __GAME_SCENE_H__
 
 #include "cocos2d.h"
 #include "CocosGUI.h"
@@ -33,7 +33,6 @@ protected:
     Ball* _ballWaitShooting;
     cocos2d::Sprite* _ballPreview;
     cocos2d::Vector<Ball*> _ballsInBag;
-
     
     //pointer instance
     cocos2d::Scene* _physicsScene;
@@ -48,8 +47,6 @@ protected:
     ItemBox* _itemBox;
     cocos2d::ui::Button* _nextBallHolder;
     cocos2d::Node* _pausePanel;
-    
-    
     
     //ojbect on state
     cocos2d::Vector<Ball*> _ballsOnState;
@@ -74,7 +71,6 @@ protected:
     bool onContactBegin(cocos2d::PhysicsContact &contact);
     void onContactEnd(cocos2d::PhysicsContact &contact);
 
-    
     //setup Method
 
     void setupTouchHandling();
@@ -121,8 +117,8 @@ protected:
     int _opponetScore;
     std::vector<cocos2d::Vec2> _nextBallPos;
     
-    void performInput(JSONPacker::MultiInputData multiInputData);
-    bool isMyselfHost(std::string deviceName) const;
+    void performInput(const JSONPacker::MultiInputData& multiInputData);
+    bool isMyselfHost(const std::string& deviceName) const;
     bool canPlayfirst() const;
     void sendData(JSONPacker::MultiInputData multiInputData);
     void setBallPosOnState(std::vector<cocos2d::Vec2> ballPos);
@@ -140,4 +136,4 @@ protected:
 };
 
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __GAME_SCENE_H__

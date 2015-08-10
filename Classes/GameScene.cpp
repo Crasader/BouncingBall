@@ -37,11 +37,6 @@
 
 USING_NS_CC;
 
-//TODO: make Debug func for game over and map test
-//TODO: fix bugs that bomb donot hit any thing
-//TODO: fix bomb collusion
-//TODO: fix diffrence of ball nums
-
 #pragma mark -
 #pragma mark LifeCircle
 
@@ -70,6 +65,7 @@ bool GameScene::initWithLevel(int level)
     
     bool tutorial1Finish = UserDefault::getInstance()->getBoolForKey("tutorial1",false);
     bool tutorial2Finish = UserDefault::getInstance()->getBoolForKey("tutorial2",false);
+    
     if (_level == 1 && !tutorial1Finish) {
         _tutorial = true;
     }
@@ -111,7 +107,6 @@ void GameScene::onEnter()
         setupTouchHandling();
     }
  
-    //if tutorial call tutorial touch event
     this->scheduleUpdate();
     
 }
@@ -925,6 +920,7 @@ void GameScene::triggerGameOver()
         return;
     }
 
+    // Zero stars is different from level clear
     int starsNum = evaluateStars(_currentScore);
     if (starsNum == 0) {
         auto gameOver = createGameOverPanel();
@@ -948,6 +944,7 @@ void GameScene::triggerGameOver()
     
     _mainScene->runAction(FadeTo::create(0.5, 128));
     
+    //Unlock current level
     int currentStars = UserDefault::getInstance()->getIntegerForKey(StringUtils::toString(_level).c_str(),UNLOCKED_LEVEL);
     if (starsNum > currentStars){
         UserDefault::getInstance()->setIntegerForKey(StringUtils::toString(_level).c_str(), starsNum);
@@ -958,7 +955,6 @@ void GameScene::triggerGameOver()
     if (_level ==1) {
         UserDefault::getInstance()->setBoolForKey("tutorial1",true);
     }
-    
     if (_level == 10) {
         UserDefault::getInstance()->setBoolForKey("tutorial2",true);
     }
@@ -1268,9 +1264,7 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
                 it++;
             }
         }
-        
-        //temp code to prevent too fast contact maybe not neccesary ,need to test more
-        // bomb->getPhysicsBody()->setContactTestBitmask(NONE);
+
         bomb->removeFromParent();
         _gameState = GameState::bombFinish;
         return false;
@@ -1667,7 +1661,7 @@ void GameScene::receivedData(const void *data, unsigned long length)
     performInput(multiInputData);
 }
 
-void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
+void GameScene::performInput(const JSONPacker::MultiInputData& multiInputData)
 {
     switch (multiInputData.gameState) {
         case GameState::sendDeviceName:
@@ -1702,7 +1696,6 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
             
         }
             break;
-            //TODO: fix a bugs of one device is too fast than others
         case GameState::waiting:
         {
             switch (_gameState) {
@@ -1818,7 +1811,7 @@ void GameScene::performInput(JSONPacker::MultiInputData multiInputData)
     }
 }
 
-bool GameScene::isMyselfHost(std::string deviceName) const
+bool GameScene::isMyselfHost(const std::string& deviceName) const
 {
     std::string myDeviceName = SceneManager::getInstance()->getDeviceName();
     

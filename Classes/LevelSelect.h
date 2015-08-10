@@ -20,6 +20,7 @@ public:
 private:
     int _levelPageNum;
     Node* _levelPage;
+    
     void loadUserData();
     void onEnter() override;
     Node* createLeveSelectPage(int pageNum);

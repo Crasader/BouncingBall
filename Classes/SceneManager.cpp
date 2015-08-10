@@ -58,7 +58,6 @@ void SceneManager::enterGameScene(int level, bool networked)
     this->_gameScene->setMultiplay(networked);
     _gameScene->setPhyWorld(physicsScene->getPhysicsWorld());
     physicsScene->getPhysicsWorld()->setAutoStep(false);
-    
     physicsScene->addChild(_gameScene);
 
     Director::getInstance()->pushScene(physicsScene);
@@ -128,7 +127,7 @@ void SceneManager::stateChanged(ConnectionState state)
             CCLOG("Connected");
             if (! _gameScene) {
                 this->networkingWrapper->stopAdvertisingAvailability();
-                this->enterGameScene(10000,true);
+                this->enterGameScene(MULTIPLAY_LEVEL,true);
             }
             break;
     }

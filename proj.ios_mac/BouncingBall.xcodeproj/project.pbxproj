@@ -52,10 +52,6 @@
 		9E0CBC4E1B556DC60000EA9C /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC4C1B556DC60000EA9C /* Ball.cpp */; };
 		9E0CBC561B55B77D0000EA9C /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC541B55B77D0000EA9C /* Lobby.cpp */; };
 		9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC541B55B77D0000EA9C /* Lobby.cpp */; };
-		9E0CBC831B56C7660000EA9C /* ContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC811B56C7660000EA9C /* ContactManager.cpp */; };
-		9E0CBC841B56C7660000EA9C /* ContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC811B56C7660000EA9C /* ContactManager.cpp */; };
-		9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */; };
-		9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */; };
 		9E0CBC931B56F9360000EA9C /* JSONPacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */; };
 		9E0CBC941B56F9360000EA9C /* JSONPacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */; };
 		9E0CBC971B56FA160000EA9C /* SceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CBC951B56FA160000EA9C /* SceneManager.cpp */; };
@@ -179,10 +175,6 @@
 		9E0CBC541B55B77D0000EA9C /* Lobby.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lobby.cpp; sourceTree = "<group>"; };
 		9E0CBC551B55B77D0000EA9C /* Lobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lobby.h; sourceTree = "<group>"; };
 		9E0CBC721B55BAF10000EA9C /* UIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIConstants.h; sourceTree = "<group>"; };
-		9E0CBC811B56C7660000EA9C /* ContactManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContactManager.cpp; sourceTree = "<group>"; };
-		9E0CBC821B56C7660000EA9C /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
-		9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelLoader.cpp; sourceTree = "<group>"; };
-		9E0CBC861B56CBC90000EA9C /* LevelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelLoader.h; sourceTree = "<group>"; };
 		9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONPacker.cpp; sourceTree = "<group>"; };
 		9E0CBC921B56F9360000EA9C /* JSONPacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONPacker.h; sourceTree = "<group>"; };
 		9E0CBC951B56FA160000EA9C /* SceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneManager.cpp; sourceTree = "<group>"; };
@@ -432,8 +424,6 @@
 		9E0CBC581B55B78A0000EA9C /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				9E9FF2641B732B0000CA8D54 /* TapInfo.cpp */,
-				9E9FF2651B732B0000CA8D54 /* TapInfo.h */,
 				9E0E6BCB1B6160CC003B2D87 /* LevelSelect.cpp */,
 				9E0E6BCC1B6160CC003B2D87 /* LevelSelect.h */,
 				9E0CBC951B56FA160000EA9C /* SceneManager.cpp */,
@@ -449,10 +439,7 @@
 		9E0CBC591B55B7C20000EA9C /* GameObject */ = {
 			isa = PBXGroup;
 			children = (
-				9E9FF2551B70055100CA8D54 /* Transport.cpp */,
-				9E9FF2561B70055100CA8D54 /* Transport.h */,
-				9E9FF2571B70055100CA8D54 /* TransportReader.cpp */,
-				9E9FF2581B70055100CA8D54 /* TransportReader.h */,
+				9ECB24021B7941A6003C990B /* Items */,
 				9E2C6B781B601C310096EA85 /* Coin.cpp */,
 				9E2C6B791B601C310096EA85 /* Coin.h */,
 				9E0E6BD11B6209BA003B2D87 /* LevelClear.cpp */,
@@ -469,16 +456,8 @@
 				9E0CBC9A1B58582B0000EA9C /* Cannon.h */,
 				9E0E6CA31B66A1BB003B2D87 /* Rock.cpp */,
 				9E0E6CA41B66A1BB003B2D87 /* Rock.h */,
-				9E0E6CAA1B66DA8C003B2D87 /* Bomb.cpp */,
-				9E0E6CAB1B66DA8C003B2D87 /* Bomb.h */,
 				9E0CBC4C1B556DC60000EA9C /* Ball.cpp */,
 				9E0CBC4D1B556DC60000EA9C /* Ball.h */,
-				9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */,
-				9E2C6B7F1B6047EC0096EA85 /* PassCode.h */,
-				9E0E6CAD1B66DCB0003B2D87 /* ItemBox.cpp */,
-				9E0E6CAE1B66DCB0003B2D87 /* ItemBox.h */,
-				9E0E6CAF1B66DCB0003B2D87 /* ItemBoxReader.cpp */,
-				9E0E6CB01B66DCB0003B2D87 /* ItemBoxReader.h */,
 			);
 			name = GameObject;
 			sourceTree = "<group>";
@@ -486,12 +465,10 @@
 		9E0CBC731B55BB1D0000EA9C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				9E9FF2641B732B0000CA8D54 /* TapInfo.cpp */,
+				9E9FF2651B732B0000CA8D54 /* TapInfo.h */,
 				9E0CBC911B56F9360000EA9C /* JSONPacker.cpp */,
 				9E0CBC921B56F9360000EA9C /* JSONPacker.h */,
-				9E0CBC861B56CBC90000EA9C /* LevelLoader.h */,
-				9E0CBC851B56CBC90000EA9C /* LevelLoader.cpp */,
-				9E0CBC811B56C7660000EA9C /* ContactManager.cpp */,
-				9E0CBC821B56C7660000EA9C /* ContactManager.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -535,6 +512,25 @@
 				9E21BA091B54A0EF00CAA983 /* libcocos2d iOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9ECB24021B7941A6003C990B /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				9E9FF2551B70055100CA8D54 /* Transport.cpp */,
+				9E9FF2561B70055100CA8D54 /* Transport.h */,
+				9E9FF2571B70055100CA8D54 /* TransportReader.cpp */,
+				9E9FF2581B70055100CA8D54 /* TransportReader.h */,
+				9E0E6CAA1B66DA8C003B2D87 /* Bomb.cpp */,
+				9E0E6CAB1B66DA8C003B2D87 /* Bomb.h */,
+				9E2C6B7E1B6047EC0096EA85 /* PassCode.cpp */,
+				9E2C6B7F1B6047EC0096EA85 /* PassCode.h */,
+				9E0E6CAD1B66DCB0003B2D87 /* ItemBox.cpp */,
+				9E0E6CAE1B66DCB0003B2D87 /* ItemBox.h */,
+				9E0E6CAF1B66DCB0003B2D87 /* ItemBoxReader.cpp */,
+				9E0E6CB01B66DCB0003B2D87 /* ItemBoxReader.h */,
+			);
+			name = Items;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -682,7 +678,6 @@
 				9E9FF25A1B70055100CA8D54 /* TransportReader.cpp in Sources */,
 				9E9FF2621B7271E300CA8D54 /* CasinoReader.cpp in Sources */,
 				9E0E6BE01B62D906003B2D87 /* NetworkingWrapper.mm in Sources */,
-				9E0CBC871B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E0E6CB11B66DCB0003B2D87 /* ItemBox.cpp in Sources */,
 				9E0E6BD51B6209BA003B2D87 /* LevelClear.cpp in Sources */,
 				9E9FF2611B7271E300CA8D54 /* Casino.cpp in Sources */,
@@ -705,7 +700,6 @@
 				9E2C6B801B6047EC0096EA85 /* PassCode.cpp in Sources */,
 				9E0E6CA51B66A1BB003B2D87 /* Rock.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
-				9E0CBC831B56C7660000EA9C /* ContactManager.cpp in Sources */,
 				9E2C6B881B60B5C10096EA85 /* DogiReader.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				9E0CBC9B1B58582B0000EA9C /* Cannon.cpp in Sources */,
@@ -725,7 +719,6 @@
 				9E0CBC571B55B77D0000EA9C /* Lobby.cpp in Sources */,
 				9E0E6BE31B62D906003B2D87 /* NetworkManager.mm in Sources */,
 				9E0CBCA01B58583A0000EA9C /* CannonReader.cpp in Sources */,
-				9E0CBC881B56CBC90000EA9C /* LevelLoader.cpp in Sources */,
 				9E2C6B7B1B601C310096EA85 /* Coin.cpp in Sources */,
 				9E2C6B811B6047EC0096EA85 /* PassCode.cpp in Sources */,
 				9E0E6BD81B6209BA003B2D87 /* LevelClearReader.cpp in Sources */,
@@ -734,7 +727,6 @@
 				9E0E6BD61B6209BA003B2D87 /* LevelClear.cpp in Sources */,
 				9E2C6B851B60B5B40096EA85 /* Dogi.cpp in Sources */,
 				9E0CBC9C1B58582B0000EA9C /* Cannon.cpp in Sources */,
-				9E0CBC841B56C7660000EA9C /* ContactManager.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* GameScene.cpp in Sources */,
 				9E2C6B891B60B5C10096EA85 /* DogiReader.cpp in Sources */,
 			);

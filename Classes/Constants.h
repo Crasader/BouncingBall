@@ -22,11 +22,25 @@ const static float MAX_SHOOTING_SPEED = 1500.0f;
 const static float BOMB_RANGE = 100.0f;
 const static float BOMB_SPEED = 1000.0f;
 
+#pragma mark -
+#pragma mark Game Logic setting
+
 const static int COIN_NUMS_IF_ITEM_IS_GETTED = 3;
+
+const static int MULTIPLAY_LEVEL = 10000;
 
 const static bool DEBUG_MODE = false;
 
 const static int BASIC_LEVEL_NUMS = 0;
+
+const static int LOCKED_LEVEL = -1;
+const static int UNLOCKED_LEVEL = 0;
+
+const static int COIN_WILL_NOT_BE_CREATED_IN_NEXT_TURN = 1;
+const static int CREADTED_COIN_NUMS_WHEN_BALL_HP_IS_ZERO = 3;
+
+const static int TUTORIAL_CRACKED_BALL = 1;
+const static int CURRENT_MAX_LEVEL = 18;
 
 #pragma mark -
 #pragma mark Edge Setting
@@ -72,14 +86,6 @@ const static int EDGE_RUNNING_CONTACT_MASK = NONE;
 const static int TRANSPORT_CULLISION_MASK = NONE;
 const static int TRANSPORT_CONTACT_MASK = BALL_CATEGORY | BOMB_CATEGORY;
 
-const static int LOCKED_LEVEL = -1;
-const static int UNLOCKED_LEVEL = 0;
-
-const static int COIN_WILL_NOT_BE_CREATED_IN_NEXT_TURN = 1;
-const static int CREADTED_COIN_NUMS_WHEN_BALL_HP_IS_ZERO = 3;
-
-const static int TUTORIAL_CRACKED_BALL = 1;
-const static int CURRENT_MAX_LEVEL = 18;
 
 const static int BALL_HIT_COIN = BALL_CATEGORY | COIN_CATEGORY;
 const static int BALL_HIT_TRANSPORT = BALL_CATEGORY | TRANSPORT_CATEGORY;
@@ -149,7 +155,5 @@ enum class ItemCategory
     transport= 3,
     none = 4,
 };
-
-
 
 #endif

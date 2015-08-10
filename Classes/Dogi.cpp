@@ -22,12 +22,14 @@ bool Dogi::init()
     return true;
 }
 
-
 void Dogi::onExit()
 {
     _timeline->release();
     Node::onExit();
 }
+
+#pragma mark -
+#pragma mark Animation
 void Dogi::runShootingAnimation()
 {
     this->stopAllActions();
